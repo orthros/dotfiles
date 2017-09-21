@@ -16,6 +16,9 @@ set showmatch     " highlight matching [{()}]
 set incsearch     " search as characters are entered
 set hlsearch      " highlight matches
 set noswapfile
+set backspace=indent,eol,start "Allow backspacing over everything in insert mode
+set autoread      " If a file is changed outside of vim, automatically reload it witout asking
+
 
 "-------------------------------------------------------------
 "  Mappings
