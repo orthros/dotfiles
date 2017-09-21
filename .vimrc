@@ -2,6 +2,13 @@
 "  orthros settings
 "-----------------------------------------------------------
 
+"-----------------------------------------------------------
+"  Pathogen
+"-----------------------------------------------------------
+
+execute pathogen#infect()
+call pathogen#helptags()
+
 set number
 syntax enable
 set background=dark
@@ -34,5 +41,3 @@ if &term =~ '256color'
   set t_ut=
 endif
 
-execute pathogen#infect()
-call pathogen#helptags()
