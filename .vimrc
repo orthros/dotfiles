@@ -9,6 +9,10 @@
 execute pathogen#infect()
 call pathogen#helptags()
 
+"-----------------------------------------------------------
+" General Features
+"-----------------------------------------------------------
+
 set number
 syntax enable
 set background=dark
