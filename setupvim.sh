@@ -27,6 +27,9 @@ fi
 if [ ! -d vim-airline ]; then
         git clone https://github.com/vim-airline/vim-airline
 fi
+if [ ! -d dracula-theme]; then
+        git clone https://github.com/dracula/vim dracula-theme
+fi
 cd -
 
 if [ ! -e ~/.vim/autoload/pathogen.vim ]; then
