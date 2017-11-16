@@ -78,8 +78,17 @@ sudo apt-get install mc -y
 echo ''
 echo "Now installing solarized dark WSL color scheme..."
 echo ''
-wget https://raw.githubusercontent.com/seebi/dircolors-solarized/master/dircolors.256dark
-mv dircolors.256dark .dircolors
+if [ ! -f ./.dircolors ];
+then
+    echo 'The .dirclors file is not here... did you clone this out of the repository?' 
+else
+    if [ -f ~/.dircolors ];
+        echo "Backing up $HOME/.dircolors"
+        sudo mv $HOME/.dircolors $HOME/.dircolors.bak
+    fi
+    echo 'Copying....'    
+    cp .dircolors ~/.dircolors
+fi
 
 # Pull down personal dotfiles
 echo ''
