@@ -1,0 +1,5 @@
+[user]
+        name = orthros
+        email = colinnlsn@gmail.com
+[credential]
+        helper = cache
