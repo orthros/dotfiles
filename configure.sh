@@ -84,13 +84,13 @@ mv dircolors.256dark .dircolors
 # Pull down personal dotfiles
 echo ''
 read -p "Do you want to configure the dotfiles? y/n" -n 1 -r
-echo    # (optional) move to a new line
+echo  # (optional) move to a new line
+echo $(pwd)
 if [[ $REPLY =~ ^[Yy]$ ]]
 then
-    if [ ! -f ./script/bootstrap ]
+    if [ ! -f ./script/bootstrap ]; 
     then
-        echo 'Could not find ./script/bootstrap.... did you clone this out of the repository?'
-    fi
+        echo 'Could not find ./script/bootstrap.... did you clone this out of the repository?'    
     else
         echo ''
         echo "Now configuring symlinks..." && ./script/bootstrap
@@ -99,8 +99,8 @@ then
             echo "Successfully configured your environment with dotfiles..."
         else
             echo "Dotfiles were not applied successfully..." >&2
+        fi
     fi
-fi
 else 
 	echo ''
     echo "You chose not to apply jldeen's dotfiles. You will need to configure your environment manually..."
