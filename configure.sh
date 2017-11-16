@@ -83,6 +83,7 @@ then
     echo 'The .dirclors file is not here... did you clone this out of the repository?' 
 else
     if [ -f ~/.dircolors ];
+    then
         echo "Backing up $HOME/.dircolors"
         sudo mv $HOME/.dircolors $HOME/.dircolors.bak
     fi

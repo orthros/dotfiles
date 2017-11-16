@@ -158,7 +158,7 @@ if [ -e $HOME/bin ]
 then
     echo ''
     echo "current $HOME/bin folder found!!! Creating backup..."
-    sudo mv $HOME/bin bin_old
+    sudo mv $HOME/bin $HOME/bin_old
 else
     echo ''
     echo "No current $HOME/bin folder found. Proceeding to link bin folder for tumx scripts..."
@@ -171,7 +171,7 @@ if [ -e $HOME/.tmux ]
 then
     echo ''
     echo "Current $HOME/.tmux folder found!! Creating backup..."
-    sudo mv $HOME/.tmux .tmux_old
+    sudo mv $HOME/.tmux $HOME/.tmux_old
 else
     echo ''
     echo "No current $HOME/.tmux folder found. Proceeding to link tmux folder..."
