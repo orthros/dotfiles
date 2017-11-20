@@ -8,9 +8,11 @@ export TERM=screen-256color
 # Set name of the theme to load. Optionally, if you set this to "random"
 # it'll load a random theme each time that oh-my-zsh is loaded.
 # See https://github.com/robbyrussell/oh-my-zsh/wiki/Themes
-# POWERLEVEL9K_MODE='awesome-fontconfig'
+#POWERLEVEL9K_MODE='awesome-fontconfig'
 POWERLEVEL9K_MODE="nerdfont-complete"
-ZSH_THEME="powerlevel9k/powerlevel9k"
+#ZSH_THEME="powerlevel9k/powerlevel9k"
+ZSH_THEME="robbyrussell"
+#ZSH_THEME="agnoster"
 
 # POWERLEVEL9K_IP_INTERFACE='en0'
 # POWERLEVEL9K_PUBLIC_IP_HOST='http://ident.me'
@@ -24,13 +26,13 @@ POWERLEVEL9K_HISTORY_BACKGROUND='green'
 POWERLEVEL9K_SHORTEN_STRATEGY="truncate_middle"
 POWERLEVEL9K_SHORTEN_DIR_LENGTH=4
 
-POWERLEVEL9K_PROMPT_ON_NEWLINE=true
+POWERLEVEL9K_PROMPT_ON_NEWLINE=false
 
-POWERLEVEL9K_MULTILINE_FIRST_PROMPT_PREFIX=''
+POWERLEVEL9K_MULTILINE_FIRST_PROMPT_PREFI=''
 POWERLEVEL9K_MULTILINE_SECOND_PROMPT_PREFIX="%F{red} \Uf1d0 %f %F{yellow
 }❯ "
 
-POWERLEVEL9K_LEFT_PROMPT_ELEMENTS=(dir vcs)
+POWERLEVEL9K_LEFT_PROMPT_ELEMENTS=(context dir vcs)
 POWERLEVEL9K_RIGHT_PROMPT_ELEMENTS=(status history)
 
 # # Refresh Function - https://babushk.in/posts/renew-environment-tmux.html
@@ -52,7 +54,7 @@ POWERLEVEL9K_RIGHT_PROMPT_ELEMENTS=(status history)
 ## 
 
 # Default username to hide "user@hostname" info
-DEFAULT_USER="jldeen"
+DEFAULT_USER="colin"
 
 # Uncomment the following line to use case-sensitive completion.
 # CASE_SENSITIVE="true"
