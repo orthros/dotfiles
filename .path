@@ -1,0 +1,28 @@
+#!/bin/bash
+
+# If we are on OSX, check for brew
+if [ "$(uname -s)" == "Darwin" ]; then
+    if [ -d "$HOME/.homebrew" ]; then
+        export PATH=$HOME/.homebrew/bin:$PATH
+        export LD_LIBRARY_PATH=$HOME/.homebrew/lib:$LD_LIBRARY_PATH
+    fi
+    
+    if [ -f "$(brew --prefix)/etc/bash_completion" ]; then
+        source "$(brew --prefix)/etc/bash_completion"
+    fi
+    
+    #for completion_file in $(brew --prefix)/etc/bash_completion.d/*; do
+    #    source "$completion_file"
+    #done
+    #unset completion_file
+fi
+
+if [ -d "$HOME/.nvm" ]; then
+    export NVM_DIR="$HOME/.nvm"
+    [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh" # This loads nvm
+    [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion" # This loads nvm bash_completion
+fi
+
+if [ -d "$HOME/.bin" ]; then
+    export PATH=$HOME/.bin:$PATH
+fi
