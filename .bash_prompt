@@ -62,6 +62,20 @@ prompt_git() {
 	fi;
 }
 
+prompt_gcloud() {
+  if command -v gcloud &>/dev/null; then
+    if [ -z ${SHOW_CLOUD_PS1+x} ]; then
+      return;
+    else
+      local cloud_icon="☁️ "
+      local project_name=$(gcloud config list --format 'value(core.project)' 2>/dev/null)
+      echo -e "${cloud_icon}${project_name}${cloud_icon}";
+    fi;
+  else
+    return;
+  fi;
+}
+
 cloud=""
 if [[ -f /proc/cpuinfo ]] && grep -q "^flags.* hypervisor" /proc/cpuinfo && [[ ! -d "/mnt/c/Windows/" ]]; then
 	cloud="☁️ "
@@ -117,6 +131,7 @@ fi;
 # Set the terminal title to the current working directory.
 PS1="\\[\\033]0;\\w\\007\\]";
 PS1+="\\[${bold}\\]\\n"; # newline
+PS1+="\\[${bold}\\]\$(prompt_gcloud)"; # gcloud project name
 PS1+="\\[${userStyle}\\]\\u"; # username
 PS1+="\\[${white}\\] at ";
 PS1+="\\[${hostStyle}\\]${cloud}\\h"; # host

@@ -1,0 +1,13 @@
+#!/bin/bash
+
+# Gcloud Active Project Get
+if command -v gcloud &>/dev/null; then
+  alias gcloudproj="gcloud config list --format 'value(core.project)' 2>/dev/null"
+  gcloudmode(){
+    if [ -z ${SHOW_CLOUD_PS1+x}  ]; then
+      SHOW_CLOUD_PS1=1
+    else
+      unset SHOW_CLOUD_PS1
+    fi
+  }
+fi
