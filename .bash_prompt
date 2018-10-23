@@ -68,6 +68,7 @@ prompt_gcloud() {
       return;
     else
       local cloud_icon="☁️ "
+	  # shellcheck disable=SC2155
       local project_name=$(gcloud config list --format 'value(core.project)' 2>/dev/null)
       echo -e "${cloud_icon}${project_name}${cloud_icon}";
     fi;
