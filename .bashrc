@@ -94,12 +94,6 @@ if ! shopt -oq posix; then
 		. /usr/local/etc/bash_completion
 	fi
 fi
-if [[ -d /etc/bash_completion.d/ ]]; then
-	for file in /etc/bash_completion.d/* ; do
-		# shellcheck source=/dev/null
-		source "$file"
-	done
-fi
 
 # use a tty for gpg
 # solves error: "gpg: signing failed: Inappropriate ioctl for device"
