@@ -1,23 +1,5 @@
 #!/bin/bash
 
-# If we are on OSX, check for brew
-if [ "$(uname -s)" == "Darwin" ]; then
-    if [ -d "$HOME/.homebrew" ]; then
-        export PATH=$HOME/.homebrew/bin:$PATH
-        export LD_LIBRARY_PATH=$HOME/.homebrew/lib:$LD_LIBRARY_PATH
-    fi
-    
-    if [ -f "$(brew --prefix)/etc/bash_completion" ]; then
-		# shellcheck source=/dev/null
-        source "$(brew --prefix)/etc/bash_completion"
-    fi
-    
-    #for completion_file in $(brew --prefix)/etc/bash_completion.d/*; do
-    #    source "$completion_file"
-    #done
-    #unset completion_file
-fi
-
 if [ -d "$HOME/.nvm" ]; then
     export NVM_DIR="$HOME/.nvm"
     # shellcheck disable=SC1090
