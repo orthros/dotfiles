@@ -106,6 +106,9 @@ export GPG_TTY
 # Append to the Bash history file, rather than overwriting it
 shopt -s histappend
 
+# Disable Ctrl+s
+stty -ixon
+
 # Autocorrect typos in path names when using `cd`
 # shopt -s cdspell
 
