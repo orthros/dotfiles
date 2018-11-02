@@ -1,5 +1,11 @@
 #!/bin/bash
 
+# go path
+export GOPATH="${HOME}/.go"
+
+# add go path
+export PATH="/usr/local/go/bin:${GOPATH}/bin:${PATH}"
+
 if [ -d "$HOME/.nvm" ]; then
     export NVM_DIR="$HOME/.nvm"
     # shellcheck disable=SC1090
