@@ -10,7 +10,7 @@ dotfiles:  ## Installs the dotfile
 	done; \
 	gpg --list-keys || true;
 	ln -sfn $(CURDIR)/.gnupg/gpg.conf $(HOME)/.gnupg/gpg.conf;
-	if [ "$(uname -s)" == "Darwin" ]; then \
+	if [ "$(shell uname -s)" = "Darwin" ]; then \
     	ln -sfn $(CURDIR)/.gnupg/gpg-agent-mac.conf $(HOME)/.gnupg/gpg-agent.conf; \
 	else \
 		ln -sfn $(CURDIR)/.gnupg/gpg-agent-unix.conf $(HOME)/.gnupg/gpg-agent.conf; \
