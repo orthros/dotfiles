@@ -13,7 +13,7 @@ dotfiles:  ## Installs the dotfile
 	if [ "$(uname -s)" == "Darwin" ]; then \
     	ln -sfn $(CURDIR)/.gnupg/gpg-agent-mac.conf $(HOME)/.gnupg/gpg-agent.conf; \
 	else \
-		ln -sfn $(CURDIR)/.gnupg/gpg-agent-mac.conf $(HOME)/.gnupg/gpg-agent.conf; \
+		ln -sfn $(CURDIR)/.gnupg/gpg-agent-unix.conf $(HOME)/.gnupg/gpg-agent.conf; \
 	fi;
 
 .PHONY: test
