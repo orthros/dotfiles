@@ -47,3 +47,5 @@ alias sudo='sudo '
 # Get week number
 alias week='date +%V'
 
+# copy working directory
+alias cwd='pwd | tr -d "\r\n" | xclip -selection clipboard'
