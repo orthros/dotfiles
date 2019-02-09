@@ -224,3 +224,7 @@ bar {
 # run the merge for good colors
 exec xrdb -merge $HOME/.Xresources
 exec xrdb -merge $HOME/.Xdefaults
+
+# Gaps
+gaps inner 10
+
