@@ -1,4 +1,5 @@
 #!/bin/bash
+# .path is used for extending the PATH environment variable
 
 # go path
 export GOPATH="${HOME}/.go"
@@ -20,4 +21,10 @@ fi
 
 if [ -d "$HOME/.krew"  ]; then
 	export PATH="${KREW_ROOT:-$HOME/.krew}/bin:$PATH"
+fi
+
+# source kubectl bash completion
+if hash kubectl 2>/dev/null; then
+	# shellcheck source=/dev/null
+	source <(kubectl completion bash)
 fi
