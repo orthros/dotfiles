@@ -133,12 +133,6 @@ if hash kubectl 2>/dev/null; then
 	source <(kubectl completion bash)
 fi
 
-# source travis bash completion
-if [[ -f "${HOME}/.travis/travis.sh" ]]; then
-	# shellcheck source=/dev/null
-	source "${HOME}/.travis/travis.sh"
-fi
-
 for file in ~/.{darwin,bash_prompt,aliases,functions,path,dockerfunc,extra,exports,corp}; do
 	if [[ -r "$file" ]] && [[ -f "$file" ]]; then
 		# shellcheck source=/dev/null
