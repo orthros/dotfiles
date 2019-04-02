@@ -127,12 +127,6 @@ stty -ixon
 	grep -v "[?*]" | cut -d " " -f2 | \
 	tr ' ' '\n')" scp sftp ssh
 
-# source kubectl bash completion
-if hash kubectl 2>/dev/null; then
-	# shellcheck source=/dev/null
-	source <(kubectl completion bash)
-fi
-
 for file in ~/.{darwin,bash_prompt,aliases,functions,path,dockerfunc,extra,exports,corp}; do
 	if [[ -r "$file" ]] && [[ -f "$file" ]]; then
 		# shellcheck source=/dev/null
