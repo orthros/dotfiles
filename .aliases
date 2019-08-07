@@ -49,3 +49,7 @@ alias week='date +%V'
 
 # copy working directory
 alias cwd='pwd | tr -d "\r\n" | xclip -selection clipboard'
+
+alias :wq="echo You aren\'t in vim!"
+alias :q!="echo You aren\'t in vim!"
+alias :q="echo You aren\'t in vim!"
