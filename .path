@@ -23,10 +23,8 @@ if [ -d "$HOME/.krew"  ]; then
 	export PATH="${KREW_ROOT:-$HOME/.krew}/bin:$PATH"
 fi
 
-# source kubectl bash completion
-if hash kubectl 2>/dev/null; then
-	# shellcheck source=/dev/null
-	source <(kubectl completion bash)
+if [ -d "$HOME/.cargo/bin"  ]; then
+	export PATH="$HOME/.cargo/bin:$PATH"
 fi
 
 # source kubectl bash completion
@@ -34,3 +32,4 @@ if hash kubectl 2>/dev/null; then
 	# shellcheck source=/dev/null
 	source <(kubectl completion bash)
 fi
+
