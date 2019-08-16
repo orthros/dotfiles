@@ -36,10 +36,12 @@ fi
 
 # The next lines updates PATH for the Google Cloud SDK.
 if [ -f "${HOME}/google-cloud-sdk/path.bash.inc" ]; then
+# shellcheck source=/dev/null
 	. "${HOME}/google-cloud-sdk/path.bash.inc";
 fi
 
 # The next lines enables shell command completion for gcloud.
 if [ -f "${HOME}/google-cloud-sdk/completion.bash.inc" ]; then
+# shellcheck source=/dev/null
 	. "${HOME}/google-cloud-sdk/completion.bash.inc";
 fi
