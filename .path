@@ -19,6 +19,12 @@ if [ -d "$HOME/.bin" ]; then
     export PATH=$HOME/.bin:$PATH
 fi
 
+# If we have terraform, apply bash completions
+if hash terraform 2>/dev/null; then
+	# shellchewck source=/dev/null
+    complete -C terraform terraform
+fi
+
 if [ -d "$HOME/.krew"  ]; then
 	export PATH="${KREW_ROOT:-$HOME/.krew}/bin:$PATH"
 fi
