@@ -37,10 +37,10 @@ window {
 }
 
 mainbox {
-	spacing: 30px;
-	margin: 0%;
-	padding: 30px 30px;
-	border: 1px;
+  spacing: 30px;
+  margin: 0%;
+  padding: 30px 30px;
+  border: 1px;
 }
 
 inputbar {
