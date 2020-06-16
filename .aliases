@@ -52,3 +52,6 @@ alias cwd='pwd | tr -d "\r\n" | xclip -selection clipboard'
 alias :wq="echo You are not in vim!"
 alias :q!="echo You are not in vim!"
 alias :q="echo You are not in vim!"
+
+# Use bazelisk as opposed to bazel
+alias bazel="bazelisk "
