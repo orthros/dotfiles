@@ -11,6 +11,10 @@ if [ -d "$HOME/.flutter-sdk/bin" ]; then
 	export PATH="${HOME}/.flutter-sdk/bin:${PATH}"
 fi
 
+if [ -d "/usr/lib/dart/bin" ]; then
+	export PATH="$PATH:/usr/lib/dart/bin"
+fi
+
 if [ -d "$HOME/.nvm" ]; then
     export NVM_DIR="$HOME/.nvm"
     # shellcheck disable=SC1090
