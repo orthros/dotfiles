@@ -3,7 +3,8 @@
 # Please see http://i3wm.org/docs/userguide.html for a complete reference!
 
 set $mod Mod4
-set $term urxvt
+# Use alacritty for terminal
+set $term alacritty
 #set $menu i3-dmenu-desktop
 set $menu rofi -show run -theme oneorthros.rasi
 set $barcmd i3status
