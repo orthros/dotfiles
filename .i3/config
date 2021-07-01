@@ -14,7 +14,7 @@ set $lockcmd i3lock
 # is used in the bar {} block below.
 # This font is widely installed, provides lots of unicode glyphs, right-to-left
 # text rendering and scalability on retina/hidpi displays (thanks to pango).
-font pango:Monospace 10
+font pango:Monospace 12
 
 # HiDPI for sway
 # output eDP-1 scale 1
@@ -46,7 +46,6 @@ bindsym $mod+d exec $menu
 # kill focused window
 bindsym $mod+Shift+q kill
 
-# spotify: no border
 for_window [class="^Spotify$"] border none
 for_window [class="^Spotify Premium$"] border none
 
@@ -54,8 +53,8 @@ for_window [class="^Spotify Premium$"] border none
 for_window [class="Code"] floating enable
 for_window [class="Firefox"] floating enable
 for_window [class="Gimp"] floating enable
-for_window [class="google-chrome"] floating enable
-for_window [class="Google-chrome"] floating enable
+#for_window [class="google-chrome"] floating enable
+#for_window [class="Google-chrome"] floating enable
 for_window [class="Keybase"] floating enable
 for_window [class="Neoman"] floating enable
 for_window [class="NES"] floating enable
@@ -71,6 +70,10 @@ for_window [class="VirtualBox"] floating enable
 for_window [class="vlc"] floating enable
 for_window [class="Wine"] floating enable
 for_window [class="Wireshark"] floating enable
+
+# Remove titlebars
+for_window [class=".*"] border pixel 1
+
 
 # lock screen
 bindsym $mod+l exec $lockcmd -c 111111
@@ -153,26 +156,31 @@ bindsym $mod+Shift+9 move container to workspace 9
 bindsym $mod+Shift+0 move container to workspace 10
 
 # audio controls
-bindsym XF86AudioRaiseVolume exec amixer set Master 5%+ #increase sound volume
-bindsym XF86AudioLowerVolume exec amixer set Master 5%- #decrease sound volume
-bindsym XF86AudioMute exec amixer set Master 1+ toggle # mute sound
+#bindsym XF86AudioRaiseVolume exec amixer set Master 5%+ #increase sound volume
+#bindsym XF86AudioLowerVolume exec amixer set Master 5%- #decrease sound volume
+#bindsym XF86AudioMute exec amixer set Master 1+ toggle # mute sound
+#bindsym XF86AudioMicMute exec amixer set Capture toggle # mute mic
+
+bindsym XF86AudioRaiseVolume exec pactl set-sink-volume @DEFAULT_SINK@ +5% #increase sound volume
+bindsym XF86AudioLowerVolume exec pactl set-sink-volume @DEFAULT_SINK@ -5% #decrease sound volume
+bindsym XF86AudioMute exec pactl set-sink-mute @DEFAULT_SINK@ toggle # mute sound
 bindsym XF86AudioMicMute exec amixer set Capture toggle # mute mic
 
 # screen brightness controls
-bindsym XF86MonBrightnessUp exec sudo light -A 5 # increase screen brightness
-bindsym XF86MonBrightnessDown exec sudo light -U 5 # decrease screen brightness
+bindsym XF86MonBrightnessUp exec light -A 5 # increase screen brightness
+bindsym XF86MonBrightnessDown exec light -U 5 # decrease screen brightness
 
 # Screenshots
 # Screenshot fullscreen
-bindsym Print exec "scrot -q 100 ${HOME}'/Pictures/Screenshots/%Y-%m-%d-%H-%M-%S_$wx$h.png' -e ${HOME}'/google-cloud-sdk/bin/gsutil cp $f gs://misc.orthros.dev/screenshots/ && xclip -i -selection clipboard -t image/png < $f'"
+bindsym Print exec "scrot -q 100 ${HOME}'/Pictures/Screenshots/%Y-%m-%d-%H-%M-%S_$wx$h.png' -e '/usr/bin/gsutil cp $f gs://misc.orthros.dev/screenshots/ && xclip -i -selection clipboard -t image/png < $f'"
 # Screenshot fullscreen, sway
 #bindsym Shift+Print exec "swaygrab ${HOME}/Pictures/Screenshots/$(date '+%Y-%m-%d-%H-%M-%S').png"
 # Screenshot with selection
-bindsym $mod+Print exec "sleep 0.4; scrot -q 100 -s ${HOME}'/Pictures/Screenshots/%Y-%m-%d-%H-%M-%S_$wx$h.png' -e ${HOME}'/google-cloud-sdk/bin/gsutil cp $f gs://misc.orthros.dev/screenshots/ && xclip -i -selection clipboard -t image/png < $f'"
+bindsym $mod+Print exec "sleep 0.4; scrot -q 100 -s ${HOME}'/Pictures/Screenshots/%Y-%m-%d-%H-%M-%S_$wx$h.png' -e '/usr/bin/gsutil cp $f gs://misc.orthros.dev/screenshots/ && xclip -i -selection clipboard -t image/png < $f'"
 # Screenshot capture, sway
 #bindsym Shift+Print exec "swaygrab -c ${HOME}/Pictures/Screenshots/$(date '+%Y-%m-%d-%H-%M-%S').webm"
 # Screenshot current focused window
-bindsym Shift+Print exec "scrot -q 100 -u ${HOME}'/Pictures/Screenshots/%Y-%m-%d-%H-%M-%S_$wx$h.png' -e ${HOME}'/google-cloud-sdk/bin/gsutil cp $f gs://misc.orthros.dev/screenshots/ && xclip -i -selection clipboard -t image/png < $f'"
+bindsym Shift+Print exec "scrot -q 100 -u ${HOME}'/Pictures/Screenshots/%Y-%m-%d-%H-%M-%S_$wx$h.png' -e '/usr/bin/gsutil cp $f gs://misc.orthros.dev/screenshots/ && xclip -i -selection clipboard -t image/png < $f'"
 # Screenshot current focused window, sway
 #bindsym Shift+Print exec "swaygrab --focused ${HOME}/Pictures/Screenshots/$(date '+%Y-%m-%d-%H-%M-%S').png"
 
@@ -211,7 +219,7 @@ bindsym $mod+r mode "resize"
 
 # i3status bar config
 bar {
-	font pango:monospace 10
+	font pango:monospace 12
 	status_command $barcmd --config ~/.i3/status.conf
 }
 
@@ -219,13 +227,13 @@ bar {
 # set background
 # use the same background as slim (login manager)
 #exec --no-startup-id feh --bg-fill ${HOME}/Pictures/some-background.jpeg
+exec --no-startup-id feh --bg-fill ${HOME}/Pictures/Wallpapers/outrun_wallpaper.jpg
 
 # Sway backgroud
 # output "*" background ${HOME}/Pictures/some-background.jpg fill
 
 # run the merge for good colors
 exec xrdb -merge $HOME/.Xresources
-exec xrdb -merge $HOME/.Xdefaults
 
 # Gaps
 gaps inner 10
