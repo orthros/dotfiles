@@ -20,3 +20,8 @@ cdg(){
 	echo "Run cdg in a git repository"
   fi
 }
+
+# Special tmux alias to cd to the root of the tmux session
+function cdt() {
+	cd $(tmux display -p '#{session_path}')
+}
