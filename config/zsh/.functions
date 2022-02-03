@@ -10,13 +10,26 @@ if command -v gcloud &>/dev/null; then
 fi
 
 # cdg is used to cd to the root of a git directory (if you're in one)
-cdg(){
-  if [ "$(git rev-parse --is-inside-work-tree &>/dev/null; echo "${?}")" == '0' ]; then
-	cd $(git rev-parse --git-dir)/..
-  else
+function cdg() {
+  if [ "$(git rev-parse --is-inside-work-tree &>/dev/null; echo "${?}")" != '0' ]; then
 	echo "Run cdg in a git repository"
+    return
+  fi
+  cd $(git rev-parse --git-dir)/..
+}
+
+function gcb() {
+  if [ "$(git rev-parse --is-inside-work-tree &>/dev/null; echo "${?}")" != '0' ]; then
+	echo "Run cdg in a git repository"
+    return
+  fi
+  local branch_name=$(git branch --format="%(refname:short)" | peco)
+  if [ $branch_name ]; then
+    git checkout $branch_name
   fi
 }
+
+
 
 # Special tmux alias to cd to the root of the tmux session
 function cdt() {
