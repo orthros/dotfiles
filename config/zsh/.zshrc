@@ -21,6 +21,13 @@ autoload -Uz compinit && compinit
 
 setopt PROMPT_SUBST
 
+# History
+export HISTFILE=~/.zsh_history
+# Immediatly appends history
+setopt INC_APPEND_HISTORY
+
+
+
 # Keybindings
 bindkey "^[[1;5C" forward-word
 bindkey "^[[1;5D" backward-word
