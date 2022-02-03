@@ -29,6 +29,10 @@ if hash nvim 2>/dev/null; then
 	alias vim="nvim";
 fi
 
+if command -v kubectl >/dev/null  2>&1; then
+  alias k="kubectl"
+fi
+
 # List all files colorized in long format
 # shellcheck disable=SC2139
 alias l="ls -lhF ${colorflag}"

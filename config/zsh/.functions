@@ -1,14 +1,11 @@
-#!/bin/bash
+#!/usr/bin/env zsh
 
 # Gcloud Active Project Get
 if command -v gcloud &>/dev/null; then
   alias gcloudproj="gcloud config list --format 'value(core.project)' 2>/dev/null"
-  gcloudmode(){
-    if [ -z ${SHOW_CLOUD_PS1+x}  ]; then
-      SHOW_CLOUD_PS1=1
-    else
-      unset SHOW_CLOUD_PS1
-    fi
+
+  cloudproj(){
+	  gcloud config list --format 'value(core.project)' 2>/dev/null
   }
 fi
 
@@ -25,3 +22,4 @@ cdg(){
 function cdt() {
 	cd $(tmux display -p '#{session_path}')
 }
+
