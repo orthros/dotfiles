@@ -1,0 +1,120 @@
+#!/usr/bin/env zsh
+#"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+# Config/ Zsh Prompt
+#"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+
+
+function prompt_git() {
+	local s='';
+	local branchName='';
+
+	# Check if the current directory is in a Git repository.
+	if [ "$(git rev-parse --is-inside-work-tree &>/dev/null; echo "${?}")" = '0' ]; then
+
+		# check if the current directory is in .git before running git checks
+		if [ "$(git rev-parse --is-inside-git-dir 2> /dev/null)" = 'false' ]; then
+
+			if [[ -O "$(git rev-parse --show-toplevel)/.git/index" ]]; then
+				git update-index --really-refresh -q &> /dev/null;
+			fi;
+
+			# Check for uncommitted changes in the index.
+			if ! git diff --quiet --ignore-submodules --cached; then
+				s+='+';
+			fi;
+
+			# Check for unstaged changes.
+			if ! git diff-files --quiet --ignore-submodules --; then
+				s+='!';
+			fi;
+
+			# Check for untracked files.
+			if [ -n "$(git ls-files --others --exclude-standard)" ]; then
+				s+='?';
+			fi;
+
+			# Check for stashed files.
+			if git rev-parse --verify refs/stash &>/dev/null; then
+				s+='$';
+			fi;
+
+		fi;
+
+		# Get the short symbolic ref.
+		# If HEAD isn’t a symbolic ref, get the short SHA for the latest commit
+		# Otherwise, just give up.
+		branchName="$(git symbolic-ref --quiet --short HEAD 2> /dev/null || \
+			git rev-parse --short HEAD 2> /dev/null || \
+			echo '(unknown)')";
+
+		[ -n "${s}" ] && s=" [${s}]";
+
+		echo " %F{white}on %F{blue}${branchName}%F{reset}%F{61}${s}%F{reset}";
+	else
+		return;
+	fi;
+}
+
+
+function gcloudmode() {
+  	if ! command -v gcloud &>/dev/null; then
+		  return
+  	fi
+
+	if [ -z ${SHOW_GCLOUD_PROMPT+x} ]; then
+		SHOW_GCLOUD_PROMPT="1"
+	else
+		unset SHOW_GCLOUD_PROMPT
+	fi
+}
+
+function prompt_gcloud() {
+  	if ! command -v gcloud &>/dev/null; then
+		  return
+  	fi
+
+	if [ -z ${SHOW_GCLOUD_PROMPT+x} ]; then
+		return
+	else
+		local cloud_icon="☁️ "
+      	local project_name=$(gcloud config list --format 'value(core.project)' 2>/dev/null)
+		echo "${cloud_icon}${project_name}${cloud_icon}"
+	fi
+}
+
+function prompt_ssh() {
+    local symbol="Φ"
+    if [ -z ${SSH_CONNECTION+x} ]; then
+        return
+    else
+        echo "%F{163}${symbol}%F{reset} "
+    fi
+}
+
+local cloud_icon="☁️ "
+
+local user_host="%F{33}%n%F{reset}"
+local user_hostname="%F{37}%m%F{reset}"
+local separator_at="%F{white}@%F{reset}"
+local user_symbol="$"
+local current_dir="%F{64}%~%F{reset}"
+local current_time="%F{green}%*%F{reset}"
+
+local last_command="%F{green}%(?..[%?] )%F{reset}"
+local command_prompt="$ "
+
+local git_info='$(prompt_git)';
+local ssh_prompt='$(prompt_ssh)'
+
+local vm_host=""
+if [[ -f /proc/cpuinfo ]] && grep -q "^flags.* hypervisor" /proc/cpuinfo && [[ ! -d "/mnt/c/Windows" ]]; then
+    vm_host=$cloud_icon
+fi
+
+local cloud_prompt='$(prompt_gcloud)'
+
+RPROMPT="${last_command}"
+PROMPT="%B
+${cloud_prompt}${user_host} at ${ssh_prompt}${vm_host}${user_hostname} in ${current_dir}${git_info}
+${command_prompt}%b"
+

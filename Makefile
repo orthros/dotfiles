@@ -8,6 +8,10 @@ dotfiles:  ## Installs the dotfile
 		f=$$(basename $$file); \
 		ln -sfn $$file $(HOME)/$$f; \
 	done; \
+	for file in $(shell find $(CURDIR)/config ! -path $(CURDIR)/config -type d); do \
+		f=$$(basename $$file); \
+		ln -sfn $$file $(HOME)/.config/$$f; \
+	done; \
 	gpg --list-keys || true;
 	ln -sfn $(CURDIR)/.gnupg/gpg.conf $(HOME)/.gnupg/gpg.conf;
 	if [ "$(shell uname -s)" = "Darwin" ]; then \

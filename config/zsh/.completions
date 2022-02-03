@@ -1,0 +1,12 @@
+#!/usr/bin/env zsh
+
+if command -v kubectl >/dev/null  2>&1; then
+    source <(kubectl completion zsh)
+    complete -F __start_kubectl k
+fi
+
+
+# HACK
+if [ -d "$HOME/.homebrew/Caskroom/google-cloud-sdk" ]; then
+	source $HOME/.homebrew/Caskroom/google-cloud-sdk/latest/google-cloud-sdk/completion.zsh.inc
+fi
