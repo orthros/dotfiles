@@ -25,6 +25,8 @@ setopt PROMPT_SUBST
 export HISTFILE=~/.zsh_history
 # Immediatly appends history
 setopt INC_APPEND_HISTORY
+export HISTSIZE=1000
+export SAVEHIST=1000
 
 
 
