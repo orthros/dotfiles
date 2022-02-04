@@ -43,6 +43,19 @@ source $dotfile_config_path/zsh/.functions
 source $dotfile_config_path/zsh/.completions
 
 #"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+# Super hack for if we have alacritty and peco
+#"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+if [[ $TERM == "alacritty" && $(command -v peco &>/dev/null) != 0 ]]; then
+  if command -v peco &>/dev/null; then
+    # peco does not support the alacritty terminal
+    # as one of it's dependencies (termbox) does not
+    # support "alacritty". If our terminal is alacritty then
+    # set the term variable to xterm-256color
+    TERM=xterm-256color
+  fi
+fi
+
+#"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 # This section is to import any corporate specific config
 #"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 if [[ -r $dotfile_config_path/corp/.zsh  ]]; then
