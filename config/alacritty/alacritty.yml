@@ -1,0 +1,53 @@
+# Configuration for Alacritty, the GPU enhanced terminal emulator.
+
+# Any items in the `env` entry below will be added as
+# environment variables. Some entries may override variables
+# set by alacritty itself.
+env:
+  # TERM variable
+  #
+  # This value is used to set the `$TERM` environment variable for
+  # each instance of Alacritty. If it is not present, alacritty will
+  # check the local terminfo database and use `alacritty` if it is
+  # available, otherwise `xterm-256color` is used.
+  #
+  # This is done because some libraries to not properly support the term
+  # variable "alacritty"
+  TERM: xterm-256color
+
+# Uncomment to channel your inner lain
+#window:
+#  title: The Wired
+
+font:
+  normal:
+    family: IBM Plex Mono
+
+colors:
+  # Default colors
+  primary:
+    background: '0x1a2026'
+    foreground: '0xffffff'
+
+  # Normal colors
+  normal:
+    black:   '0x242d35'
+    red:     '0xfb6396'
+    green:   '0x94cf95'
+    yellow:  '0xf692b2'
+    blue:    '0x6ec1d6'
+    magenta: '0xcd84c8'
+    cyan:    '0x7fe4d2'
+    white:   '0xffffff'
+
+  # Bright colors
+  bright:
+    black:   '0x526170'
+    red:     '0xf92d72'
+    green:   '0x6ccb6e'
+    yellow:  '0xf26190'
+    blue:    '0x4cb9d6'
+    magenta: '0xc269bc'
+    cyan:    '0x58d6bf'
+    white:   '0xf4f5f2'
+
