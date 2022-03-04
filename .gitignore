@@ -1,5 +1,4 @@
 .i3/logfile
 .exports
-.zcompdumps
-zsh/.zcompdumps
+.zcompdump
 
