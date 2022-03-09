@@ -226,6 +226,10 @@ bar {
 	status_command $barcmd --config ~/.i3/status.conf
 }
 
+# Scratchpad
+bindsym $mod+Shift+minus move scratchpad
+bindsym $mod+Shift+plus scratchpad show
+
 # auto run commands
 # set background
 # use the same background as slim (login manager)
