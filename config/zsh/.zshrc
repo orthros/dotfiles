@@ -28,7 +28,8 @@ setopt INC_APPEND_HISTORY
 export HISTSIZE=1000
 export SAVEHIST=1000
 
-
+# Editor
+export EDITOR=nvim
 
 # Keybindings
 bindkey "^[[1;5C" forward-word
