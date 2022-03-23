@@ -36,7 +36,6 @@ function cdt() {
 	cd $(tmux display -p '#{session_path}')
 }
 
-
 if which peco &> /dev/null; then
   function peco_select_history() {
     local tac
@@ -52,3 +51,6 @@ if which peco &> /dev/null; then
   zle -N peco_select_history
   bindkey '^R' peco_select_history
 fi
+
+# Get the git utilities
+source $dotfile_config_path/zsh/git-utils.sh
