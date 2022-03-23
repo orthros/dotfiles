@@ -7,4 +7,4 @@ export dotfile_config_path="$HOME/.config"
 
 # Source zsh startup files from:  ~/.config/zsh
 export ZDOTDIR="$dotfile_config_path/zsh"
-. $ZDOTDIR/.zshenv
+. $ZDOTDIR/zshenv

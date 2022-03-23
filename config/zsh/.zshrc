@@ -35,17 +35,17 @@ export EDITOR=nvim
 bindkey "^[[1;5C" forward-word
 bindkey "^[[1;5D" backward-word
 
-source $dotfile_config_path/zsh/.prompt
+source $dotfile_config_path/zsh/prompt
 
-source $dotfile_config_path/zsh/.aliases
+source $dotfile_config_path/zsh/aliases
 
-source $dotfile_config_path/zsh/.functions
+source $dotfile_config_path/zsh/functions
 
-source $dotfile_config_path/zsh/.completions
+source $dotfile_config_path/zsh/completions
 
 #"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 # This section is to import any corporate specific config
 #"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-if [[ -r $dotfile_config_path/corp/.zsh  ]]; then
-    source $dotfile_config_path/corp/.zsh
+if [[ -r $dotfile_config_path/corp/zsh  ]]; then
+    source $dotfile_config_path/corp/zsh
 fi
