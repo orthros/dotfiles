@@ -1,7 +1,7 @@
 #!/usr/bin/env zsh
 
-if ! [ -z "${_GIT_UTILS_INCLUDE+x}" ]; then
-	return 0
+if [[ "${_GIT_UTILS_INCLUDE}" == true ]]; then
+	return
 fi
 
 export _GIT_UTILS_INCLUDE=true
