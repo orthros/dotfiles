@@ -34,6 +34,7 @@ export EDITOR=nvim
 # Keybindings
 bindkey "^[[1;5C" forward-word
 bindkey "^[[1;5D" backward-word
+bindkey "^[[3~" delete-char
 
 source $dotfile_config_path/zsh/prompt
 
