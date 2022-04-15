@@ -33,6 +33,10 @@ if command -v kubectl >/dev/null  2>&1; then
   alias k="kubectl"
 fi
 
+if command -v fdfind >/dev/null 2>&1; then
+  alias fd="fdfind"
+fi
+
 # List all files colorized in long format
 # shellcheck disable=SC2139
 alias l="ls -lhF ${colorflag}"
