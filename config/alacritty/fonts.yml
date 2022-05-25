@@ -1,4 +1,10 @@
 font:
   normal:
-    family: IBM Plex Mono
+    family: BlexMono Nerd Font Mono
+  bold:
+    family: BlexMono Nerd Font Mono
+    style: Bold
+  italic:
+    family: BlexMono Nerd Font Mono
+    style: Italic
 
