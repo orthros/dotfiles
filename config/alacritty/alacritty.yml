@@ -24,13 +24,15 @@ window:
 # Uncomment to channel your inner lain
 #  title: The Wired
   opacity: 1
+  decorations: full #Still won't show in a window manger, but will in a desktop environment
 
 ## Cursor
 cursor:
   style:
     shape: Block
     blinking: Off
-  unfocused_hollow: true
+    unfocused_hollow: true
+    blink-interval: 750
 
 ## Live config reload
 live_config_reload: true
