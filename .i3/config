@@ -221,10 +221,28 @@ mode "resize" {
 bindsym $mod+r mode "resize"
 
 # i3status bar config
+#bar {
+#       font pango:monospace 12
+#       status_command $barcmd --config ~/.i3/status.conf
+#}
+
+# Use i3blocks for status bar
 bar {
-	font pango:monospace 12
-	status_command $barcmd --config ~/.i3/status.conf
+    font pango:BlexMono Nerd Font Mono 15
+    status_command    SCRIPT_DIR=~/.config/blocklets i3blocks
+    position          bottom
+    mode              dock
+    workspace_buttons yes
+    colors {
+        background #333333
+        statusline #d321d9
+        focused_workspace  #ffffff #285577
+        active_workspace   #ffffff #333333
+        inactive_workspace #888888 #222222
+        urgent_workspace   #ffffff #900000
+    }
 }
+
 
 # Scratchpad
 bindsym $mod+Shift+minus move scratchpad
