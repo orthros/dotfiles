@@ -6,46 +6,51 @@
 # .path is used for extending the PATH environment variable
 
 if [ -d "$HOME/.homebrew/bin" ]; then
-	export PATH=$PATH:"$HOME/.homebrew/bin"
-	export LD_LIBRARY_PATH=$HOME/.homebrew/lib:$LD_LIBRARY_PATH
+  export PATH=$PATH:"$HOME/.homebrew/bin"
+  export LD_LIBRARY_PATH=$HOME/.homebrew/lib:$LD_LIBRARY_PATH
 
-	if [ -d "$HOME/.homebrew/Caskroom/google-cloud-sdk" ]; then
-		export PATH=$PATH:"$HOME/.homebrew/Caskroom/google-cloud-sdk/latest/google-cloud-sdk/bin"
-	fi
+  if [ -d "$HOME/.homebrew/Caskroom/google-cloud-sdk" ]; then
+    export PATH=$PATH:"$HOME/.homebrew/Caskroom/google-cloud-sdk/latest/google-cloud-sdk/bin"
+  fi
 fi
 
 # go path
 if [ -d "$HOME/.go" ]; then
-	export GOPATH="${HOME}/.go"
-	# add go path
-	export PATH="/usr/local/go/bin:${GOPATH}/bin:${PATH}"
+  export GOPATH="${HOME}/.go"
+  # add go path
+  export PATH="/usr/local/go/bin:${GOPATH}/bin:${PATH}"
 fi
 
 if [ -d "$HOME/.flutter-sdk/bin" ]; then
-	export PATH="${HOME}/.flutter-sdk/bin:${PATH}"
+  export PATH="${HOME}/.flutter-sdk/bin:${PATH}"
 fi
 
 if [ -d "/usr/lib/dart/bin" ]; then
-	export PATH="$PATH:/usr/lib/dart/bin"
+  export PATH="$PATH:/usr/lib/dart/bin"
 fi
 
 if [ -d "$HOME/.bin" ]; then
     export PATH=$HOME/.bin:$PATH
 fi
 
+if [ -d "${HOME}/.nvm" ]; then
+  export NVM_DIR="$HOME/.nvm"
+  [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
+fi
+
 if [ -d "$HOME/.krew"  ]; then
-	export PATH="${KREW_ROOT:-$HOME/.krew}/bin:$PATH"
+  export PATH="${KREW_ROOT:-$HOME/.krew}/bin:$PATH"
 fi
 
 if [ -d "$HOME/.cargo/bin"  ]; then
-	export PATH="$HOME/.cargo/bin:$PATH"
+  export PATH="$HOME/.cargo/bin:$PATH"
 fi
 
 if [ -f "$HOME/.cargo/env" ]; then
-	source "$HOME/.cargo/env"
+  source "$HOME/.cargo/env"
 fi
 
 if [ -d "$HOME/.plan9/plan9port" ]; then
-	export PLAN9="$HOME/.plan9/plan9port"
-	export PATH=$PATH:$PLAN9/bin
+  export PLAN9="$HOME/.plan9/plan9port"
+  export PATH=$PATH:$PLAN9/bin
 fi
