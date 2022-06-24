@@ -255,6 +255,9 @@ bindsym $mod+Shift+plus scratchpad show
 #exec --no-startup-id feh --bg-fill ${HOME}/Pictures/some-background.jpeg
 exec --no-startup-id feh --bg-fill ${HOME}/Pictures/Wallpapers/outrun_wallpaper.jpg
 
+# Have some nice transparencies
+exec --no-startup-id picom -b
+
 # Sway backgroud
 # output "*" background ${HOME}/Pictures/some-background.jpg fill
 
