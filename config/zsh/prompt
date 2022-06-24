@@ -101,7 +101,7 @@ local current_dir="%F{64}%~%F{reset}"
 local current_time="%F{green}%*%F{reset}"
 
 local last_command="%F{green}%(?..[%?] )%F{reset}"
-local command_prompt="$ "
+local command_prompt="∮ "
 
 local git_info='$(prompt_git)';
 local ssh_prompt='$(prompt_ssh)'
