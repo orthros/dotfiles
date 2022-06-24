@@ -14,7 +14,8 @@ set $lockcmd i3lock
 # is used in the bar {} block below.
 # This font is widely installed, provides lots of unicode glyphs, right-to-left
 # text rendering and scalability on retina/hidpi displays (thanks to pango).
-font pango:Monospace 12
+# font pango:Monospace 12
+font pango:BlexMono Nerd Font Mono 12
 
 # HiDPI for sway
 # output eDP-1 scale 1
