@@ -1,4 +1,4 @@
 .i3/logfile
 .exports
-.zcompdump
+.zcompdump*
 
