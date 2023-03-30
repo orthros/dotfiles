@@ -75,15 +75,15 @@ color=#00FF00
 interval=10
 
 
-[wifi]
-#INTERFACE=wlp3s0
-label=wifi:
-interval=10
-separator=false
+# [wifi]
+# INTERFACE=wlp3s0
+# label=wifi:
+# interval=10
+# separator=false
 
-[bandwidth]
-#INTERFACE=eth0
-interval=5
+# [bandwidth]
+# INTERFACE=eth0
+# interval=5
 
 # CPU usage
 #
