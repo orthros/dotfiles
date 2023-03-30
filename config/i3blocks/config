@@ -26,7 +26,7 @@
 # Each block command defaults to the script name to avoid boilerplate.
 # Change $SCRIPT_DIR to the location of your scripts!
 command=$SCRIPT_DIR/$BLOCK_NAME
-separator_block_width=15
+separator_block_width=30
 markup=none
 
 # Volume indicator
@@ -37,7 +37,7 @@ markup=none
 
 [volume]
 #label=♪
-label=♪
+label=♪ 
 interval=once
 signal=10
 #STEP=5%
@@ -46,7 +46,7 @@ signal=10
 #
 # The type defaults to "mem" if the instance is not specified.
 [memory]
-label=
+label= 
 interval=30
 
 # Disk usage
@@ -55,7 +55,7 @@ interval=30
 # The script may be called with a optional argument to set the alert
 # (defaults to 10 for 10%).
 [disk]
-label=
+label= 
 #DIR=/mnt/data
 interval=30
 
@@ -90,7 +90,7 @@ interval=5
 # The script may be called with -w and -c switches to specify thresholds,
 # see the script for details.
 [cpu_usage]
-label=
+label= 
 interval=10
 min_width= 100.00%
 #separator=false
@@ -107,7 +107,7 @@ interval=30
 # Date Time
 #
 [time]
-label=
+label= 
 command=date '+%Y-%m-%d %H:%M'
 interval=5
 
