@@ -18,15 +18,6 @@ font pango:BlexMono Nerd Font Mono 12
 # HiDPI for sway
 output eDP-1 scale 1.75
 
-# Inputs for sway
-# Reverse scroll
-#input "2:7:SynPS/2_Synaptics_TouchPad" {
-#    natural_scroll enabled
-#    left_handed disabled
-#    pointer_accel 0.9
-#}
-
-
 # Use Mouse+$mod to drag floating windows to their wanted position
 floating_modifier $mod
 
@@ -77,8 +68,8 @@ bindsym $mod+k focus down
 bindsym $mod+semicolon focus right
 
 # move to monitor
-#bindsym $mod+Shift+Left move workspace to output left
-#bindsym $mod+Shift+Right move workspace to output right
+# bindsym $mod+Shift+Left move workspace to output left
+# bindsym $mod+Shift+Right move workspace to output right
 
 # alternatively, you can use the cursor keys:
 bindsym $mod+Left focus left
@@ -122,7 +113,7 @@ bindsym $mod+space focus mode_toggle
 bindsym $mod+a focus parent
 
 # focus the child container
-#bindsym $mod+d focus child
+# bindsym $mod+d focus child
 
 # switch to workspace
 bindsym $mod+1 workspace 1
@@ -149,10 +140,10 @@ bindsym $mod+Shift+9 move container to workspace 9
 bindsym $mod+Shift+0 move container to workspace 10
 
 # audio controls
-#bindsym XF86AudioRaiseVolume exec amixer set Master 5%+ #increase sound volume
-#bindsym XF86AudioLowerVolume exec amixer set Master 5%- #decrease sound volume
-#bindsym XF86AudioMute exec amixer set Master 1+ toggle # mute sound
-#bindsym XF86AudioMicMute exec amixer set Capture toggle # mute mic
+# bindsym XF86AudioRaiseVolume exec amixer set Master 5%+ #increase sound volume
+# bindsym XF86AudioLowerVolume exec amixer set Master 5%- #decrease sound volume
+# bindsym XF86AudioMute exec amixer set Master 1+ toggle # mute sound
+# bindsym XF86AudioMicMute exec amixer set Capture toggle # mute mic
 
 bindsym XF86AudioRaiseVolume exec pactl set-sink-volume @DEFAULT_SINK@ +5% #increase sound volume
 bindsym XF86AudioLowerVolume exec pactl set-sink-volume @DEFAULT_SINK@ -5% #decrease sound volume
@@ -167,15 +158,15 @@ bindsym XF86MonBrightnessDown exec light -U 5 # decrease screen brightness
 # Screenshot fullscreen
 # bindsym Print exec "scrot -q 100 ${HOME}'/Pictures/Screenshots/%Y-%m-%d-%H-%M-%S_$wx$h.png' -e '/usr/bin/gsutil cp $f gs://misc.orthros.dev/screenshots/ && xclip -i -selection clipboard -t image/png < $f'"
 # Screenshot fullscreen, sway
-#bindsym Shift+Print exec "swaygrab ${HOME}/Pictures/Screenshots/$(date '+%Y-%m-%d-%H-%M-%S').png"
+# bindsym Shift+Print exec "swaygrab ${HOME}/Pictures/Screenshots/$(date '+%Y-%m-%d-%H-%M-%S').png"
 # Screenshot with selection
 # bindsym $mod+Print exec "sleep 0.4; scrot -q 100 -s ${HOME}'/Pictures/Screenshots/%Y-%m-%d-%H-%M-%S_$wx$h.png' -e '/usr/bin/gsutil cp $f gs://misc.orthros.dev/screenshots/ && xclip -i -selection clipboard -t image/png < $f'"
 # Screenshot capture, sway
-#bindsym Shift+Print exec "swaygrab -c ${HOME}/Pictures/Screenshots/$(date '+%Y-%m-%d-%H-%M-%S').webm"
+# bindsym Shift+Print exec "swaygrab -c ${HOME}/Pictures/Screenshots/$(date '+%Y-%m-%d-%H-%M-%S').webm"
 # Screenshot current focused window
 # bindsym Shift+Print exec "scrot -q 100 -u ${HOME}'/Pictures/Screenshots/%Y-%m-%d-%H-%M-%S_$wx$h.png' -e '/usr/bin/gsutil cp $f gs://misc.orthros.dev/screenshots/ && xclip -i -selection clipboard -t image/png < $f'"
 # Screenshot current focused window, sway
-#bindsym Shift+Print exec "swaygrab --focused ${HOME}/Pictures/Screenshots/$(date '+%Y-%m-%d-%H-%M-%S').png"
+# bindsym Shift+Print exec "swaygrab --focused ${HOME}/Pictures/Screenshots/$(date '+%Y-%m-%d-%H-%M-%S').png"
 
 bindsym Print exec "${HOME}/.bin/sway-screenshot.sh"
 bindsym $mod+Print exec "${HOME}/.bin/sway-screenshot-region.sh"
@@ -215,21 +206,24 @@ mode "resize" {
 bindsym $mod+r mode "resize"
 
 # Use i3blocks for status bar
-bar {
-    font pango:BlexMono Nerd Font Mono 15
-    status_command    SCRIPT_DIR=~/.config/blocklets i3blocks
-    position          bottom
-    mode              dock
-    workspace_buttons yes
-    colors {
-        background #333333
-        statusline #d321d9
-        focused_workspace  #ffffff #285577 #888888 
-        active_workspace   #ffffff #333333 #888888
-        inactive_workspace #888888 #222222 #888888
-        urgent_workspace   #ffffff #900000 #888888
-    }
-}
+# bar {
+#     font pango:BlexMono Nerd Font Mono 15
+#     status_command    SCRIPT_DIR=~/.config/blocklets i3blocks
+#     position          bottom
+#     mode              dock
+#     workspace_buttons yes
+#     colors {
+#         background #333333
+#         statusline #d321d9
+#         focused_workspace  #ffffff #285577 #888888 
+#         active_workspace   #ffffff #333333 #888888
+#         inactive_workspace #888888 #222222 #888888
+#         urgent_workspace   #ffffff #900000 #888888
+#     }
+# }
+#
+
+bar swaybar_command waybar
 
 
 # Scratchpad
