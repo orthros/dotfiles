@@ -1,0 +1,61 @@
+{
+    "layer": "top",
+    "position": "bottom",
+    "modules-left": ["sway/workspaces", "sway/mode"],
+    "modules-center": [],
+    "modules-right": ["custom/volume", "memory", "disk", "custom/wifi", "custom/tailscale", "cpu", "battery", "clock"],
+    "sway/workspaces": {
+      "disable-scroll-wraparound": true,
+      "enable-bar-scroll": true, // Scroll anywhere on the bar
+      "smooth-scrolling-threshold": 5, // If unset this is way too fast
+    },
+    "sway/window": {
+        "max-length": 50
+    },
+    "battery": {
+        "format": "{capacity}% {icon}",
+        "format-icons": ["", "", "", "", ""]
+    },
+    "clock": {
+        "format-alt": "{:%a, %d. %b  %H:%M}"
+    },
+    "cpu": {
+      "interval": 1,
+      "format": " {usage}%"
+    },
+
+    "custom/tailscale": {
+      "format": "Tailscale: {}",
+      "exec": "IFACE=tailscale0 $HOME/.config/blocklets/iface",
+      "interval": 5,
+    },
+
+    "custom/wifi": {
+      "format": "{}",
+      "exec": "$HOME/.config/blocklets/iface",
+      "interval": 5,
+    },
+
+    "disk": {
+      "interval": 30,
+      "format": " {free}",
+      "path": "/",
+    },
+
+    "memory": {
+      "interval": 5,
+      "format": " {}%",
+      "max-length": 10,
+    },
+
+    "custom/volume": {
+      "format": "♪ {}",
+      "exec": "$HOME/.config/blocklets/volume",
+      "interval": "once",
+      "signal": 10,
+      "on-click-right": "BLOCK_BUTTON=3 $HOME/.config/blocklets/volume",
+      "on-scroll-up": "BLOCK_BUTTON=4 $HOME/.config/blocklets/volume",
+      "on-scroll-down": "BLOCK_BUTTON=5 $HOME/.config/blocklets/volume",
+      "smooth-scrolling-threshold": 5,
+    },
+}
