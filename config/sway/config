@@ -225,7 +225,6 @@ bindsym $mod+r mode "resize"
 
 bar swaybar_command waybar
 
-
 # Scratchpad
 bindsym $mod+Shift+minus move scratchpad
 bindsym $mod+Shift+equal scratchpad show
@@ -238,6 +237,9 @@ bindsym $mod+Shift+equal scratchpad show
 
 # Sway backgroud
 exec --no-startup-id swaybg -i ${HOME}/Pictures/Wallpapers/cherry_blossoms.jpg 
+
+# Mako for notifications
+exec --no-startup-id mako
 
 # run the merge for good colors
 # exec xrdb -merge $HOME/.Xresources
