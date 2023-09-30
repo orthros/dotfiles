@@ -1,0 +1,25 @@
+sort=-time
+layer=top
+background-color=#282a36
+text-color=#6272a4
+width=300
+height=110
+border-size=2
+border-color=#88c0d0
+border-radius=15
+icons=1
+max-icon-size=32
+default-timeout=0
+ignore-timeout=0
+font="BlexMono Nerd Font Mono" 10
+group-by=body
+
+[urgency=low]
+border-color=#cccccc
+
+[urgency=normal]
+border-color=#d08770
+
+[urgency=high]
+border-color=#bf616a
+default-timeout=0
