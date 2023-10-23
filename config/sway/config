@@ -236,7 +236,7 @@ bindsym $mod+Shift+equal scratchpad show
 # exec --no-startup-id feh --bg-fill ${HOME}/Pictures/Wallpapers/cherry_blossoms.jpg
 
 # Sway backgroud
-exec --no-startup-id swaybg -i ${HOME}/Pictures/Wallpapers/cherry_blossoms.jpg 
+exec --no-startup-id swaybg -i ${HOME}/.config/wallpapers/cherry_blossoms.jpg 
 
 # Mako for notifications
 exec --no-startup-id mako
