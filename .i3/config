@@ -253,7 +253,7 @@ bindsym $mod+Shift+plus scratchpad show
 # set background
 # use the same background as slim (login manager)
 #exec --no-startup-id feh --bg-fill ${HOME}/Pictures/some-background.jpeg
-exec --no-startup-id feh --bg-fill ${HOME}/Pictures/Wallpapers/outrun_wallpaper.jpg
+exec --no-startup-id feh --bg-fill ${HOME}/.config/wallpapers/outrun-ocean.jpg
 
 # Have some nice transparencies
 exec --no-startup-id picom -b
