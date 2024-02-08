@@ -1,0 +1,10 @@
+[font.bold]
+family = "BlexMono Nerd Font Mono"
+style = "Bold"
+
+[font.italic]
+family = "BlexMono Nerd Font Mono"
+style = "Italic"
+
+[font.normal]
+family = "BlexMono Nerd Font Mono"

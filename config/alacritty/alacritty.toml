@@ -1,0 +1,18 @@
+# import = ["/home/orthros/.config/alacritty/colors.toml", "/home/orthros/.config/alacritty/fonts.toml"]
+import = ["./colors.toml", "./fonts.toml"]
+live_config_reload = true
+
+[cursor]
+blink_interval = 751
+unfocused_hollow = true
+
+[cursor.style]
+shape = "Block"
+blinking = "Off"
+
+[env]
+TERM = "xterm-256color"
+
+[window]
+decorations = "full"
+opacity = 0.7
