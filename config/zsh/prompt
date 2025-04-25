@@ -14,6 +14,16 @@ function prompt_git() {
 		# check if the current directory is in .git before running git checks
 		if [ "$(git rev-parse --is-inside-git-dir 2> /dev/null)" = 'false' ]; then
 
+      # Check if SIMPLE_GIT_PROMPT is set
+      if [[ ${SIMPLE_GIT_PROMPT+x} ]]; then
+        # There are some large git repositories where calculating if 
+        # there are any untracked files is an expensive operation O(second)
+        # which causes prompt redraws to be very sluggish. Having a toggle
+        # to simply show we are in a git directory will speed things up
+        echo " %F{61}Ξ%F{reset}"
+        return
+      fi
+
 			if [[ -O "$(git rev-parse --show-toplevel)/.git/index" ]]; then
 				git update-index --really-refresh -q &> /dev/null;
 			fi;
