@@ -39,7 +39,31 @@
     "root": {
       "inputs": {
         "home-manager": "home-manager",
-        "nixpkgs": "nixpkgs"
+        "nixpkgs": "nixpkgs",
+        "vim-config": "vim-config"
+      }
+    },
+    "vim-config": {
+      "inputs": {
+        "home-manager": [
+          "home-manager"
+        ],
+        "nixpkgs": [
+          "nixpkgs"
+        ]
+      },
+      "locked": {
+        "lastModified": 1786031995,
+        "narHash": "sha256-Lf5cSFJcZ0BaMbxVDA7sr57bCOxJodpy73NQiG2EE8Q=",
+        "owner": "orthros",
+        "repo": ".vim",
+        "rev": "01fc7a394be693be8287ee9bfbc571bec1730c4a",
+        "type": "github"
+      },
+      "original": {
+        "owner": "orthros",
+        "repo": ".vim",
+        "type": "github"
       }
     }
   },
