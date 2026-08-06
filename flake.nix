@@ -37,7 +37,12 @@
         };
       };
       homeManagerModules = {
-        default = ./home.nix;
+        default = { ... }: {
+          imports = [
+            ./home.nix
+            vim-config.homeManagerModules.default
+          ];
+        };
       };
     };
 }
