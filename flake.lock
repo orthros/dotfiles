@@ -53,11 +53,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1786031995,
-        "narHash": "sha256-Lf5cSFJcZ0BaMbxVDA7sr57bCOxJodpy73NQiG2EE8Q=",
+        "lastModified": 1786130017,
+        "narHash": "sha256-EdbOHHm09eXv3A7l/uMVwF6MHqxtLtTDb441by4RR6A=",
         "owner": "orthros",
         "repo": ".vim",
-        "rev": "01fc7a394be693be8287ee9bfbc571bec1730c4a",
+        "rev": "23a009e858128f473ad2a78029ebc36e61099e1d",
         "type": "github"
       },
       "original": {
