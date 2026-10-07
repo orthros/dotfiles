@@ -1,0 +1,13 @@
+# tio configuration file (~/.config/tio/config)
+#
+# Usage:
+#   tio <device|profile>
+#   tio --list        (list available serial devices and profiles)
+#   Ctrl-t q          (quit session)
+#   Ctrl-t ?          (list key commands in session)
+
+[default]
+baudrate = 115200
+databits = 8
+parity = none
+stopbits = 1

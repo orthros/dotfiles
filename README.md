@@ -27,10 +27,55 @@ nix flake check
 
 ### Structure
 
-- `flake.nix`: Defines inputs (`nixpkgs` and `home-manager`) and exposes a generic `default` `homeConfiguration`.
+- `flake.nix`: Defines inputs (`nixpkgs`, `home-manager`, and `vim-config`) and exposes a generic `default` `homeConfiguration` and `homeManagerModules.default`.
 - `home.nix`: Main Home Manager module entry point.
-- `modules/dotfiles.nix`: Handles symlinking root dotfiles (e.g., `.zshenv`, `.tmux.conf`) and `~/.config` directories (e.g., `alacritty`, `i3`, `zsh`). Also maps GnuPG files from `config/gnupg` to `~/.gnupg` and fonts from `config/fonts` to `~/.fonts`.
-- `modules/packages.nix`: Declarative user packages.
+- `modules/dotfiles.nix`: Handles symlinking root dotfiles (e.g., `.zshenv`, `.tmux.conf`) and `~/.config` directories (e.g., `alacritty`, `i3`, `jj`, `mise`, `tio`, `zsh`). Also maps GnuPG files from `config/gnupg` to `~/.gnupg` and fonts from `config/fonts` to `~/.fonts`.
+- `modules/packages.nix`: Declarative user packages (`btop`, `difftastic`, `direnv`, `duf`, `dust`, `fastfetch`, `fd`, `fzf`, `glow`, `jq`, `jujutsu`, `mergiraf`, `mise`, `nh`, `nix-melt`, `ripgrep`, `tio`, `tmux`, `viddy`, `yazi`).
+
+### Using `nh`
+
+Once the initial setup is complete, `nh` is installed and can be used instead of `home-manager` for nicer build progress (via `nix-output-monitor`) and package version diffs (via `nvd`).
+
+Apply configuration changes:
+
+```bash
+nh home switch .
+```
+
+Update flake inputs before switching:
+
+```bash
+nh home switch . --update
+```
+
+Clean up old Home Manager generations and unused Nix store paths:
+
+```bash
+# Clean user profile generations and store paths, keeping the last 5 generations
+nh clean user --keep 5
+```
+
+Search nixpkgs for packages from the terminal:
+
+```bash
+nh search <package-name>
+```
+
+### Disk Usage (`dust` and `duf`)
+
+- **`dust`** (modern `du` replacement): View a visual breakdown of directory sizes in the current directory or a specific path.
+  ```bash
+  dust
+  dust /path/to/dir
+  # Limit tree depth (e.g. 2 levels)
+  dust -d 2
+  ```
+- **`duf`** (modern `df` replacement): View free/used space across mounted filesystems.
+  ```bash
+  duf
+  # Show only local filesystems
+  duf --only local
+  ```
 
 ## What the heck is `.darwin`?
 

@@ -1,56 +1,118 @@
 #!/usr/bin/env zsh
 
+# Get the git utilities
+source "$dotfile_config_path/zsh/git-utils.sh"
+
 # Gcloud Active Project Get
 if command -v gcloud &>/dev/null; then
   alias gcloudproj="gcloud config list --format 'value(core.project)' 2>/dev/null"
 
-  cloudproj(){
-	  gcloud config list --format 'value(core.project)' 2>/dev/null
+  cloudproj() {
+    gcloud config list --format 'value(core.project)' 2>/dev/null
   }
 fi
 
 # cdg is used to cd to the root of a git directory (if you're in one)
 function cdg() {
-  if [ "$(git rev-parse --is-inside-work-tree &>/dev/null; echo "${?}")" != '0' ]; then
-	echo "Run cdg in a git repository"
+  if ! in_git_dir; then
+    echo "Run cdg in a git repository"
     return
   fi
-  cd $(git rev-parse --git-dir)/..
+  cd "$(git rev-parse --git-dir)/.." || return
 }
 
-function gcb() {
-  if [ "$(git rev-parse --is-inside-work-tree &>/dev/null; echo "${?}")" != '0' ]; then
-	echo "Run cdg in a git repository"
+function git_branch_search() {
+  local selected_line
+  if jj root &>/dev/null; then
+    # Disable check as LBUFFER is provided to us by ZSH
+    # shellcheck disable=2153
+    selected_line=$(jj bookmark list --no-pager -T 'if(!self.remote(), self.name() ++ "\n")' | fzf --query "${LBUFFER:-}" --prompt="jj bookmark > " --preview 'jj log --color=always -r "ancestors({}, 5)"')
+    if [ -n "$selected_line" ]; then
+      jj new "$selected_line"
+      if zle; then
+        BUFFER=""
+        zle accept-line
+      fi
+    fi
     return
   fi
-  local branch_name=$(git branch --format="%(refname:short)" | peco)
-  if [ $branch_name ]; then
-    git checkout $branch_name
+  # Check for git repository
+  if ! in_git_dir; then
+    echo "Run git_branch_search in a jj or git repository"
+    return
+  fi
+  # Disable check as LBUFFER is provided to us by ZSH
+  # shellcheck disable=2153
+  selected_line=$(git branch --format="%(refname:short)" | fzf --query "${LBUFFER:-}" --prompt="git branch > " --preview 'git log --oneline --color=always -n 10 {}')
+  if [ -n "$selected_line" ]; then
+    git checkout "$selected_line"
+    if zle; then
+      BUFFER=""
+      zle accept-line
+    fi
   fi
 }
+zle -N git_branch_search
+bindkey '^B' git_branch_search
+alias gcb="git_branch_search"
 
+function ghq_cd() {
+  local selected_line
+  # Disable check as LBUFFER is provided to us by ZSH
+  # shellcheck disable=2153
+  selected_line=$(ghq list | fzf --query "${LBUFFER:-}" --prompt="ghq > " --preview "glow -s dark \$(ghq root)/{}/README.md 2>/dev/null || ls -la \$(ghq root)/{}")
+  if [ -n "$selected_line" ]; then
+    cd "$(ghq root)/${selected_line}" || return
+    if zle; then
+      # Disable check as BUFFER is set for us by ZSH
+      # shellcheck disable=2034
+      BUFFER=""
+      zle accept-line
+    fi
+  fi
+}
+zle -N ghq_cd
+bindkey '^]' ghq_cd
 
+function ghq_update_all() {
+  # Get each tracked repository
+  for repo in $(ghq list); do
+    # Update it
+    ghq get -u "${repo}"
+  done
+}
 
 # Special tmux alias to cd to the root of the tmux session
 function cdt() {
-	cd $(tmux display -p '#{session_path}')
+  cd "$(tmux display -p '#{session_path}')" || return
 }
 
-if which peco &> /dev/null; then
-  function peco_select_history() {
-    local tac
-    { which gtac &> /dev/null && tac="gtac" } || \
-      { which tac &> /dev/null && tac="tac" } || \
-      tac="tail -r"
-    BUFFER=$(fc -l -n 1 | awk '!seen[$0]++' | eval $tac | \
-                peco --query "$LBUFFER")
-    CURSOR=$#BUFFER # move cursor
-    zle -R -c       # refresh
-  }
+# fzf configuration (backed by fd, styled with OneDark / oneorthros palette)
+export FZF_DEFAULT_COMMAND='fd --type f --hidden --follow --exclude .git --exclude .jj'
+export FZF_CTRL_T_COMMAND="$FZF_DEFAULT_COMMAND"
+export FZF_ALT_C_COMMAND='fd --type d --hidden --follow --exclude .git --exclude .jj'
+export FZF_DEFAULT_OPTS="
+  --height 100%
+  --tmux 80%,60%
+  --layout=default
+  --border=rounded
+  --info=inline-right
+  --color=bg+:#50536b,fg:#abb2bf,fg+:#dfdfdf,hl:#95ee8f,hl+:#95ee8f
+  --color=prompt:#6eaafb,pointer:#d886f3,marker:#95ee8f,border:#6cdcf7,header:#f8c456
+  --bind 'ctrl-/:toggle-preview,ctrl-u:preview-half-page-up,ctrl-d:preview-half-page-down'
+  --bind 'ctrl-y:execute-silent(echo -n {+} | (wl-copy 2>/dev/null || xclip -selection clipboard 2>/dev/null || pbcopy 2>/dev/null))+abort'
+"
+export FZF_CTRL_T_OPTS="
+  --preview 'if [[ -d {} ]]; then dust -d 1 {}; elif [[ {} == *.md ]]; then glow -s dark {}; else head -n 200 {}; fi'
+  --bind 'ctrl-e:become(nvim {+})'
+"
+export FZF_ALT_C_OPTS="--preview 'dust -d 1 {}'"
+export FZF_CTRL_R_OPTS="
+  --preview 'echo {}'
+  --preview-window down:3:hidden:wrap
+  --bind 'ctrl-y:execute-silent(echo -n {2..} | (wl-copy 2>/dev/null || xclip -selection clipboard 2>/dev/null || pbcopy 2>/dev/null))+abort'
+"
 
-  zle -N peco_select_history
-  bindkey '^R' peco_select_history
+if command -v fzf &>/dev/null; then
+  eval "$(fzf --zsh)"
 fi
-
-# Get the git utilities
-source $dotfile_config_path/zsh/git-utils.sh

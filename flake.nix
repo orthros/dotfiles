@@ -16,7 +16,7 @@
 
   outputs = { nixpkgs, home-manager, vim-config, ... }:
     let
-      mkHome = { username, homeDirectory, system ? "x86_64-linux", stateVersion ? "24.05" }:
+      mkHome = { username, homeDirectory ? "/home/${username}", system ? "x86_64-linux", stateVersion ? "24.05" }:
         home-manager.lib.homeManagerConfiguration {
           pkgs = nixpkgs.legacyPackages.${system};
           modules = [

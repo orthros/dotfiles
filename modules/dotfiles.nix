@@ -14,7 +14,7 @@
     # GnuPG configuration (stored in config/gnupg in repo, linked to ~/.gnupg in $HOME)
     ".gnupg/gpg.conf".source = ../config/gnupg/gpg.conf;
     ".gnupg/gpg-agent.conf".source =
-      if pkgs.stdenv.isDarwin then
+      if pkgs.stdenv.hostPlatform.isDarwin then
         ../config/gnupg/gpg-agent-mac.conf
       else
         ../config/gnupg/gpg-agent-unix.conf;
@@ -49,14 +49,17 @@
     # i3blocks
     "i3blocks/config".source = ../config/i3blocks/config;
 
+    # jj
+    "jj/config.toml".source = ../config/jj/config.toml;
+
     # mako
     "mako/config".source = ../config/mako/config;
 
+    # mise
+    "mise/config.toml".source = ../config/mise/config.toml;
+
     # neofetch
     "neofetch/config.conf".source = ../config/neofetch/config.conf;
-
-    # peco
-    "peco/config.json".source = ../config/peco/config.json;
 
     # picom
     "picom/picom.conf".source = ../config/picom/picom.conf;
@@ -66,6 +69,9 @@
 
     # sway
     "sway/config".source = ../config/sway/config;
+
+    # tio
+    "tio/config".source = ../config/tio/config;
 
     # wallpapers
     "wallpapers/cherry_blossoms.jpg".source = ../config/wallpapers/cherry_blossoms.jpg;

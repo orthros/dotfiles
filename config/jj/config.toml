@@ -1,0 +1,44 @@
+[user]
+name = "Colin Nelson"
+email = "colin@orthros.dev"
+
+[ui]
+# diff-editor = "vimdiff"
+diff-formatter = "difft"
+pager = ":builtin"
+
+[aliases]
+accuse = ["file", "annotate"]
+mergiraf = ["resolve", "--tool", "mergiraf"]
+
+[revsets]
+# The default is 'present(@) | ancestors(immutable_heads().., 2) | present(trunk())'
+# but this will only show the last TWO ancestors. We want all of them
+# log = "present(@) | ancestors(immutable_heads()..) | present(trunk())"
+
+[templates]
+# log = '''
+# if(self.root(),
+#   format_root_commit(self),
+#   label(
+#     separate(" ",
+#       if(self.current_working_copy(), "working_copy"),
+#       if(self.immutable(), "immutable", "mutable"),
+#       if(self.conflict(), "conflicted"),
+#     ),
+#     concat(
+#       format_short_commit_header(self) ++ "\n",
+#       separate(" ",
+#         if(self.empty(), empty_commit_marker),
+#         if(self.description(),
+#           self.description().first_line(),
+#           label(if(self.empty(), "empty"), description_placeholder),
+#         ),
+#         if(!self.empty(),
+#           "(" ++ label("diff added", "+" ++ self.diff().stat().total_added()) ++ "/" ++ label("diff removed", "-" ++ self.diff().stat().total_removed()) ++ ")"
+#         ),
+#       ) ++ "\n",
+#     ),
+#   )
+# )
+# '''

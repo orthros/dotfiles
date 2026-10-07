@@ -54,3 +54,7 @@ if [ -d "$HOME/.plan9/plan9port" ]; then
   export PLAN9="$HOME/.plan9/plan9port"
   export PATH=$PATH:$PLAN9/bin
 fi
+
+if [ -d "$HOME/.nix-profile/bin" ]; then
+  export PATH="$HOME/.nix-profile/bin:$PATH"
+fi

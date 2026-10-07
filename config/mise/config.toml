@@ -1,0 +1,5 @@
+[settings]
+# Paranoid mode forces the evaluation of the SHA of each trusted file so that
+# if it changes, then mise will not load it. This is not the default (somehow)
+# and setting it enhances our security posture.
+paranoid = true
