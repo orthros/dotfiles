@@ -1,6 +1,3 @@
-# import = ["/home/orthros/.config/alacritty/colors.toml", "/home/orthros/.config/alacritty/fonts.toml"]
-import = ["./colors.toml", "./fonts.toml"]
-live_config_reload = true
 
 [cursor]
 blink_interval = 751
@@ -16,3 +13,8 @@ TERM = "xterm-256color"
 [window]
 decorations = "full"
 opacity = 0.7
+
+[general]
+# import = ["./colors.toml", "./fonts.toml"]
+live_config_reload = true
+import = ["~/.config/alacritty/colors.toml", "~/.config/alacritty/fonts.toml"]
