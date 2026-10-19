@@ -11,6 +11,11 @@
     ".xsessionrc".source = ../.xsessionrc;
     ".zshenv".source = ../.zshenv;
 
+    # Global AI agent instructions
+    ".agents/AGENTS.md".source = ../config/agents/AGENTS.md;
+    ".gemini/GEMINI.md".source = ../config/agents/AGENTS.md;
+    ".claude/CLAUDE.md".source = ../config/agents/AGENTS.md;
+
     # GnuPG configuration (stored in config/gnupg in repo, linked to ~/.gnupg in $HOME)
     ".gnupg/gpg.conf".source = ../config/gnupg/gpg.conf;
     ".gnupg/gpg-agent.conf".source =
