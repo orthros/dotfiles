@@ -100,4 +100,10 @@
     "zsh/zprofile".source = ../config/zsh/zprofile;
     "zsh/zshenv".source = ../config/zsh/zshenv;
   };
+
+  # Herdr terminal multiplexer for AI coding agents
+  programs.herdr = {
+    enable = true;
+    settings = builtins.fromTOML (builtins.readFile ../config/herdr/config.toml);
+  };
 }

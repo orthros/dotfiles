@@ -29,8 +29,8 @@ nix flake check
 
 - `flake.nix`: Defines inputs (`nixpkgs`, `home-manager`, and `vim-config`) and exposes a generic `default` `homeConfiguration` and `homeManagerModules.default`.
 - `home.nix`: Main Home Manager module entry point.
-- `modules/dotfiles.nix`: Handles symlinking root dotfiles (e.g., `.zshenv`, `.tmux.conf`) and `~/.config` directories (e.g., `alacritty`, `i3`, `jj`, `mise`, `tio`, `zsh`). Also maps GnuPG files from `config/gnupg` to `~/.gnupg` and fonts from `config/fonts` to `~/.fonts`.
-- `modules/packages.nix`: Declarative user packages (`btop`, `difftastic`, `direnv`, `duf`, `dust`, `fastfetch`, `fd`, `fzf`, `glow`, `jq`, `jujutsu`, `mergiraf`, `mise`, `nh`, `nix-melt`, `ripgrep`, `tio`, `tmux`, `viddy`, `yazi`).
+- `modules/dotfiles.nix`: Handles symlinking root dotfiles (e.g., `.zshenv`, `.tmux.conf`), `~/.config` directories (e.g., `alacritty`, `herdr`, `i3`, `jj`, `mise`, `tio`, `zsh`), and global AI agent instructions (`config/agents/AGENTS.md`). Also maps GnuPG files from `config/gnupg` to `~/.gnupg` and fonts from `config/fonts` to `~/.fonts`.
+- `modules/packages.nix`: Declarative user packages (`bandwhich`, `btop`, `cyme`, `difftastic`, `direnv`, `duf`, `dust`, `fastfetch`, `fd`, `fzf`, `glow`, `jq`, `jujutsu`, `just`, `mergiraf`, `mise`, `nh`, `nix-melt`, `procs`, `ripgrep`, `tio`, `tmux`, `trippy`, `viddy`, `yazi`).
 
 ### Using `nh`
 
@@ -75,6 +75,35 @@ nh search <package-name>
   duf
   # Show only local filesystems
   duf --only local
+  ```
+
+### Systems, USB & Network Diagnostics (`cyme`, `bandwhich`, `trippy`, and `procs`)
+
+- **`cyme`** (modern Rust `lsusb` replacement): Lists and visualizes USB buses, hubs, port topologies, negotiated speeds, and device descriptors.
+  ```bash
+  # Display USB buses, hubs, and attached devices as a tree
+  cyme --tree
+
+  # Emit structured JSON for scripting or port inspection
+  cyme --tree --json
+  ```
+- **`bandwhich`** (Rust per-process network utilization TUI): Sniffs a network interface and attributes live bandwidth consumption to specific processes, PIDs, and remote socket addresses.
+  ```bash
+  # Monitor live per-process and per-connection network bandwidth (requires root/CAP_NET_RAW)
+  sudo bandwhich
+  ```
+- **`trippy`** (`trip` — Rust `mtr` / `traceroute` + `ping` TUI): Interactive network path diagnostic tool combining hop-by-hop traceroute discovery with continuous latency, jitter, and packet-loss telemetry.
+  ```bash
+  # Trace and monitor hop-by-hop latency to a target host
+  trip <host-or-ip>
+  ```
+- **`procs`** (modern Rust `ps` replacement): Displays running processes with colorized, human-readable columns, full process-tree hierarchy, TCP/UDP port and socket ownership, and container/cgroup metadata.
+  ```bash
+  # Search for processes matching a keyword or binary name
+  procs <pattern>
+
+  # Display the full process hierarchy tree
+  procs --tree
   ```
 
 ## What the heck is `.darwin`?

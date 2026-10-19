@@ -12,7 +12,9 @@
     # Add or uncomment CLI tools, development dependencies, and applications here.
     home.packages = (with pkgs; [
       # Basic CLI utilities & modern replacements
+      bandwhich # Per-process/connection network bandwidth monitor
       btop # Resource monitor (replaces htop)
+      cyme # Modern USB bus & topology viewer (replaces lsusb)
       difftastic # Structural AST diff tool
       direnv # Per-directory environment loader
       duf # Modern df replacement
@@ -22,13 +24,16 @@
       fzf # Command-line fuzzy finder (replaces peco)
       glow # Terminal markdown renderer
       jq # Command-line JSON processor
+      just # Command runner for project workflows
       mergiraf # Structural AST merge tool
       mise # Polyglot tool version & environment manager
       nh # Nix CLI helper
       nix-melt # Ranger-like viewer for flake.lock
+      procs # Modern process viewer with tree & socket mapping (replaces ps)
       ripgrep # Modern grep replacement
       tio # Serial device I/O tool
       tmux # Terminal multiplexer
+      trippy # Network path diagnostic TUI (combines traceroute and ping/mtr)
       viddy # Modern watch command
       yazi # Terminal file explorer
     ]) ++ lib.optionals config.dotfiles.jujutsu.enable [
