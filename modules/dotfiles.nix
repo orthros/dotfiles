@@ -1,109 +1,165 @@
-{ config, pkgs, ... }:
+{ config, lib, pkgs, ... }:
 
+let
+  agentInstructions =
+    if config.dotfiles.extraAgentInstructions == "" then
+      config.dotfiles.agentInstructionsFile
+    else
+      pkgs.writeText "AGENTS.md" (
+        builtins.readFile config.dotfiles.agentInstructionsFile
+        + "\n"
+        + config.dotfiles.extraAgentInstructions
+      );
+
+  agentSkills = pkgs.symlinkJoin {
+    name = "agent-skills";
+    paths = config.dotfiles.agentSkills;
+  };
+in
 {
-  # Root-level dotfiles linked into $HOME
-  home.file = {
-    ".Xresources".source = ../.Xresources;
-    ".dircolors".source = ../.dircolors;
-    ".fonts".source = ../config/fonts;
-    ".tmux.conf".source = ../.tmux.conf;
-    ".xinitrc".source = ../.xinitrc;
-    ".xsessionrc".source = ../.xsessionrc;
-    ".zshenv".source = ../.zshenv;
+  options.dotfiles = {
+    agentInstructionsFile = lib.mkOption {
+      type = lib.types.path;
+      default = ../config/agents/AGENTS.md;
+      description = "Base global AGENTS.md file linked into ~/.agents/AGENTS.md, ~/.gemini/GEMINI.md, and ~/.claude/CLAUDE.md.";
+    };
 
-    # Global AI agent instructions
-    ".agents/AGENTS.md".source = ../config/agents/AGENTS.md;
-    ".gemini/GEMINI.md".source = ../config/agents/AGENTS.md;
-    ".claude/CLAUDE.md".source = ../config/agents/AGENTS.md;
+    extraAgentInstructions = lib.mkOption {
+      type = lib.types.lines;
+      default = "";
+      description = "Additional markdown instructions appended to agentInstructionsFile (for layering machine- or environment-specific rules).";
+    };
 
-    # GnuPG configuration (stored in config/gnupg in repo, linked to ~/.gnupg in $HOME)
-    ".gnupg/gpg.conf".source = ../config/gnupg/gpg.conf;
-    ".gnupg/gpg-agent.conf".source =
-      if pkgs.stdenv.hostPlatform.isDarwin then
-        ../config/gnupg/gpg-agent-mac.conf
-      else
-        ../config/gnupg/gpg-agent-unix.conf;
+    agentSkills = lib.mkOption {
+      type = lib.types.listOf (lib.types.either lib.types.str lib.types.path);
+      default = [ ];
+      description = "Skill directories combined into an agent-skills symlinkJoin derivation and mounted at ~/.agents/skills, ~/.gemini/config/skills, and ~/.claude/skills.";
+    };
   };
 
-  # XDG configuration files linked explicitly into ~/.config/<path>
-  xdg.configFile = {
-    # alacritty
-    "alacritty/alacritty.toml".source = ../config/alacritty/alacritty.toml;
-    "alacritty/alacritty.yml".source = ../config/alacritty/alacritty.yml;
-    "alacritty/colors.toml".source = ../config/alacritty/colors.toml;
-    "alacritty/colors.yml".source = ../config/alacritty/colors.yml;
-    "alacritty/fonts.toml".source = ../config/alacritty/fonts.toml;
-    "alacritty/fonts.yml".source = ../config/alacritty/fonts.yml;
+  config = {
+    dotfiles.agentSkills = lib.mkIf (config.programs.herdr.enable && config.programs.herdr.package != null) [
+      "${config.programs.herdr.package}/share/skills/herdr"
+    ];
 
-    # blocklets
-    "blocklets/battery".source = ../config/blocklets/battery;
-    "blocklets/cpu_usage".source = ../config/blocklets/cpu_usage;
-    "blocklets/disk".source = ../config/blocklets/disk;
-    "blocklets/docker".source = ../config/blocklets/docker;
-    "blocklets/iface".source = ../config/blocklets/iface;
-    "blocklets/memory".source = ../config/blocklets/memory;
-    "blocklets/volume".source = ../config/blocklets/volume;
+    # Root-level dotfiles linked into $HOME
+    home.file = {
+      ".Xresources".source = ../.Xresources;
+      ".dircolors".source = ../.dircolors;
+      ".fonts".source = ../config/fonts;
+      ".tmux.conf".source = ../.tmux.conf;
+      ".xinitrc".source = ../.xinitrc;
+      ".xsessionrc".source = ../.xsessionrc;
+      ".zshenv".source = ../.zshenv;
 
-    # dunst
-    "dunst/dunstrc".source = ../config/dunst/dunstrc;
+      # Global AI agent instructions
+      ".agents/AGENTS.md".source = agentInstructions;
+      ".gemini/GEMINI.md".source = agentInstructions;
+      ".claude/CLAUDE.md".source = agentInstructions;
 
-    # i3
-    "i3/config".source = ../config/i3/config;
-    "i3/status.conf".source = ../config/i3/status.conf;
+      # Global AI agent skills
+      ".agents/skills" = lib.mkIf (config.dotfiles.agentSkills != [ ]) {
+        source = agentSkills;
+        recursive = true;
+      };
+      ".gemini/config/skills" = lib.mkIf (config.dotfiles.agentSkills != [ ]) {
+        source = agentSkills;
+        recursive = true;
+      };
+      ".claude/skills" = lib.mkIf (config.dotfiles.agentSkills != [ ]) {
+        source = agentSkills;
+        recursive = true;
+      };
 
-    # i3blocks
-    "i3blocks/config".source = ../config/i3blocks/config;
+      # GnuPG configuration (stored in config/gnupg in repo, linked to ~/.gnupg in $HOME)
+      ".gnupg/gpg.conf".source = ../config/gnupg/gpg.conf;
+      ".gnupg/gpg-agent.conf".source =
+        if pkgs.stdenv.hostPlatform.isDarwin then
+          ../config/gnupg/gpg-agent-mac.conf
+        else
+          ../config/gnupg/gpg-agent-unix.conf;
+    };
 
-    # jj
-    "jj/config.toml".source = ../config/jj/config.toml;
+    # XDG configuration files linked explicitly into ~/.config/<path>
+    xdg.configFile = {
+      # alacritty
+      "alacritty/alacritty.toml".source = ../config/alacritty/alacritty.toml;
+      "alacritty/alacritty.yml".source = ../config/alacritty/alacritty.yml;
+      "alacritty/colors.toml".source = ../config/alacritty/colors.toml;
+      "alacritty/colors.yml".source = ../config/alacritty/colors.yml;
+      "alacritty/fonts.toml".source = ../config/alacritty/fonts.toml;
+      "alacritty/fonts.yml".source = ../config/alacritty/fonts.yml;
 
-    # mako
-    "mako/config".source = ../config/mako/config;
+      # blocklets
+      "blocklets/battery".source = ../config/blocklets/battery;
+      "blocklets/cpu_usage".source = ../config/blocklets/cpu_usage;
+      "blocklets/disk".source = ../config/blocklets/disk;
+      "blocklets/docker".source = ../config/blocklets/docker;
+      "blocklets/iface".source = ../config/blocklets/iface;
+      "blocklets/memory".source = ../config/blocklets/memory;
+      "blocklets/volume".source = ../config/blocklets/volume;
 
-    # mise
-    "mise/config.toml".source = ../config/mise/config.toml;
+      # dunst
+      "dunst/dunstrc".source = ../config/dunst/dunstrc;
 
-    # neofetch
-    "neofetch/config.conf".source = ../config/neofetch/config.conf;
+      # i3
+      "i3/config".source = ../config/i3/config;
+      "i3/status.conf".source = ../config/i3/status.conf;
 
-    # picom
-    "picom/picom.conf".source = ../config/picom/picom.conf;
+      # i3blocks
+      "i3blocks/config".source = ../config/i3blocks/config;
 
-    # rofi
-    "rofi/oneorthros.rasi".source = ../config/rofi/oneorthros.rasi;
+      # jj
+      "jj/config.toml".source = ../config/jj/config.toml;
 
-    # sway
-    "sway/config".source = ../config/sway/config;
+      # mako
+      "mako/config".source = ../config/mako/config;
 
-    # tio
-    "tio/config".source = ../config/tio/config;
+      # mise
+      "mise/config.toml".source = ../config/mise/config.toml;
 
-    # wallpapers
-    "wallpapers/cherry_blossoms.jpg".source = ../config/wallpapers/cherry_blossoms.jpg;
-    "wallpapers/outrun-ocean.jpg".source = ../config/wallpapers/outrun-ocean.jpg;
+      # neofetch
+      "neofetch/config.conf".source = ../config/neofetch/config.conf;
 
-    # waybar
-    "waybar/config".source = ../config/waybar/config;
-    "waybar/style.css".source = ../config/waybar/style.css;
+      # picom
+      "picom/picom.conf".source = ../config/picom/picom.conf;
 
-    # zathura
-    "zathura/zathurarc".source = ../config/zathura/zathurarc;
+      # rofi
+      "rofi/oneorthros.rasi".source = ../config/rofi/oneorthros.rasi;
 
-    # zsh
-    "zsh/.zshrc".source = ../config/zsh/.zshrc;
-    "zsh/aliases".source = ../config/zsh/aliases;
-    "zsh/completions".source = ../config/zsh/completions;
-    "zsh/functions".source = ../config/zsh/functions;
-    "zsh/git-utils.sh".source = ../config/zsh/git-utils.sh;
-    "zsh/path".source = ../config/zsh/path;
-    "zsh/prompt".source = ../config/zsh/prompt;
-    "zsh/zprofile".source = ../config/zsh/zprofile;
-    "zsh/zshenv".source = ../config/zsh/zshenv;
-  };
+      # sway
+      "sway/config".source = ../config/sway/config;
 
-  # Herdr terminal multiplexer for AI coding agents
-  programs.herdr = {
-    enable = true;
-    settings = builtins.fromTOML (builtins.readFile ../config/herdr/config.toml);
+      # tio
+      "tio/config".source = ../config/tio/config;
+
+      # wallpapers
+      "wallpapers/cherry_blossoms.jpg".source = ../config/wallpapers/cherry_blossoms.jpg;
+      "wallpapers/outrun-ocean.jpg".source = ../config/wallpapers/outrun-ocean.jpg;
+
+      # waybar
+      "waybar/config".source = ../config/waybar/config;
+      "waybar/style.css".source = ../config/waybar/style.css;
+
+      # zathura
+      "zathura/zathurarc".source = ../config/zathura/zathurarc;
+
+      # zsh
+      "zsh/.zshrc".source = ../config/zsh/.zshrc;
+      "zsh/aliases".source = ../config/zsh/aliases;
+      "zsh/completions".source = ../config/zsh/completions;
+      "zsh/functions".source = ../config/zsh/functions;
+      "zsh/git-utils.sh".source = ../config/zsh/git-utils.sh;
+      "zsh/path".source = ../config/zsh/path;
+      "zsh/prompt".source = ../config/zsh/prompt;
+      "zsh/zprofile".source = ../config/zsh/zprofile;
+      "zsh/zshenv".source = ../config/zsh/zshenv;
+    };
+
+    # Herdr terminal multiplexer for AI coding agents
+    programs.herdr = {
+      enable = true;
+      settings = builtins.fromTOML (builtins.readFile ../config/herdr/config.toml);
+    };
   };
 }
