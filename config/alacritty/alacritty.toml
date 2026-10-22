@@ -15,6 +15,5 @@ decorations = "full"
 opacity = 0.7
 
 [general]
-# import = ["./colors.toml", "./fonts.toml"]
 live_config_reload = true
 import = ["~/.config/alacritty/colors.toml", "~/.config/alacritty/fonts.toml"]

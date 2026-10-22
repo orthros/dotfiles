@@ -84,30 +84,12 @@ in
     xdg.configFile = {
       # alacritty
       "alacritty/alacritty.toml".source = ../config/alacritty/alacritty.toml;
-      "alacritty/alacritty.yml".source = ../config/alacritty/alacritty.yml;
       "alacritty/colors.toml".source = ../config/alacritty/colors.toml;
-      "alacritty/colors.yml".source = ../config/alacritty/colors.yml;
       "alacritty/fonts.toml".source = ../config/alacritty/fonts.toml;
-      "alacritty/fonts.yml".source = ../config/alacritty/fonts.yml;
-
-      # blocklets
-      "blocklets/battery".source = ../config/blocklets/battery;
-      "blocklets/cpu_usage".source = ../config/blocklets/cpu_usage;
-      "blocklets/disk".source = ../config/blocklets/disk;
-      "blocklets/docker".source = ../config/blocklets/docker;
-      "blocklets/iface".source = ../config/blocklets/iface;
-      "blocklets/memory".source = ../config/blocklets/memory;
-      "blocklets/volume".source = ../config/blocklets/volume;
-
-      # dunst
-      "dunst/dunstrc".source = ../config/dunst/dunstrc;
 
       # i3
       "i3/config".source = ../config/i3/config;
       "i3/status.conf".source = ../config/i3/status.conf;
-
-      # i3blocks
-      "i3blocks/config".source = ../config/i3blocks/config;
 
       # jj
       "jj/config.toml".source = ../config/jj/config.toml;
@@ -117,9 +99,6 @@ in
 
       # mise
       "mise/config.toml".source = ../config/mise/config.toml;
-
-      # neofetch
-      "neofetch/config.conf".source = ../config/neofetch/config.conf;
 
       # picom
       "picom/picom.conf".source = ../config/picom/picom.conf;
