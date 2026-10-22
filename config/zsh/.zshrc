@@ -31,6 +31,9 @@ export SAVEHIST=1000
 # Editor
 export EDITOR=nvim
 
+# Use active terminal TTY for GPG pinentry
+export GPG_TTY=$TTY
+
 # Keybindings
 bindkey "^[[1;5C" forward-word
 bindkey "^[[1;5D" backward-word

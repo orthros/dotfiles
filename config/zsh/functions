@@ -12,13 +12,15 @@ if command -v gcloud &>/dev/null; then
   }
 fi
 
-# cdg is used to cd to the root of a git directory (if you're in one)
+# cdg is used to cd to the root of a jj or git repository (if you're in one)
 function cdg() {
-  if ! in_git_dir; then
-    echo "Run cdg in a git repository"
-    return
+  if jj root &>/dev/null; then
+    cd "$(jj root)" || return
+  elif in_git_dir; then
+    cd "$(git rev-parse --show-toplevel)" || return
+  else
+    echo "Run cdg in a jj or git repository"
   fi
-  cd "$(git rev-parse --git-dir)/.." || return
 }
 
 function git_branch_search() {
