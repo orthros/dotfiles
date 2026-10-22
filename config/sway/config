@@ -33,27 +33,10 @@ bindsym $mod+Shift+q kill
 for_window [class="^Spotify$"] border none
 for_window [class="^Spotify Premium$"] border none
 
-# skype, steam, wine: float Gimp
-# for_window [class="Code"] floating enable
-# for_window [class="Firefox"] floating enable
+# Floating window rules
 for_window [class="Gimp"] floating enable
-# for_window [class="google-chrome"] floating enable
-# for_window [class="Google-chrome"] floating enable
-# for_window [class="Keybase"] floating enable
-# for_window [class="Neoman"] floating enable
-# for_window [class="NES"] floating enable
-# for_window [class="Pidgin"] floating enable
-# for_window [class="Portal"] floating enable
-# for_window [class="RStudio"] floating enable
-# for_window [class="Skype"] floating enable
-# for_window [class="Slack"] floating enable
-# for_window [class="Steam"] floating enable
-# for_window [class="Tor Browser"] floating enable
-# for_window [class="Virt-viewer"] floating enable
-# for_window [class="VirtualBox"] floating enable
-# for_window [class="vlc"] floating enable
-# for_window [class="Wine"] floating enable
-# for_window [class="Wireshark"] floating enable
+for_window [app_id="(?i).*pavucontrol.*"] floating enable
+for_window [class="(?i).*pavucontrol.*"] floating enable
 
 # Remove titlebars
 for_window [class=".*"] border pixel 1
@@ -140,36 +123,19 @@ bindsym $mod+Shift+9 move container to workspace 9
 bindsym $mod+Shift+0 move container to workspace 10
 
 # audio controls
-# bindsym XF86AudioRaiseVolume exec amixer set Master 5%+ #increase sound volume
-# bindsym XF86AudioLowerVolume exec amixer set Master 5%- #decrease sound volume
-# bindsym XF86AudioMute exec amixer set Master 1+ toggle # mute sound
-# bindsym XF86AudioMicMute exec amixer set Capture toggle # mute mic
-
 bindsym XF86AudioRaiseVolume exec pactl set-sink-volume @DEFAULT_SINK@ +5% #increase sound volume
 bindsym XF86AudioLowerVolume exec pactl set-sink-volume @DEFAULT_SINK@ -5% #decrease sound volume
 bindsym XF86AudioMute exec pactl set-sink-mute @DEFAULT_SINK@ toggle # mute sound
-bindsym XF86AudioMicMute exec amixer set Capture toggle # mute mic
+bindsym XF86AudioMicMute exec pactl set-source-mute @DEFAULT_SOURCE@ toggle # mute mic
 
 # screen brightness controls
-bindsym XF86MonBrightnessUp exec light -A 5 # increase screen brightness
-bindsym XF86MonBrightnessDown exec light -U 5 # decrease screen brightness
+bindsym XF86MonBrightnessUp exec brightnessctl set +5% # increase screen brightness
+bindsym XF86MonBrightnessDown exec brightnessctl set 5%- # decrease screen brightness
 
 # Screenshots
-# Screenshot fullscreen
-# bindsym Print exec "scrot -q 100 ${HOME}'/Pictures/Screenshots/%Y-%m-%d-%H-%M-%S_$wx$h.png' -e '/usr/bin/gsutil cp $f gs://misc.orthros.dev/screenshots/ && xclip -i -selection clipboard -t image/png < $f'"
-# Screenshot fullscreen, sway
-# bindsym Shift+Print exec "swaygrab ${HOME}/Pictures/Screenshots/$(date '+%Y-%m-%d-%H-%M-%S').png"
-# Screenshot with selection
-# bindsym $mod+Print exec "sleep 0.4; scrot -q 100 -s ${HOME}'/Pictures/Screenshots/%Y-%m-%d-%H-%M-%S_$wx$h.png' -e '/usr/bin/gsutil cp $f gs://misc.orthros.dev/screenshots/ && xclip -i -selection clipboard -t image/png < $f'"
-# Screenshot capture, sway
-# bindsym Shift+Print exec "swaygrab -c ${HOME}/Pictures/Screenshots/$(date '+%Y-%m-%d-%H-%M-%S').webm"
-# Screenshot current focused window
-# bindsym Shift+Print exec "scrot -q 100 -u ${HOME}'/Pictures/Screenshots/%Y-%m-%d-%H-%M-%S_$wx$h.png' -e '/usr/bin/gsutil cp $f gs://misc.orthros.dev/screenshots/ && xclip -i -selection clipboard -t image/png < $f'"
-# Screenshot current focused window, sway
-# bindsym Shift+Print exec "swaygrab --focused ${HOME}/Pictures/Screenshots/$(date '+%Y-%m-%d-%H-%M-%S').png"
-
-bindsym Print exec "${HOME}/.bin/sway-screenshot.sh"
-bindsym $mod+Print exec "${HOME}/.bin/sway-screenshot-region.sh"
+bindsym Print exec "grimshot copy output"
+bindsym $mod+Print exec "grimshot copy area"
+bindsym Shift+Print exec "grimshot copy area"
 
 # reload the configuration file
 bindsym $mod+Shift+c reload
@@ -205,24 +171,6 @@ mode "resize" {
 
 bindsym $mod+r mode "resize"
 
-# Use i3blocks for status bar
-# bar {
-#     font pango:BlexMono Nerd Font Mono 15
-#     status_command    SCRIPT_DIR=~/.config/blocklets i3blocks
-#     position          bottom
-#     mode              dock
-#     workspace_buttons yes
-#     colors {
-#         background #333333
-#         statusline #d321d9
-#         focused_workspace  #ffffff #285577 #888888 
-#         active_workspace   #ffffff #333333 #888888
-#         inactive_workspace #888888 #222222 #888888
-#         urgent_workspace   #ffffff #900000 #888888
-#     }
-# }
-#
-
 bar swaybar_command waybar
 
 # Scratchpad
@@ -230,19 +178,12 @@ bindsym $mod+Shift+minus move scratchpad
 bindsym $mod+Shift+equal scratchpad show
 
 # auto run commands
-# set background
-# use the same background as slim (login manager)
-# exec --no-startup-id feh --bg-fill ${HOME}/Pictures/some-background.jpeg
-# exec --no-startup-id feh --bg-fill ${HOME}/Pictures/Wallpapers/cherry_blossoms.jpg
 
-# Sway backgroud
-exec --no-startup-id swaybg -i ${HOME}/.config/wallpapers/cherry_blossoms.jpg 
+# Sway background
+output "*" background ${HOME}/.config/wallpapers/cherry_blossoms.jpg fill
 
 # Mako for notifications
-exec --no-startup-id mako
-
-# run the merge for good colors
-# exec xrdb -merge $HOME/.Xresources
+exec mako
 
 # Gaps
 gaps inner 10
