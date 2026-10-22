@@ -1,0 +1,54 @@
+// Zellij configuration modeled after .tmux.conf
+
+keybinds {
+    tmux {
+        // Remap prefix from Ctrl-b to Ctrl-a (and send Ctrl-a on double press)
+        unbind "Ctrl b"
+        bind "Ctrl a" { Write 1; SwitchToMode "Normal"; }
+
+        // Split panes using | (horizontal / side-by-side) and _ (vertical / top-bottom)
+        unbind "\"" "%"
+        bind "|" { NewPane "Right"; SwitchToMode "Normal"; }
+        bind "_" { NewPane "Down"; SwitchToMode "Normal"; }
+
+        // Kill window (tab) with k and server (quit session) with K
+        unbind "k"
+        bind "k" { CloseTab; SwitchToMode "Normal"; }
+        bind "K" { Quit; }
+
+        // Directional pane resizing (<, >, -, +)
+        bind "<" { Resize "Left"; }
+        bind ">" { Resize "Right"; }
+        bind "-" { Resize "Down"; }
+        bind "+" { Resize "Up"; }
+
+        // Switch tabs by number (1-9) like tmux windows
+        bind "1" { GoToTab 1; SwitchToMode "Normal"; }
+        bind "2" { GoToTab 2; SwitchToMode "Normal"; }
+        bind "3" { GoToTab 3; SwitchToMode "Normal"; }
+        bind "4" { GoToTab 4; SwitchToMode "Normal"; }
+        bind "5" { GoToTab 5; SwitchToMode "Normal"; }
+        bind "6" { GoToTab 6; SwitchToMode "Normal"; }
+        bind "7" { GoToTab 7; SwitchToMode "Normal"; }
+        bind "8" { GoToTab 8; SwitchToMode "Normal"; }
+        bind "9" { GoToTab 9; SwitchToMode "Normal"; }
+    }
+
+    shared_except "tmux" "locked" {
+        // Use Ctrl-a as the tmux-mode prefix instead of Ctrl-b
+        unbind "Ctrl b"
+        bind "Ctrl a" { SwitchToMode "Tmux"; }
+    }
+
+    shared_except "locked" {
+        // Switch panes directly using Alt-Arrow without prefix (without switching tabs at edges)
+        unbind "Alt Left" "Alt Right" "Alt Up" "Alt Down"
+        bind "Alt Left" { MoveFocus "Left"; }
+        bind "Alt Right" { MoveFocus "Right"; }
+        bind "Alt Up" { MoveFocus "Up"; }
+        bind "Alt Down" { MoveFocus "Down"; }
+    }
+}
+
+// Enable mouse support (clickable tabs/panes, scrollable/resizable panes)
+mouse_mode true

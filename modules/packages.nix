@@ -36,6 +36,7 @@
       trippy # Network path diagnostic TUI (combines traceroute and ping/mtr)
       viddy # Modern watch command
       yazi # Terminal file explorer
+      zellij # Terminal workspace and multiplexer
     ]) ++ lib.optionals pkgs.stdenv.hostPlatform.isLinux (with pkgs; [
       brightnessctl # Backlight brightness control for Sway
       pavucontrol # PulseAudio / PipeWire volume control GUI for Waybar

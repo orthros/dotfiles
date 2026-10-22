@@ -127,6 +127,9 @@ in
       # zathura
       "zathura/zathurarc".source = ../config/zathura/zathurarc;
 
+      # zellij
+      "zellij/config.kdl".source = ../config/zellij/config.kdl;
+
       # zsh
       "zsh/.zshrc".source = ../config/zsh/.zshrc;
       "zsh/aliases".source = ../config/zsh/aliases;
