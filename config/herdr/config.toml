@@ -3,9 +3,14 @@
 
 onboarding = false
 
+[theme]
+name = "tokyo-night"
+
 [keys]
 # Use Ctrl+a as the prefix/leader key to start a chord (pressing Ctrl+a twice sends literal Ctrl+a)
 prefix = "ctrl+a"
+# Bind prefix+d to detach (matching tmux) instead of the default prefix+q
+detach = "prefix+d"
 
 [terminal]
 # Inherit the source pane/workspace directory when opening new panes/tabs
@@ -21,6 +26,10 @@ manifest_check = true
 mouse_capture = true
 copy_on_select = true
 show_agent_labels_on_pane_borders = true
+
+[ui.toast]
+# Send background notification popups via the OS notification service directly
+delivery = "system"
 
 [session]
 # Resume supported AI-agent panes into their native conversation sessions
