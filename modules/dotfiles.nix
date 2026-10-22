@@ -139,7 +139,11 @@ in
 
       # waybar
       "waybar/config".source = ../config/waybar/config;
-      "waybar/style.css".source = ../config/waybar/style.css;
+      "waybar/style.css".source = pkgs.runCommand "waybar-style.css" {
+        nativeBuildInputs = [ pkgs.dart-sass ];
+      } ''
+        sass --no-source-map ${../config/waybar/style.scss} $out
+      '';
 
       # zathura
       "zathura/zathurarc".source = ../config/zathura/zathurarc;

@@ -1,0 +1,153 @@
+* {
+    border: none;
+    border-radius: 0;
+    margin: 0;
+    padding: 0;
+    box-shadow: none;
+    text-shadow: none;
+    -gtk-icon-shadow: none;
+
+    /* `otf-font-awesome` is required to be installed for icons */
+    font-family: "BlexMono Nerd Font Mono";
+    min-height: 20px;
+}
+
+$primary-color: #383c4a;
+$text-color: #ffffff;
+
+@mixin bubble() {
+    margin-right: 8px;
+    padding-left: 16px;
+    padding-right: 16px;
+    border-radius: 10px;
+    transition: none;
+    color: $text-color;
+    background: $primary-color;
+}
+
+window#waybar {
+    background: transparent;
+}
+
+window#waybar.hidden {
+    opacity: 0.2;
+}
+
+#workspaces {
+    margin-right: 8px;
+    border-radius: 10px;
+    transition: none;
+    background: $primary-color;
+}
+
+#workspaces button {
+    transition: none;
+    color: #7c818c;
+    background: transparent;
+    padding: 5px;
+    font-size: 18px;
+}
+
+#workspaces button.persistent {
+    color: #7c818c;
+    font-size: 12px;
+}
+
+/* https://github.com/Alexays/Waybar/wiki/FAQ#the-workspace-buttons-have-a-strange-hover-effect */
+#workspaces button:hover {
+    transition: none;
+    box-shadow: inherit;
+    text-shadow: inherit;
+    border-radius: inherit;
+    color: #383c4a;
+    background: #7c818c;
+}
+
+#workspaces button.focused {
+    color: white;
+}
+
+#mode {
+    @include bubble;
+}
+
+#clock {
+    @include bubble;
+}
+
+#pulseaudio {
+    @include bubble;
+}
+
+#pulseaudio.muted {
+    background-color: #90b1b1;
+    color: #2a5c45;
+}
+
+#network {
+    @include bubble;
+}
+
+#disk {
+    @include bubble;
+}
+
+#cpu {
+    @include bubble;
+}
+
+#memory {
+    @include bubble;
+}
+
+#temperature {
+    @include bubble;
+}
+
+#temperature.critical {
+    background-color: #eb4d4b;
+}
+
+#backlight {
+    @include bubble;
+}
+
+#battery {
+    @include bubble;
+}
+
+#battery.charging {
+    color: $text-color;
+    background-color: #26A65B;
+}
+
+#battery.warning:not(.charging) {
+    background-color: #ffbe61;
+    color: black;
+}
+
+#battery.critical:not(.charging) {
+    background-color: #f53c3c;
+    color: $text-color;
+    animation-name: blink;
+    animation-duration: 0.5s;
+    animation-timing-function: linear;
+    animation-iteration-count: infinite;
+    animation-direction: alternate;
+}
+
+#tray {
+    padding-left: 16px;
+    padding-right: 16px;
+    border-radius: 10px;
+    transition: none;
+    color: $text-color;
+    background: $primary-color;
+}
+
+@keyframes blink {
+    to {
+        background-color: $text-color;
+        color: #000000;
+    }
+}
