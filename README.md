@@ -29,8 +29,8 @@ nix flake check
 
 - `flake.nix`: Defines inputs (`nixpkgs`, `home-manager`, and `vim-config`) and exposes a generic `default` `homeConfiguration` and `homeManagerModules.default`.
 - `home.nix`: Main Home Manager module entry point.
-- `modules/dotfiles.nix`: Handles symlinking root dotfiles (e.g., `.zshenv`, `.tmux.conf`), `~/.config` directories (e.g., `alacritty`, `herdr`, `i3`, `jj`, `mise`, `tio`, `zsh`), and global AI agent instructions (`config/agents/AGENTS.md`). Also maps GnuPG files from `config/gnupg` to `~/.gnupg` and fonts from `config/fonts` to `~/.fonts`.
-- `modules/packages.nix`: Declarative user packages (`bandwhich`, `btop`, `cyme`, `difftastic`, `direnv`, `duf`, `dust`, `fastfetch`, `fd`, `fzf`, `glow`, `jq`, `jujutsu`, `just`, `mergiraf`, `mise`, `nh`, `nix-melt`, `procs`, `ripgrep`, `tio`, `tmux`, `trippy`, `viddy`, `yazi`).
+- `modules/dotfiles.nix`: Handles symlinking root dotfiles (e.g., `.zshenv`, `.tmux.conf`), `~/.config` directories (e.g., `alacritty`, `herdr`, `i3`, `jj`, `mako`, `mise`, `rofi`, `sway`, `tio`, `waybar`, `zellij`, `zsh`), and global AI agent instructions (`config/agents/AGENTS.md`). Also maps GnuPG files from `config/gnupg` to `~/.gnupg` and enables Fontconfig.
+- `modules/packages.nix`: Declarative user packages (`bandwhich`, `brightnessctl`, `btop`, `cyme`, `difftastic`, `direnv`, `duf`, `dust`, `fastfetch`, `fd`, `fzf`, `glow`, `jq`, `jujutsu`, `just`, `mergiraf`, `mise`, `nerd-fonts.blex-mono`, `nerd-fonts.fira-code`, `nh`, `nix-melt`, `pavucontrol`, `procs`, `ripgrep`, `tio`, `tmux`, `trippy`, `viddy`, `yazi`, `zellij`).
 
 ### Using `nh`
 

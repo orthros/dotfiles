@@ -38,6 +38,8 @@ in
   };
 
   config = {
+    fonts.fontconfig.enable = true;
+
     dotfiles.agentSkills = lib.mkIf (config.programs.herdr.enable && config.programs.herdr.package != null) [
       "${config.programs.herdr.package}/share/skills/herdr"
     ];
@@ -46,7 +48,6 @@ in
     home.file = {
       ".Xresources".source = ../.Xresources;
       ".dircolors".source = ../.dircolors;
-      ".fonts".source = ../config/fonts;
       ".tmux.conf".source = ../.tmux.conf;
       ".xinitrc".source = ../.xinitrc;
       ".xsessionrc".source = ../.xsessionrc;

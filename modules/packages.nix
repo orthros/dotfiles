@@ -27,6 +27,8 @@
       just # Command runner for project workflows
       mergiraf # Structural AST merge tool
       mise # Polyglot tool version & environment manager
+      nerd-fonts.blex-mono # IBM Plex Mono Nerd Font
+      nerd-fonts.fira-code # Fira Code Nerd Font
       nh # Nix CLI helper
       nix-melt # Ranger-like viewer for flake.lock
       procs # Modern process viewer with tree & socket mapping (replaces ps)
