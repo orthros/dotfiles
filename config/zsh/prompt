@@ -3,10 +3,167 @@
 # Config/ Zsh Prompt
 #"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
+typeset -g ZSH_PROMPT_SCRIPT_PATH="${${(%):-%x}:A}"
+typeset -g ZSH_PROMPT_THEME_STATE_FILE="${XDG_STATE_HOME:-$HOME/.local/state}/zsh/prompt_theme"
+typeset -g ZSH_PROMPT_THEME=""
+typeset -gA ZSH_PROMPT_COLORS
+
+typeset -ga ZSH_PROMPT_THEME_ORDER=(
+	"faithful"
+	"cyber-aqua"
+	"storm"
+	"storm-neon"
+	"sunset"
+	"moon"
+	"classic"
+)
+
+typeset -gA ZSH_PROMPT_THEME_DESC=(
+	[faithful]="Tokyo Night Faithful — 1:1 hue mapping to tokyonight-night"
+	[cyber-aqua]="Tokyo Night Cyber Aqua — aqua mint dir (#73daca), lavender branch (#bb9af7), amber status (#e0af68)"
+	[storm]="Tokyo Night Storm — subdued mid-tones (#41a6b5 teal, #565f89 slate status, #e0af68 exit)"
+	[storm-neon]="Tokyo Night Storm (#ff007c Exit) — Storm mid-tones with neon magenta (#ff007c) exit code"
+	[sunset]="Tokyo Night Shibuya Sunset — cool base with warm orange (#ff9e64) SSH & git dirty accents"
+	[moon]="Tokyo Night Moon — tokyonight-moon palette (periwinkle, ice cyan, pistachio, violet)"
+	[classic]="Classic — original 256-color cube (33, 37, 163, 64, 61) + ANSI palette"
+)
+
+function _prompt_load_palette() {
+	local theme="${1:-storm-neon}"
+	case "${theme}" in
+		faithful|night)
+			ZSH_PROMPT_THEME="faithful"
+			ZSH_PROMPT_COLORS=(
+				[user]="#7aa2f7"
+				[host]="#2ac3de"
+				[ssh]="#bb9af7"
+				[dir]="#9ece6a"
+				[branch]="#7dcfff"
+				[status]="#9d7cd8"
+				[conn]="#a9b1d6"
+				[on]="#a9b1d6"
+				[sym]="#c0caf5"
+				[exit]="#f7768e"
+				[ok]="#9ece6a"
+				[err]="#f7768e"
+			)
+			;;
+		cyber-aqua|aqua)
+			ZSH_PROMPT_THEME="cyber-aqua"
+			ZSH_PROMPT_COLORS=(
+				[user]="#7aa2f7"
+				[host]="#7dcfff"
+				[ssh]="#ff007c"
+				[dir]="#73daca"
+				[branch]="#bb9af7"
+				[status]="#e0af68"
+				[conn]="#565f89"
+				[on]="#565f89"
+				[sym]="#7dcfff"
+				[exit]="#f7768e"
+				[ok]="#73daca"
+				[err]="#f7768e"
+			)
+			;;
+		storm)
+			ZSH_PROMPT_THEME="storm"
+			ZSH_PROMPT_COLORS=(
+				[user]="#7aa2f7"
+				[host]="#41a6b5"
+				[ssh]="#9d7cd8"
+				[dir]="#9ece6a"
+				[branch]="#7aa2f7"
+				[status]="#565f89"
+				[conn]="#787c99"
+				[on]="#787c99"
+				[sym]="#a9b1d6"
+				[exit]="#e0af68"
+				[ok]="#73daca"
+				[err]="#db4b4b"
+			)
+			;;
+		storm-neon|storm-pink)
+			ZSH_PROMPT_THEME="storm-neon"
+			ZSH_PROMPT_COLORS=(
+				[user]="#7aa2f7"
+				[host]="#41a6b5"
+				[ssh]="#9d7cd8"
+				[dir]="#9ece6a"
+				[branch]="#7aa2f7"
+				[status]="#565f89"
+				[conn]="#787c99"
+				[on]="#787c99"
+				[sym]="#a9b1d6"
+				[exit]="#ff007c"
+				[ok]="#73daca"
+				[err]="#db4b4b"
+			)
+			;;
+		sunset|shibuya)
+			ZSH_PROMPT_THEME="sunset"
+			ZSH_PROMPT_COLORS=(
+				[user]="#7aa2f7"
+				[host]="#2ac3de"
+				[ssh]="#ff9e64"
+				[dir]="#9ece6a"
+				[branch]="#bb9af7"
+				[status]="#ff9e64"
+				[conn]="#565f89"
+				[on]="#565f89"
+				[sym]="#bb9af7"
+				[exit]="#f7768e"
+				[ok]="#9ece6a"
+				[err]="#f7768e"
+			)
+			;;
+		moon)
+			ZSH_PROMPT_THEME="moon"
+			ZSH_PROMPT_COLORS=(
+				[user]="#82aaff"
+				[host]="#86e1fc"
+				[ssh]="#fca7ea"
+				[dir]="#c3e88d"
+				[branch]="#c099ff"
+				[status]="#636da6"
+				[conn]="#828bb8"
+				[on]="#828bb8"
+				[sym]="#c8d3f5"
+				[exit]="#ff757f"
+				[ok]="#4fd6be"
+				[err]="#ff757f"
+			)
+			;;
+		classic|default)
+			ZSH_PROMPT_THEME="classic"
+			ZSH_PROMPT_COLORS=(
+				[user]="33"
+				[host]="37"
+				[ssh]="163"
+				[dir]="64"
+				[branch]="blue"
+				[status]="61"
+				[conn]="reset"
+				[on]="white"
+				[sym]="reset"
+				[exit]="green"
+				[ok]="green"
+				[err]="red"
+			)
+			;;
+		*)
+			return 1
+			;;
+	esac
+	return 0
+}
+
 
 function prompt_git() {
 	local s='';
 	local branchName='';
+	local c_on="${ZSH_PROMPT_COLORS[on]:-white}"
+	local c_branch="${ZSH_PROMPT_COLORS[branch]:-blue}"
+	local c_status="${ZSH_PROMPT_COLORS[status]:-61}"
 
 	# Check if the current directory is in a Git repository.
 	if [ "$(git rev-parse --is-inside-work-tree &>/dev/null; echo "${?}")" = '0' ]; then
@@ -20,7 +177,7 @@ function prompt_git() {
         # there are any untracked files is an expensive operation O(second)
         # which causes prompt redraws to be very sluggish. Having a toggle
         # to simply show we are in a git directory will speed things up
-        echo " %F{61}Ξ%F{reset}"
+        echo " %F{${c_status}}Ξ%F{reset}"
         return
       fi
 
@@ -59,7 +216,7 @@ function prompt_git() {
 
 		[ -n "${s}" ] && s=" [${s}]";
 
-		echo " %F{white}on %F{blue}${branchName}%F{reset}%F{61}${s}%F{reset}";
+		echo " %F{${c_on}}on %F{${c_branch}}${branchName}%F{reset}%F{${c_status}}${s}%F{reset}";
 	else
 		return;
 	fi;
@@ -94,37 +251,214 @@ function prompt_gcloud() {
 
 function prompt_ssh() {
     local symbol="Φ"
+    local c_ssh="${ZSH_PROMPT_COLORS[ssh]:-163}"
     if [ -z ${SSH_CONNECTION+x} ]; then
         return
     else
-        echo "%F{163}${symbol}%F{reset} "
+        echo "%F{${c_ssh}}${symbol}%F{reset} "
     fi
 }
 
-local cloud_icon="☁️ "
+function _prompt_build_strings() {
+	local cloud_icon="☁️ "
 
-local user_host="%F{33}%n%F{reset}"
-local user_hostname="%F{37}%m%F{reset}"
-local separator_at="%F{white}@%F{reset}"
-local user_symbol="$"
-local current_dir="%F{64}%~%F{reset}"
-local current_time="%F{green}%*%F{reset}"
+	local user_host="%F{${ZSH_PROMPT_COLORS[user]}}%n%F{reset}"
+	local user_hostname="%F{${ZSH_PROMPT_COLORS[host]}}%m%F{reset}"
+	local conn_at="%F{${ZSH_PROMPT_COLORS[conn]}}at%F{reset}"
+	local conn_in="%F{${ZSH_PROMPT_COLORS[conn]}}in%F{reset}"
+	local current_dir="%F{${ZSH_PROMPT_COLORS[dir]}}%~%F{reset}"
 
-local last_command="%F{green}%(?..[%?] )%F{reset}"
-local command_prompt="∮ "
+	local last_command="%F{${ZSH_PROMPT_COLORS[exit]}}%(?..[%?] )%F{reset}"
+	local command_prompt="%F{${ZSH_PROMPT_COLORS[sym]}}∮ %F{reset}"
 
-local git_info='$(prompt_git)';
-local ssh_prompt='$(prompt_ssh)'
+	local git_info='$(prompt_git)'
+	local ssh_prompt='$(prompt_ssh)'
 
-local vm_host=""
-if [[ -f /proc/cpuinfo ]] && grep -q "^flags.* hypervisor" /proc/cpuinfo && [[ ! -d "/mnt/c/Windows" ]]; then
-    vm_host=$cloud_icon
+	local vm_host=""
+	if [[ -f /proc/cpuinfo ]] && grep -q "^flags.* hypervisor" /proc/cpuinfo && [[ ! -d "/mnt/c/Windows" ]]; then
+		vm_host=$cloud_icon
+	fi
+
+	local cloud_prompt='$(prompt_gcloud)'
+
+	RPROMPT="${last_command}"
+	if [[ -n "${gcertprompt:-}" ]]; then
+		RPROMPT="${RPROMPT} ${gcertprompt}"
+	fi
+
+	PROMPT="%B
+${cloud_prompt}${user_host} ${conn_at} ${ssh_prompt}${vm_host}${user_hostname} ${conn_in} ${current_dir}${git_info}
+${command_prompt}%b"
+}
+
+function _prompt_render_sample() {
+	local target_theme="$1"
+	local saved_theme="${ZSH_PROMPT_THEME}"
+	local -A saved_colors
+	saved_colors=("${(@kv)ZSH_PROMPT_COLORS}")
+
+	if ! _prompt_load_palette "${target_theme}"; then
+		return 1
+	fi
+
+	local c_user="${ZSH_PROMPT_COLORS[user]}"
+	local c_host="${ZSH_PROMPT_COLORS[host]}"
+	local c_ssh="${ZSH_PROMPT_COLORS[ssh]}"
+	local c_dir="${ZSH_PROMPT_COLORS[dir]}"
+	local c_branch="${ZSH_PROMPT_COLORS[branch]}"
+	local c_status="${ZSH_PROMPT_COLORS[status]}"
+	local c_conn="${ZSH_PROMPT_COLORS[conn]}"
+	local c_on="${ZSH_PROMPT_COLORS[on]}"
+	local c_sym="${ZSH_PROMPT_COLORS[sym]}"
+	local c_exit="${ZSH_PROMPT_COLORS[exit]}"
+	local c_ok="${ZSH_PROMPT_COLORS[ok]}"
+	local c_err="${ZSH_PROMPT_COLORS[err]}"
+
+	local active_marker=""
+	if [[ "${ZSH_PROMPT_THEME}" == "${saved_theme}" ]]; then
+		active_marker=" %F{#9ece6a}(active)%f"
+	fi
+
+	print -P "%B%F{#c0caf5}━━━ ${ZSH_PROMPT_THEME}${active_marker} %F{#565f89}— ${ZSH_PROMPT_THEME_DESC[${ZSH_PROMPT_THEME}]}%f%b"
+	print -P "  %F{#565f89}Swatches:%f %B%F{${c_user}}██ user%f  %F{${c_host}}██ host%f  %F{${c_ssh}}██ ssh%f  %F{${c_dir}}██ dir%f  %F{${c_branch}}██ branch%f  %F{${c_status}}██ status%f  %F{${c_exit}}██ exit%f%b"
+	echo ""
+
+	local left_a="%B%F{${c_user}}colnnelson%f %F{${c_conn}}at%f %F{${c_host}}alecto%f %F{${c_conn}}in%f %F{${c_dir}}~/Development/src/nix-config%f %F{${c_on}}on%f %F{${c_branch}}main%f%F{${c_status}} [!+]%f%b"
+	local right_a="%F{${c_conn}}[%f %B%F{${c_ok}}Ω%f%b %F{${c_conn}}]%f"
+	print -P "  ${left_a}        ${right_a}"
+	print -P "  %B%F{${c_sym}}∮ %f%b%F{#a9b1d6}jj status%f"
+	echo ""
+
+	local left_b="%B%F{${c_user}}colnnelson%f %F{${c_conn}}at%f %F{${c_ssh}}Φ%f ☁️ %F{${c_host}}cytherea%f %F{${c_conn}}in%f %F{${c_dir}}~/fuchsia%f %F{${c_on}}on%f %F{${c_branch}}fx-branch%f%F{${c_status}} [?]%f%b"
+	local right_b="%F{${c_exit}}[130]%f %F{${c_conn}}[%f %B%F{${c_err}}Ω%f%b %F{${c_conn}}]%f"
+	print -P "  ${left_b}            ${right_b}"
+	print -P "  %B%F{${c_sym}}∮ %f%b"
+	echo ""
+
+	ZSH_PROMPT_THEME="${saved_theme}"
+	ZSH_PROMPT_COLORS=("${(@kv)saved_colors}")
+}
+
+function prompt_theme() {
+	local quiet=0
+	local arg="${1:-}"
+
+	if [[ "${arg}" == "-q" || "${arg}" == "--quiet" ]]; then
+		quiet=1
+		shift
+		arg="${1:-}"
+	fi
+
+	case "${arg}" in
+		-h|--help)
+			echo "Usage: prompt_theme [theme | --list | --preview [theme]]"
+			echo ""
+			echo "Themes:"
+			local t
+			for t in "${ZSH_PROMPT_THEME_ORDER[@]}"; do
+				printf "  %-12s %s\n" "${t}" "${ZSH_PROMPT_THEME_DESC[${t}]}"
+			done
+			return 0
+			;;
+		-l|--list)
+			local saved_theme="${ZSH_PROMPT_THEME}"
+			local -A saved_colors
+			saved_colors=("${(@kv)ZSH_PROMPT_COLORS}")
+			local t marker swatch
+			for t in "${ZSH_PROMPT_THEME_ORDER[@]}"; do
+				_prompt_load_palette "${t}"
+				if [[ "${t}" == "${saved_theme}" ]]; then
+					marker="%F{#9ece6a}*%f"
+				else
+					marker="%F{#565f89}·%f"
+				fi
+				swatch="%B%F{${ZSH_PROMPT_COLORS[user]}}██%f%F{${ZSH_PROMPT_COLORS[host]}}██%f%F{${ZSH_PROMPT_COLORS[ssh]}}██%f%F{${ZSH_PROMPT_COLORS[dir]}}██%f%F{${ZSH_PROMPT_COLORS[branch]}}██%f%F{${ZSH_PROMPT_COLORS[status]}}██%f%F{${ZSH_PROMPT_COLORS[exit]}}██%f%b"
+				print -P " ${marker} ${swatch}  %B$(printf '%-12s' "${t}")%b %F{#565f89}${ZSH_PROMPT_THEME_DESC[${t}]}%f"
+			done
+			ZSH_PROMPT_THEME="${saved_theme}"
+			ZSH_PROMPT_COLORS=("${(@kv)saved_colors}")
+			return 0
+			;;
+		-p|--preview)
+			shift
+			if [[ -n "${1:-}" ]]; then
+				_prompt_render_sample "$1"
+			else
+				local t
+				for t in "${ZSH_PROMPT_THEME_ORDER[@]}"; do
+					_prompt_render_sample "${t}"
+				done
+			fi
+			return 0
+			;;
+		"")
+			if command -v fzf &>/dev/null && [[ -t 0 && -t 1 ]]; then
+				local selected
+				selected=$(
+					prompt_theme --list | fzf \
+						--ansi \
+						--no-sort \
+						--prompt="Prompt Theme > " \
+						--header="Current: ${ZSH_PROMPT_THEME} (Enter to apply, Esc to cancel)" \
+						--preview="zsh -c 'source ${(q)ZSH_PROMPT_SCRIPT_PATH} && _prompt_render_sample {3}'" \
+						--preview-window="down:11:wrap" | awk '{print $3}'
+				)
+				if [[ -n "${selected}" ]]; then
+					prompt_theme "${selected}"
+				fi
+				return 0
+			else
+				prompt_theme --list
+				return 0
+			fi
+			;;
+	esac
+
+	if ! _prompt_load_palette "${arg}"; then
+		echo "Unknown prompt theme: ${arg}" >&2
+		echo "Available themes: ${ZSH_PROMPT_THEME_ORDER[*]}" >&2
+		return 1
+	fi
+
+	_prompt_build_strings
+
+	if (( ! quiet )); then
+		mkdir -p "${ZSH_PROMPT_THEME_STATE_FILE:h}" 2>/dev/null
+		printf '%s\n' "${ZSH_PROMPT_THEME}" > "${ZSH_PROMPT_THEME_STATE_FILE}" 2>/dev/null || true
+		print -P "%F{#565f89}Switched prompt theme to%f %B%F{${ZSH_PROMPT_COLORS[user]}}${ZSH_PROMPT_THEME}%f%b"
+	fi
+}
+
+function _prompt_theme() {
+	local -a themes
+	themes=(
+		'faithful:Tokyo Night Faithful (1:1 hue mapping to tokyonight-night)'
+		'cyber-aqua:Tokyo Night Cyber Aqua (aqua mint dir, lavender branch, amber status)'
+		'storm:Tokyo Night Storm (subdued mid-tones, amber exit code)'
+		'storm-neon:Tokyo Night Storm with neon magenta (#ff007c) exit code'
+		'sunset:Tokyo Night Shibuya Sunset (warm orange #ff9e64 SSH & git dirty accents)'
+		'moon:Tokyo Night Moon (periwinkle, ice cyan, pistachio, violet)'
+		'classic:Classic (original 256-color cube + ANSI palette)'
+		'--list:List available prompt themes'
+		'--preview:Preview all prompt themes in terminal'
+	)
+	_describe -t themes 'prompt theme' themes
+}
+
+if (( $+functions[compdef] )); then
+	compdef _prompt_theme prompt_theme
 fi
 
-local cloud_prompt='$(prompt_gcloud)'
+# Load persisted theme (or default to storm-neon) on shell startup
+if [[ -z "${ZSH_PROMPT_THEME}" ]]; then
+	if [[ -r "${ZSH_PROMPT_THEME_STATE_FILE}" ]]; then
+		read -r ZSH_PROMPT_THEME < "${ZSH_PROMPT_THEME_STATE_FILE}"
+	fi
+	if ! _prompt_load_palette "${ZSH_PROMPT_THEME:-storm-neon}"; then
+		_prompt_load_palette "storm-neon"
+	fi
+fi
 
-RPROMPT="${last_command}"
-PROMPT="%B
-${cloud_prompt}${user_host} at ${ssh_prompt}${vm_host}${user_hostname} in ${current_dir}${git_info}
-${command_prompt}%b"
+_prompt_build_strings
+
 
