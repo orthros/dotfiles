@@ -9,6 +9,7 @@ typeset -g ZSH_PROMPT_THEME=""
 typeset -gA ZSH_PROMPT_COLORS
 
 typeset -ga ZSH_PROMPT_THEME_ORDER=(
+	"cherry-blossom"
 	"faithful"
 	"cyber-aqua"
 	"storm"
@@ -19,6 +20,7 @@ typeset -ga ZSH_PROMPT_THEME_ORDER=(
 )
 
 typeset -gA ZSH_PROMPT_THEME_DESC=(
+	[cherry-blossom]="Cherry Blossom (Sakura Night) — sakura pink (#e87a90), seafoam (#9ad1ca), midnight pine (#0b151c)"
 	[faithful]="Tokyo Night Faithful — 1:1 hue mapping to tokyonight-night"
 	[cyber-aqua]="Tokyo Night Cyber Aqua — aqua mint dir (#73daca), lavender branch (#bb9af7), amber status (#e0af68)"
 	[storm]="Tokyo Night Storm — subdued mid-tones (#41a6b5 teal, #565f89 slate status, #e0af68 exit)"
@@ -29,8 +31,31 @@ typeset -gA ZSH_PROMPT_THEME_DESC=(
 )
 
 function _prompt_load_palette() {
-	local theme="${1:-storm-neon}"
+	local theme="${1:-${DOTFILES_THEME_PRESET:-cherry-blossom}}"
 	case "${theme}" in
+		cherry-blossom|sakura)
+			ZSH_PROMPT_THEME="cherry-blossom"
+			ZSH_PROMPT_COLORS=(
+				[user]="#e87a90"
+				[host]="#6ea39e"
+				[ssh]="#d68fb8"
+				[dir]="#9ad1ca"
+				[branch]="#d68fb8"
+				[status]="#e6b07e"
+				[conn]="#5a6b75"
+				[on]="#5a6b75"
+				[sym]="#e87a90"
+				[exit]="#ff4d79"
+				[ok]="#7ec4b6"
+				[err]="#ff4d79"
+				[ls_norm]="#f2dfe3"
+				[ls_archive]="#b36b92"
+				[ls_image]="#e6b07e"
+				[ls_media]="#e38c6b"
+				[ls_doc]="#c7afb7"
+				[ls_dim]="#5a6b75"
+			)
+			;;
 		faithful|night)
 			ZSH_PROMPT_THEME="faithful"
 			ZSH_PROMPT_COLORS=(
@@ -623,6 +648,7 @@ function prompt_theme() {
 function _prompt_theme() {
 	local -a themes
 	themes=(
+		'cherry-blossom:Cherry Blossom (Sakura Night — sakura pink, seafoam, midnight pine)'
 		'faithful:Tokyo Night Faithful (1:1 hue mapping to tokyonight-night)'
 		'cyber-aqua:Tokyo Night Cyber Aqua (aqua mint dir, lavender branch, amber status)'
 		'storm:Tokyo Night Storm (subdued mid-tones, amber exit code)'
@@ -640,13 +666,13 @@ if (( $+functions[compdef] )); then
 	compdef _prompt_theme prompt_theme
 fi
 
-# Load persisted theme (or default to storm-neon) on shell startup
+# Load persisted theme (or default to DOTFILES_THEME_PRESET / cherry-blossom) on shell startup
 if [[ -z "${ZSH_PROMPT_THEME}" ]]; then
 	if [[ -r "${ZSH_PROMPT_THEME_STATE_FILE}" ]]; then
 		read -r ZSH_PROMPT_THEME < "${ZSH_PROMPT_THEME_STATE_FILE}"
 	fi
-	if ! _prompt_load_palette "${ZSH_PROMPT_THEME:-storm-neon}"; then
-		_prompt_load_palette "storm-neon"
+	if ! _prompt_load_palette "${ZSH_PROMPT_THEME:-${DOTFILES_THEME_PRESET:-cherry-blossom}}"; then
+		_prompt_load_palette "${DOTFILES_THEME_PRESET:-cherry-blossom}"
 	fi
 fi
 

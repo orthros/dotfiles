@@ -89,21 +89,24 @@ function cdt() {
   cd "$(tmux display -p '#{session_path}')" || return
 }
 
-# fzf configuration (backed by fd, styled with OneDark / oneorthros palette)
+# fzf configuration (backed by fd; colors provided by ~/.config/theme/colors.sh
+# when managed by modules/theme.nix, falling back to cherry-blossom defaults)
 export FZF_DEFAULT_COMMAND='fd --type f --hidden --follow --exclude .git --exclude .jj'
 export FZF_CTRL_T_COMMAND="$FZF_DEFAULT_COMMAND"
 export FZF_ALT_C_COMMAND='fd --type d --hidden --follow --exclude .git --exclude .jj'
-export FZF_DEFAULT_OPTS="
-  --height 100%
-  --tmux 80%,60%
-  --layout=default
-  --border=rounded
-  --info=inline-right
-  --color=bg+:#50536b,fg:#abb2bf,fg+:#dfdfdf,hl:#95ee8f,hl+:#95ee8f
-  --color=prompt:#6eaafb,pointer:#d886f3,marker:#95ee8f,border:#6cdcf7,header:#f8c456
-  --bind 'ctrl-/:toggle-preview,ctrl-u:preview-half-page-up,ctrl-d:preview-half-page-down'
-  --bind 'ctrl-y:execute-silent(echo -n {+} | (wl-copy 2>/dev/null || xclip -selection clipboard 2>/dev/null || pbcopy 2>/dev/null))+abort'
-"
+if [[ -z "${DOTFILES_THEME_PRESET:-}" ]]; then
+  export FZF_DEFAULT_OPTS="
+    --height 100%
+    --tmux 80%,60%
+    --layout=default
+    --border=rounded
+    --info=inline-right
+    --color=bg+:#233440,fg:#c7afb7,fg+:#f2dfe3,hl:#e87a90,hl+:#9ad1ca
+    --color=prompt:#e87a90,pointer:#ff4d79,marker:#7ec4b6,border:#6ea39e,header:#5a6b75
+    --bind 'ctrl-/:toggle-preview,ctrl-u:preview-half-page-up,ctrl-d:preview-half-page-down'
+    --bind 'ctrl-y:execute-silent(echo -n {+} | (wl-copy 2>/dev/null || xclip -selection clipboard 2>/dev/null || pbcopy 2>/dev/null))+abort'
+  "
+fi
 export FZF_CTRL_T_OPTS="
   --preview 'if [[ -d {} ]]; then dust -d 1 {}; elif [[ {} == *.md ]]; then glow -s dark {}; else head -n 200 {}; fi'
   --bind 'ctrl-e:become(nvim {+})'

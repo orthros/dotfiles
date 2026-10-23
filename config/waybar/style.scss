@@ -1,3 +1,5 @@
+@use "theme" as *;
+
 * {
     border: none;
     border-radius: 0;
@@ -8,12 +10,9 @@
     -gtk-icon-shadow: none;
 
     /* `otf-font-awesome` is required to be installed for icons */
-    font-family: "BlexMono Nerd Font Mono";
+    font-family: $font-family;
     min-height: 20px;
 }
-
-$primary-color: #383c4a;
-$text-color: #ffffff;
 
 @mixin bubble() {
     margin-right: 8px;
@@ -42,14 +41,14 @@ window#waybar.hidden {
 
 #workspaces button {
     transition: none;
-    color: #7c818c;
+    color: $muted-color;
     background: transparent;
     padding: 5px;
     font-size: 18px;
 }
 
 #workspaces button.persistent {
-    color: #7c818c;
+    color: $muted-color;
     font-size: 12px;
 }
 
@@ -59,15 +58,23 @@ window#waybar.hidden {
     box-shadow: inherit;
     text-shadow: inherit;
     border-radius: inherit;
-    color: #383c4a;
-    background: #7c818c;
+    color: $text-color;
+    background: $surface-hover;
 }
 
 #workspaces button.focused {
-    color: white;
+    color: $accent-color;
+}
+
+#workspaces button.urgent {
+    color: $urgent-color;
 }
 
 #mode {
+    @include bubble;
+}
+
+#scratchpad {
     @include bubble;
 }
 
@@ -75,20 +82,32 @@ window#waybar.hidden {
     @include bubble;
 }
 
+#pulseaudio.muted {
+    background-color: $surface-hover;
+    color: $muted-color;
+}
+
+#custom-media {
+    @include bubble;
+}
+
+#custom-loas {
+    @include bubble;
+}
+
 #pulseaudio {
     @include bubble;
 }
 
-#pulseaudio.muted {
-    background-color: #90b1b1;
-    color: #2a5c45;
-}
-
-#network {
+#battery {
     @include bubble;
 }
 
-#disk {
+#backlight {
+    @include bubble;
+}
+
+#memory {
     @include bubble;
 }
 
@@ -96,7 +115,11 @@ window#waybar.hidden {
     @include bubble;
 }
 
-#memory {
+#disk {
+    @include bubble;
+}
+
+#network {
     @include bubble;
 }
 
@@ -105,29 +128,33 @@ window#waybar.hidden {
 }
 
 #temperature.critical {
-    background-color: #eb4d4b;
+    background-color: $urgent-color;
 }
 
-#backlight {
+#idle_inhibitor {
     @include bubble;
 }
 
-#battery {
+#idle_inhibitor.activated {
+    color: $accent-color;
+}
+
+#keyboard-state label.locked {
     @include bubble;
 }
 
 #battery.charging {
-    color: $text-color;
-    background-color: #26A65B;
+    color: $dark-bg;
+    background-color: $ok-color;
 }
 
 #battery.warning:not(.charging) {
-    background-color: #ffbe61;
-    color: black;
+    background-color: $warn-color;
+    color: $dark-bg;
 }
 
 #battery.critical:not(.charging) {
-    background-color: #f53c3c;
+    background-color: $urgent-color;
     color: $text-color;
     animation-name: blink;
     animation-duration: 0.5s;
@@ -142,12 +169,12 @@ window#waybar.hidden {
     border-radius: 10px;
     transition: none;
     color: $text-color;
-    background: $primary-color;
+    background: $surface-alt;
 }
 
 @keyframes blink {
     to {
         background-color: $text-color;
-        color: #000000;
+        color: $dark-bg;
     }
 }

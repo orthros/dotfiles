@@ -39,6 +39,10 @@ bindkey "^[[1;5C" forward-word
 bindkey "^[[1;5D" backward-word
 bindkey "^[[3~" delete-char
 
+if [[ -r $dotfile_config_path/theme/colors.sh ]]; then
+  source $dotfile_config_path/theme/colors.sh
+fi
+
 source $dotfile_config_path/zsh/prompt
 
 source $dotfile_config_path/zsh/aliases
