@@ -46,6 +46,12 @@ function _prompt_load_palette() {
 				[exit]="#f7768e"
 				[ok]="#9ece6a"
 				[err]="#f7768e"
+				[ls_norm]="#c0caf5"
+				[ls_archive]="#9d7cd8"
+				[ls_image]="#e0af68"
+				[ls_media]="#ff9e64"
+				[ls_doc]="#a9b1d6"
+				[ls_dim]="#565f89"
 			)
 			;;
 		cyber-aqua|aqua)
@@ -63,6 +69,12 @@ function _prompt_load_palette() {
 				[exit]="#f7768e"
 				[ok]="#73daca"
 				[err]="#f7768e"
+				[ls_norm]="#c0caf5"
+				[ls_archive]="#bb9af7"
+				[ls_image]="#e0af68"
+				[ls_media]="#ff9e64"
+				[ls_doc]="#a9b1d6"
+				[ls_dim]="#565f89"
 			)
 			;;
 		storm)
@@ -80,6 +92,12 @@ function _prompt_load_palette() {
 				[exit]="#e0af68"
 				[ok]="#73daca"
 				[err]="#db4b4b"
+				[ls_norm]="#c0caf5"
+				[ls_archive]="#9d7cd8"
+				[ls_image]="#e0af68"
+				[ls_media]="#ff9e64"
+				[ls_doc]="#787c99"
+				[ls_dim]="#565f89"
 			)
 			;;
 		storm-neon|storm-pink)
@@ -97,6 +115,12 @@ function _prompt_load_palette() {
 				[exit]="#ff007c"
 				[ok]="#73daca"
 				[err]="#db4b4b"
+				[ls_norm]="#c0caf5"
+				[ls_archive]="#9d7cd8"
+				[ls_image]="#e0af68"
+				[ls_media]="#ff9e64"
+				[ls_doc]="#787c99"
+				[ls_dim]="#565f89"
 			)
 			;;
 		sunset|shibuya)
@@ -114,6 +138,12 @@ function _prompt_load_palette() {
 				[exit]="#f7768e"
 				[ok]="#9ece6a"
 				[err]="#f7768e"
+				[ls_norm]="#c0caf5"
+				[ls_archive]="#bb9af7"
+				[ls_image]="#e0af68"
+				[ls_media]="#ff9e64"
+				[ls_doc]="#a9b1d6"
+				[ls_dim]="#565f89"
 			)
 			;;
 		moon)
@@ -131,6 +161,12 @@ function _prompt_load_palette() {
 				[exit]="#ff757f"
 				[ok]="#4fd6be"
 				[err]="#ff757f"
+				[ls_norm]="#c8d3f5"
+				[ls_archive]="#c099ff"
+				[ls_image]="#ffc777"
+				[ls_media]="#ff966c"
+				[ls_doc]="#828bb8"
+				[ls_dim]="#636da6"
 			)
 			;;
 		classic|default)
@@ -148,6 +184,12 @@ function _prompt_load_palette() {
 				[exit]="green"
 				[ok]="green"
 				[err]="red"
+				[ls_norm]="244"
+				[ls_archive]="61"
+				[ls_image]="136"
+				[ls_media]="166"
+				[ls_doc]="245"
+				[ls_dim]="240"
 			)
 			;;
 		*)
@@ -155,6 +197,147 @@ function _prompt_load_palette() {
 			;;
 	esac
 	return 0
+}
+
+function _prompt_sgr_fg() {
+	local c="$1"
+	if [[ "$c" == \#[0-9a-fA-F][0-9a-fA-F][0-9a-fA-F][0-9a-fA-F][0-9a-fA-F][0-9a-fA-F] ]]; then
+		REPLY="38;2;$(( 16#${c[2,3]} ));$(( 16#${c[4,5]} ));$(( 16#${c[6,7]} ))"
+	elif [[ "$c" == <-> ]]; then
+		REPLY="38;5;${c}"
+	else
+		REPLY="38;5;244"
+	fi
+}
+
+function _prompt_sgr_bg() {
+	local c="$1"
+	if [[ "$c" == \#[0-9a-fA-F][0-9a-fA-F][0-9a-fA-F][0-9a-fA-F][0-9a-fA-F][0-9a-fA-F] ]]; then
+		REPLY="48;2;$(( 16#${c[2,3]} ));$(( 16#${c[4,5]} ));$(( 16#${c[6,7]} ))"
+	elif [[ "$c" == <-> ]]; then
+		REPLY="48;5;${c}"
+	else
+		REPLY="48;5;235"
+	fi
+}
+
+function _prompt_apply_ls_colors() {
+	local REPLY
+	_prompt_sgr_fg "${ZSH_PROMPT_COLORS[ls_norm]}"
+	local sgr_norm="00;${REPLY}"
+
+	_prompt_sgr_fg "${ZSH_PROMPT_COLORS[user]}"
+	local fg_dir="${REPLY}"
+	local bg_dir="${REPLY/#38;/48;}"
+	local sgr_dir="01;${fg_dir}"
+	if [[ "${ZSH_PROMPT_THEME}" == "classic" ]]; then
+		sgr_dir="00;${fg_dir}"
+	fi
+
+	_prompt_sgr_fg "${ZSH_PROMPT_COLORS[host]}"
+	local sgr_link="00;${REPLY}"
+
+	_prompt_sgr_fg "${ZSH_PROMPT_COLORS[dir]}"
+	local fg_exec="${REPLY}"
+	local bg_exec="${REPLY/#38;/48;}"
+	local sgr_exec="00;${fg_exec}"
+
+	_prompt_sgr_fg "${ZSH_PROMPT_COLORS[ls_archive]}"
+	local sgr_arc="00;${REPLY}"
+
+	_prompt_sgr_fg "${ZSH_PROMPT_COLORS[ls_image]}"
+	local fg_img="${REPLY}"
+	local bg_img="${REPLY/#38;/48;}"
+	local sgr_img="00;${fg_img}"
+
+	_prompt_sgr_fg "${ZSH_PROMPT_COLORS[ls_media]}"
+	local sgr_med="00;${REPLY}"
+
+	_prompt_sgr_fg "${ZSH_PROMPT_COLORS[ls_doc]}"
+	local fg_doc="${REPLY}"
+	local sgr_doc="00;${fg_doc}"
+
+	_prompt_sgr_fg "${ZSH_PROMPT_COLORS[ls_dim]}"
+	local sgr_dim="00;${REPLY}"
+
+	local sgr_fifo sgr_blk sgr_orphan sgr_su sgr_sg sgr_tw sgr_ow sgr_st
+	if [[ "${ZSH_PROMPT_THEME}" == "classic" ]]; then
+		sgr_fifo="48;5;230;38;5;136;01"
+		sgr_blk="48;5;230;38;5;244;01"
+		sgr_orphan="48;5;235;38;5;160"
+		sgr_su="48;5;160;38;5;230"
+		sgr_sg="48;5;136;38;5;230"
+		sgr_tw="48;5;64;38;5;230"
+		sgr_ow="48;5;235;38;5;33"
+		sgr_st="48;5;33;38;5;230"
+	else
+		local bg_surface="48;2;31;35;53"
+		local fg_dark="38;2;26;27;38"
+		_prompt_sgr_fg "${ZSH_PROMPT_COLORS[exit]}"
+		local fg_exit="${REPLY}"
+		_prompt_sgr_bg "${ZSH_PROMPT_COLORS[err]}"
+		local bg_err="${REPLY}"
+
+		sgr_fifo="${bg_surface};${fg_img};01"
+		sgr_blk="${bg_surface};${fg_doc};01"
+		sgr_orphan="${bg_surface};${fg_exit};01"
+		sgr_su="${bg_err};${fg_dark}"
+		sgr_sg="${bg_img};${fg_dark}"
+		sgr_tw="${bg_exec};${fg_dark}"
+		sgr_ow="${bg_surface};${fg_dir}"
+		sgr_st="${bg_dir};${fg_dark}"
+	fi
+
+	local -a entries=(
+		"rs=0"
+		"no=${sgr_norm}"
+		"di=${sgr_dir}"
+		"ln=${sgr_link}"
+		"mh=00"
+		"pi=${sgr_fifo}"
+		"so=${sgr_fifo}"
+		"do=${sgr_fifo}"
+		"bd=${sgr_blk}"
+		"cd=${sgr_blk}"
+		"or=${sgr_orphan}"
+		"mi=${sgr_orphan}"
+		"su=${sgr_su}"
+		"sg=${sgr_sg}"
+		"ca=30;41"
+		"tw=${sgr_tw}"
+		"ow=${sgr_ow}"
+		"st=${sgr_st}"
+		"ex=${sgr_exec}"
+	)
+
+	local ext
+	for ext in .tar .tgz .arj .taz .lzh .lzma .tlz .txz .zip .z .Z .dz .gz .lz .xz .bz2 .bz .tbz .tbz2 .tz .zst .tzst .deb .rpm .jar .rar .ace .zoo .cpio .7z .rz .apk .gem .whl .crate; do
+		entries+=("*${ext}=${sgr_arc}")
+	done
+
+	for ext in .jpg .JPG .jpeg .gif .bmp .pbm .pgm .ppm .tga .xbm .xpm .tif .tiff .png .PNG .svg .svgz .webp .mng .pcx .dl .xcf .xwd .yuv .cgm .emf .eps .CR2 .ico; do
+		entries+=("*${ext}=${sgr_img}")
+	done
+
+	for ext in .tex .rdf .owl .n3 .ttl .nt .torrent .xml .nfo .md .ini .yml .yaml .toml .json .kdl .nix .rs .lua .py .cfg .conf .h .hpp .c .cpp .cxx .cc .objc .sqlite .go .sql .csv; do
+		entries+=("*${ext}=${sgr_doc}")
+	done
+	for ext in Makefile Justfile Rakefile Dockerfile build.xml rc 1 README README.txt readme.txt README.markdown; do
+		entries+=("*${ext}=${sgr_doc}")
+	done
+
+	for ext in .log .bak .aux .lof .lol .lot .out .toc .bbl .blg .part .incomplete .swp .tmp .temp .o .pyc .class .cache .lock; do
+		entries+=("*${ext}=${sgr_dim}")
+	done
+	entries+=("*~=${sgr_dim}" "*#=${sgr_dim}")
+
+	for ext in .aac .au .flac .mid .midi .mka .mp3 .mpc .ogg .opus .ra .wav .m4a .axa .oga .spx .xspf .mov .MOV .mpg .mpeg .m2v .mkv .ogm .mp4 .m4v .mp4v .vob .qt .nuv .wmv .asf .rm .rmvb .flc .avi .fli .flv .gl .m2ts .divx .webm .axv .anx .ogv .ogx; do
+		entries+=("*${ext}=${sgr_med}")
+	done
+
+	export LS_COLORS="${(j.:.)entries}:"
+	export ZLS_COLORS="${LS_COLORS}"
+	export LSCOLORS="ExGxFxdaCxDaDahbadacec"
 }
 
 
@@ -289,6 +472,8 @@ function _prompt_build_strings() {
 	PROMPT="%B
 ${cloud_prompt}${user_host} ${conn_at} ${ssh_prompt}${vm_host}${user_hostname} ${conn_in} ${current_dir}${git_info}
 ${command_prompt}%b"
+
+	_prompt_apply_ls_colors
 }
 
 function _prompt_render_sample() {
@@ -313,6 +498,11 @@ function _prompt_render_sample() {
 	local c_exit="${ZSH_PROMPT_COLORS[exit]}"
 	local c_ok="${ZSH_PROMPT_COLORS[ok]}"
 	local c_err="${ZSH_PROMPT_COLORS[err]}"
+	local c_arc="${ZSH_PROMPT_COLORS[ls_archive]}"
+	local c_img="${ZSH_PROMPT_COLORS[ls_image]}"
+	local c_med="${ZSH_PROMPT_COLORS[ls_media]}"
+	local c_doc="${ZSH_PROMPT_COLORS[ls_doc]}"
+	local c_dim="${ZSH_PROMPT_COLORS[ls_dim]}"
 
 	local active_marker=""
 	if [[ "${ZSH_PROMPT_THEME}" == "${saved_theme}" ]]; then
@@ -320,13 +510,14 @@ function _prompt_render_sample() {
 	fi
 
 	print -P "%B%F{#c0caf5}━━━ ${ZSH_PROMPT_THEME}${active_marker} %F{#565f89}— ${ZSH_PROMPT_THEME_DESC[${ZSH_PROMPT_THEME}]}%f%b"
-	print -P "  %F{#565f89}Swatches:%f %B%F{${c_user}}██ user%f  %F{${c_host}}██ host%f  %F{${c_ssh}}██ ssh%f  %F{${c_dir}}██ dir%f  %F{${c_branch}}██ branch%f  %F{${c_status}}██ status%f  %F{${c_exit}}██ exit%f%b"
+	print -P "  %F{#565f89}Swatches:%f %B%F{${c_user}}██ user/di%f  %F{${c_host}}██ host/ln%f  %F{${c_ssh}}██ ssh%f  %F{${c_dir}}██ dir/ex%f  %F{${c_branch}}██ branch%f  %F{${c_status}}██ status%f  %F{${c_exit}}██ exit%f%b"
 	echo ""
 
 	local left_a="%B%F{${c_user}}colnnelson%f %F{${c_conn}}at%f %F{${c_host}}alecto%f %F{${c_conn}}in%f %F{${c_dir}}~/Development/src/nix-config%f %F{${c_on}}on%f %F{${c_branch}}main%f%F{${c_status}} [!+]%f%b"
 	local right_a="%F{${c_conn}}[%f %B%F{${c_ok}}Ω%f%b %F{${c_conn}}]%f"
 	print -P "  ${left_a}        ${right_a}"
-	print -P "  %B%F{${c_sym}}∮ %f%b%F{#a9b1d6}jj status%f"
+	print -P "  %B%F{${c_sym}}∮ %f%b%F{#a9b1d6}ls -F%f"
+	print -P "  %B%F{${c_user}}dotfiles%f%b/  %F{${c_host}}result%f@  %F{${c_dir}}build.sh%f*  %F{${c_arc}}pkg.tar.zst%f  %F{${c_img}}wall.png%f  %F{${c_med}}demo.mp4%f  %F{${c_doc}}README.md%f  %F{${c_dim}}build.log%f  %K{#1f2335}%B%F{${c_exit}}broken%f%b%k@"
 	echo ""
 
 	local left_b="%B%F{${c_user}}colnnelson%f %F{${c_conn}}at%f %F{${c_ssh}}Φ%f ☁️ %F{${c_host}}cytherea%f %F{${c_conn}}in%f %F{${c_dir}}~/fuchsia%f %F{${c_on}}on%f %F{${c_branch}}fx-branch%f%F{${c_status}} [?]%f%b"
@@ -401,7 +592,7 @@ function prompt_theme() {
 						--prompt="Prompt Theme > " \
 						--header="Current: ${ZSH_PROMPT_THEME} (Enter to apply, Esc to cancel)" \
 						--preview="zsh -c 'source ${(q)ZSH_PROMPT_SCRIPT_PATH} && _prompt_render_sample {3}'" \
-						--preview-window="down:11:wrap" | awk '{print $3}'
+						--preview-window="down:12:wrap" | awk '{print $3}'
 				)
 				if [[ -n "${selected}" ]]; then
 					prompt_theme "${selected}"
@@ -425,7 +616,7 @@ function prompt_theme() {
 	if (( ! quiet )); then
 		mkdir -p "${ZSH_PROMPT_THEME_STATE_FILE:h}" 2>/dev/null
 		printf '%s\n' "${ZSH_PROMPT_THEME}" > "${ZSH_PROMPT_THEME_STATE_FILE}" 2>/dev/null || true
-		print -P "%F{#565f89}Switched prompt theme to%f %B%F{${ZSH_PROMPT_COLORS[user]}}${ZSH_PROMPT_THEME}%f%b"
+		print -P "%F{#565f89}Switched prompt & ls theme to%f %B%F{${ZSH_PROMPT_COLORS[user]}}${ZSH_PROMPT_THEME}%f%b"
 	fi
 }
 
@@ -460,5 +651,3 @@ if [[ -z "${ZSH_PROMPT_THEME}" ]]; then
 fi
 
 _prompt_build_strings
-
-

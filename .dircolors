@@ -1,15 +1,9 @@
-
-# Dark 256 color solarized theme for the color GNU ls utility.
-# Used and tested with dircolors (GNU coreutils) 8.5
-#
-# @author  {@link http://sebastian.tramp.name Sebastian Tramp}
-# @license http://sam.zoy.org/wtfpl/  Do What The Fuck You Want To Public License (WTFPL)
-#
-# More Information at
-# https://github.com/seebi/dircolors-solarized
+# Tokyo Night (Storm-Neon) 24-bit truecolor theme for GNU ls / dircolors.
+# Harmonized with the Zsh prompt palette in ~/.config/zsh/prompt.
 
 # Term Section
 TERM Eterm
+TERM alacritty
 TERM ansi
 TERM color-xterm
 TERM con132x25
@@ -30,9 +24,12 @@ TERM dvtm
 TERM dvtm-256color
 TERM eterm-color
 TERM fbterm
+TERM foot
+TERM foot-extra
 TERM gnome
 TERM gnome-256color
 TERM jfbterm
+TERM kitty
 TERM konsole
 TERM konsole-256color
 TERM kterm
@@ -70,6 +67,7 @@ TERM st-meta-256color
 TERM tmux
 TERM tmux-256color
 TERM vt100
+TERM wezterm
 TERM xterm
 TERM xterm-16color
 TERM xterm-256color
@@ -77,227 +75,220 @@ TERM xterm-256color-italic
 TERM xterm-88color
 TERM xterm-color
 TERM xterm-debian
+TERM xterm-ghostty
+TERM xterm-kitty
 TERM xterm-termite
 
-## Documentation
-#
-# standard colors
-#
-# Below are the color init strings for the basic file types. A color init
-# string consists of one or more of the following numeric codes:
-# Attribute codes:
-# 00=none 01=bold 04=underscore 05=blink 07=reverse 08=concealed
-# Text color codes:
-# 30=black 31=red 32=green 33=yellow 34=blue 35=magenta 36=cyan 37=white
-# Background color codes:
-# 40=black 41=red 42=green 43=yellow 44=blue 45=magenta 46=cyan 47=white
-#
-#
-# 256 color support
-# see here: http://www.mail-archive.com/bug-coreutils@gnu.org/msg11030.html)
-#
-# Text 256 color coding:
-# 38;5;COLOR_NUMBER
-# Background 256 color coding:
-# 48;5;COLOR_NUMBER
+## Special files (Tokyo Night Storm-Neon)
+# DIR     = #7aa2f7 (122;162;247) — matches prompt user
+# LINK    = #41a6b5 (65;166;181)  — matches prompt host
+# EXEC    = #9ece6a (158;206;106) — matches prompt dir
+# ORPHAN  = #ff007c (255;0;124) on #1f2335 (31;35;53) — matches prompt exit
 
-## Special files
+NORMAL 00;38;2;192;202;245
+RESET 0
+DIR 01;38;2;122;162;247
+LINK 00;38;2;65;166;181
+MULTIHARDLINK 00
+FIFO 48;2;31;35;53;38;2;224;175;104;01
+SOCK 48;2;31;35;53;38;2;224;175;104;01
+DOOR 48;2;31;35;53;38;2;224;175;104;01
+BLK 48;2;31;35;53;38;2;120;124;153;01
+CHR 48;2;31;35;53;38;2;120;124;153;01
+ORPHAN 48;2;31;35;53;38;2;255;0;124;01
+MISSING 48;2;31;35;53;38;2;255;0;124;01
+SETUID 48;2;219;75;75;38;2;26;27;38
+SETGID 48;2;224;175;104;38;2;26;27;38
+CAPABILITY 48;2;219;75;75;38;2;26;27;38
+STICKY_OTHER_WRITABLE 48;2;158;206;106;38;2;26;27;38
+OTHER_WRITABLE 48;2;31;35;53;38;2;122;162;247
+STICKY 48;2;122;162;247;38;2;26;27;38
+EXEC 00;38;2;158;206;106
 
-NORMAL 00;38;5;244 # no color code at all
-#FILE 00 # regular file: use no color at all
-RESET 0 # reset to "normal" color
-DIR 00;38;5;33 # directory 01;34
-LINK 00;38;5;37 # symbolic link. (If you set this to 'target' instead of a
- # numerical value, the color is as for the file pointed to.)
-MULTIHARDLINK 00 # regular file with more than one link
-FIFO 48;5;230;38;5;136;01 # pipe
-SOCK 48;5;230;38;5;136;01 # socket
-DOOR 48;5;230;38;5;136;01 # door
-BLK 48;5;230;38;5;244;01 # block device driver
-CHR 48;5;230;38;5;244;01 # character device driver
-ORPHAN 48;5;235;38;5;160 # symlink to nonexistent file, or non-stat'able file
-SETUID 48;5;160;38;5;230 # file that is setuid (u+s)
-SETGID 48;5;136;38;5;230 # file that is setgid (g+s)
-CAPABILITY 30;41 # file with capability
-STICKY_OTHER_WRITABLE 48;5;64;38;5;230 # dir that is sticky and other-writable (+t,o+w)
-OTHER_WRITABLE 48;5;235;38;5;33 # dir that is other-writable (o+w) and not sticky
-STICKY 48;5;33;38;5;230 # dir with the sticky bit set (+t) and not other-writable
-# This is for files with execute permission:
-EXEC 00;38;5;64
+## Archives or compressed (#9d7cd8 — Tokyo Night Purple)
+.tar    00;38;2;157;124;216
+.tgz    00;38;2;157;124;216
+.arj    00;38;2;157;124;216
+.taz    00;38;2;157;124;216
+.lzh    00;38;2;157;124;216
+.lzma   00;38;2;157;124;216
+.tlz    00;38;2;157;124;216
+.txz    00;38;2;157;124;216
+.zip    00;38;2;157;124;216
+.z      00;38;2;157;124;216
+.Z      00;38;2;157;124;216
+.dz     00;38;2;157;124;216
+.gz     00;38;2;157;124;216
+.lz     00;38;2;157;124;216
+.xz     00;38;2;157;124;216
+.bz2    00;38;2;157;124;216
+.bz     00;38;2;157;124;216
+.tbz    00;38;2;157;124;216
+.tbz2   00;38;2;157;124;216
+.tz     00;38;2;157;124;216
+.zst    00;38;2;157;124;216
+.tzst   00;38;2;157;124;216
+.deb    00;38;2;157;124;216
+.rpm    00;38;2;157;124;216
+.jar    00;38;2;157;124;216
+.rar    00;38;2;157;124;216
+.ace    00;38;2;157;124;216
+.zoo    00;38;2;157;124;216
+.cpio   00;38;2;157;124;216
+.7z     00;38;2;157;124;216
+.rz     00;38;2;157;124;216
+.apk    00;38;2;157;124;216
+.gem    00;38;2;157;124;216
+.whl    00;38;2;157;124;216
+.crate  00;38;2;157;124;216
 
-## Archives or compressed (violet + bold for compression)
-.tar    00;38;5;61
-.tgz    00;38;5;61
-.arj    00;38;5;61
-.taz    00;38;5;61
-.lzh    00;38;5;61
-.lzma   00;38;5;61
-.tlz    00;38;5;61
-.txz    00;38;5;61
-.zip    00;38;5;61
-.z      00;38;5;61
-.Z      00;38;5;61
-.dz     00;38;5;61
-.gz     00;38;5;61
-.lz     00;38;5;61
-.xz     00;38;5;61
-.bz2    00;38;5;61
-.bz     00;38;5;61
-.tbz    00;38;5;61
-.tbz2   00;38;5;61
-.tz     00;38;5;61
-.deb    00;38;5;61
-.rpm    00;38;5;61
-.jar    00;38;5;61
-.rar    00;38;5;61
-.ace    00;38;5;61
-.zoo    00;38;5;61
-.cpio   00;38;5;61
-.7z     00;38;5;61
-.rz     00;38;5;61
-.apk    00;38;5;61
-.gem    00;38;5;61
+## Image formats (#e0af68 — Tokyo Night Amber Gold)
+.jpg    00;38;2;224;175;104
+.JPG    00;38;2;224;175;104
+.jpeg   00;38;2;224;175;104
+.gif    00;38;2;224;175;104
+.bmp    00;38;2;224;175;104
+.pbm    00;38;2;224;175;104
+.pgm    00;38;2;224;175;104
+.ppm    00;38;2;224;175;104
+.tga    00;38;2;224;175;104
+.xbm    00;38;2;224;175;104
+.xpm    00;38;2;224;175;104
+.tif    00;38;2;224;175;104
+.tiff   00;38;2;224;175;104
+.png    00;38;2;224;175;104
+.PNG    00;38;2;224;175;104
+.svg    00;38;2;224;175;104
+.svgz   00;38;2;224;175;104
+.webp   00;38;2;224;175;104
+.mng    00;38;2;224;175;104
+.pcx    00;38;2;224;175;104
+.dl     00;38;2;224;175;104
+.xcf    00;38;2;224;175;104
+.xwd    00;38;2;224;175;104
+.yuv    00;38;2;224;175;104
+.cgm    00;38;2;224;175;104
+.emf    00;38;2;224;175;104
+.eps    00;38;2;224;175;104
+.CR2    00;38;2;224;175;104
+.ico    00;38;2;224;175;104
 
-# Image formats (yellow)
-.jpg    00;38;5;136
-.JPG    00;38;5;136 #stupid but needed
-.jpeg   00;38;5;136
-.gif    00;38;5;136
-.bmp    00;38;5;136
-.pbm    00;38;5;136
-.pgm    00;38;5;136
-.ppm    00;38;5;136
-.tga    00;38;5;136
-.xbm    00;38;5;136
-.xpm    00;38;5;136
-.tif    00;38;5;136
-.tiff   00;38;5;136
-.png    00;38;5;136
-.PNG    00;38;5;136
-.svg    00;38;5;136
-.svgz   00;38;5;136
-.mng    00;38;5;136
-.pcx    00;38;5;136
-.dl     00;38;5;136
-.xcf    00;38;5;136
-.xwd    00;38;5;136
-.yuv    00;38;5;136
-.cgm    00;38;5;136
-.emf    00;38;5;136
-.eps    00;38;5;136
-.CR2    00;38;5;136
-.ico    00;38;5;136
+## Files of special interest (#787c99 — Tokyo Night Storm Grey)
+.tex             00;38;2;120;124;153
+.rdf             00;38;2;120;124;153
+.owl             00;38;2;120;124;153
+.n3              00;38;2;120;124;153
+.ttl             00;38;2;120;124;153
+.nt              00;38;2;120;124;153
+.torrent         00;38;2;120;124;153
+.xml             00;38;2;120;124;153
+*Makefile        00;38;2;120;124;153
+*Justfile        00;38;2;120;124;153
+*Rakefile        00;38;2;120;124;153
+*Dockerfile      00;38;2;120;124;153
+*build.xml       00;38;2;120;124;153
+*rc              00;38;2;120;124;153
+*1               00;38;2;120;124;153
+.nfo             00;38;2;120;124;153
+*README          00;38;2;120;124;153
+*README.txt      00;38;2;120;124;153
+*readme.txt      00;38;2;120;124;153
+.md              00;38;2;120;124;153
+*README.markdown 00;38;2;120;124;153
+.ini             00;38;2;120;124;153
+.yml             00;38;2;120;124;153
+.yaml            00;38;2;120;124;153
+.toml            00;38;2;120;124;153
+.json            00;38;2;120;124;153
+.kdl             00;38;2;120;124;153
+.nix             00;38;2;120;124;153
+.rs              00;38;2;120;124;153
+.lua             00;38;2;120;124;153
+.py              00;38;2;120;124;153
+.cfg             00;38;2;120;124;153
+.conf            00;38;2;120;124;153
+.h               00;38;2;120;124;153
+.hpp             00;38;2;120;124;153
+.c               00;38;2;120;124;153
+.cpp             00;38;2;120;124;153
+.cxx             00;38;2;120;124;153
+.cc              00;38;2;120;124;153
+.objc            00;38;2;120;124;153
+.sqlite          00;38;2;120;124;153
+.go              00;38;2;120;124;153
+.sql             00;38;2;120;124;153
+.csv             00;38;2;120;124;153
 
-# Files of special interest (base1)
-.tex             00;38;5;245
-.rdf             00;38;5;245
-.owl             00;38;5;245
-.n3              00;38;5;245
-.ttl             00;38;5;245
-.nt              00;38;5;245
-.torrent         00;38;5;245
-.xml             00;38;5;245
-*Makefile        00;38;5;245
-*Rakefile        00;38;5;245
-*Dockerfile      00;38;5;245
-*build.xml       00;38;5;245
-*rc              00;38;5;245
-*1               00;38;5;245
-.nfo             00;38;5;245
-*README          00;38;5;245
-*README.txt      00;38;5;245
-*readme.txt      00;38;5;245
-.md              00;38;5;245
-*README.markdown 00;38;5;245
-.ini             00;38;5;245
-.yml             00;38;5;245
-.cfg             00;38;5;245
-.conf            00;38;5;245
-.h               00;38;5;245
-.hpp             00;38;5;245
-.c               00;38;5;245
-.cpp             00;38;5;245
-.cxx             00;38;5;245
-.cc              00;38;5;245
-.objc            00;38;5;245
-.sqlite          00;38;5;245
-.go              00;38;5;245
-.sql             00;38;5;245
-.csv             00;38;5;245
+## Unimportant files: logs, lockfiles, and backups (#565f89 — Tokyo Night Comment Slate)
+.log        00;38;2;86;95;137
+.bak        00;38;2;86;95;137
+.aux        00;38;2;86;95;137
+.lof        00;38;2;86;95;137
+.lol        00;38;2;86;95;137
+.lot        00;38;2;86;95;137
+.out        00;38;2;86;95;137
+.toc        00;38;2;86;95;137
+.bbl        00;38;2;86;95;137
+.blg        00;38;2;86;95;137
+*~          00;38;2;86;95;137
+*#          00;38;2;86;95;137
+.part       00;38;2;86;95;137
+.incomplete 00;38;2;86;95;137
+.swp        00;38;2;86;95;137
+.tmp        00;38;2;86;95;137
+.temp       00;38;2;86;95;137
+.o          00;38;2;86;95;137
+.pyc        00;38;2;86;95;137
+.class      00;38;2;86;95;137
+.cache      00;38;2;86;95;137
+.lock       00;38;2;86;95;137
 
-# "unimportant" files as logs and backups (base01)
-.log        00;38;5;240
-.bak        00;38;5;240
-.aux        00;38;5;240
-.lof        00;38;5;240
-.lol        00;38;5;240
-.lot        00;38;5;240
-.out        00;38;5;240
-.toc        00;38;5;240
-.bbl        00;38;5;240
-.blg        00;38;5;240
-*~          00;38;5;240
-*#          00;38;5;240
-.part       00;38;5;240
-.incomplete 00;38;5;240
-.swp        00;38;5;240
-.tmp        00;38;5;240
-.temp       00;38;5;240
-.o          00;38;5;240
-.pyc        00;38;5;240
-.class      00;38;5;240
-.cache      00;38;5;240
+## Audio formats (#ff9e64 — Tokyo Night Orange)
+.aac    00;38;2;255;158;100
+.au     00;38;2;255;158;100
+.flac   00;38;2;255;158;100
+.mid    00;38;2;255;158;100
+.midi   00;38;2;255;158;100
+.mka    00;38;2;255;158;100
+.mp3    00;38;2;255;158;100
+.mpc    00;38;2;255;158;100
+.ogg    00;38;2;255;158;100
+.opus   00;38;2;255;158;100
+.ra     00;38;2;255;158;100
+.wav    00;38;2;255;158;100
+.m4a    00;38;2;255;158;100
+.axa    00;38;2;255;158;100
+.oga    00;38;2;255;158;100
+.spx    00;38;2;255;158;100
+.xspf   00;38;2;255;158;100
 
-# Audio formats (orange)
-.aac    00;38;5;166
-.au     00;38;5;166
-.flac   00;38;5;166
-.mid    00;38;5;166
-.midi   00;38;5;166
-.mka    00;38;5;166
-.mp3    00;38;5;166
-.mpc    00;38;5;166
-.ogg    00;38;5;166
-.opus   00;38;5;166
-.ra     00;38;5;166
-.wav    00;38;5;166
-.m4a    00;38;5;166
-# http://wiki.xiph.org/index.php/MIME_Types_and_File_Extensions
-.axa    00;38;5;166
-.oga    00;38;5;166
-.spx    00;38;5;166
-.xspf   00;38;5;166
-
-# Video formats (as audio + bold)
-.mov    00;38;5;166
-.MOV    00;38;5;166
-.mpg    00;38;5;166
-.mpeg   00;38;5;166
-.m2v    00;38;5;166
-.mkv    00;38;5;166
-.ogm    00;38;5;166
-.mp4    00;38;5;166
-.m4v    00;38;5;166
-.mp4v   00;38;5;166
-.vob    00;38;5;166
-.qt     00;38;5;166
-.nuv    00;38;5;166
-.wmv    00;38;5;166
-.asf    00;38;5;166
-.rm     00;38;5;166
-.rmvb   00;38;5;166
-.flc    00;38;5;166
-.avi    00;38;5;166
-.fli    00;38;5;166
-.flv    00;38;5;166
-.gl     00;38;5;166
-.m2ts   00;38;5;166
-.divx   00;38;5;166
-.webm   00;38;5;166
-# http://wiki.xiph.org/index.php/MIME_Types_and_File_Extensions
-.axv 00;38;5;166
-.anx 00;38;5;166
-.ogv 00;38;5;166
-.ogx 00;38;5;166
-
-
+## Video formats (#ff9e64 — Tokyo Night Orange)
+.mov    00;38;2;255;158;100
+.MOV    00;38;2;255;158;100
+.mpg    00;38;2;255;158;100
+.mpeg   00;38;2;255;158;100
+.m2v    00;38;2;255;158;100
+.mkv    00;38;2;255;158;100
+.ogm    00;38;2;255;158;100
+.mp4    00;38;2;255;158;100
+.m4v    00;38;2;255;158;100
+.mp4v   00;38;2;255;158;100
+.vob    00;38;2;255;158;100
+.qt     00;38;2;255;158;100
+.nuv    00;38;2;255;158;100
+.wmv    00;38;2;255;158;100
+.asf    00;38;2;255;158;100
+.rm     00;38;2;255;158;100
+.rmvb   00;38;2;255;158;100
+.flc    00;38;2;255;158;100
+.avi    00;38;2;255;158;100
+.fli    00;38;2;255;158;100
+.flv    00;38;2;255;158;100
+.gl     00;38;2;255;158;100
+.m2ts   00;38;2;255;158;100
+.divx   00;38;2;255;158;100
+.webm   00;38;2;255;158;100
+.axv    00;38;2;255;158;100
+.anx    00;38;2;255;158;100
+.ogv    00;38;2;255;158;100
+.ogx    00;38;2;255;158;100
