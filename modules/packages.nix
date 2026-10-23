@@ -35,7 +35,6 @@
       ripgrep # Modern grep replacement
       tio # Serial device I/O tool
       tmux # Terminal multiplexer
-      trippy # Network path diagnostic TUI (combines traceroute and ping/mtr)
       viddy # Modern watch command
       yazi # Terminal file explorer
       zellij # Terminal workspace and multiplexer
