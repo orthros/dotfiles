@@ -179,6 +179,14 @@ bindsym $mod+Shift+equal scratchpad show
 
 # auto run commands
 
+# Idle daemon (locks screen after 5m, turns off display after 10m, locks before sleep)
+exec swayidle -w \
+    timeout 300 'swaylock' \
+    timeout 600 'swaymsg "output * power off"' \
+    resume 'swaymsg "output * power on"' \
+    before-sleep 'swaylock' \
+    lock 'swaylock'
+
 # Sway background
 output "*" background ${HOME}/.config/wallpapers/cherry_blossoms.jpg fill
 
