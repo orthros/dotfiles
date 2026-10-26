@@ -1,0 +1,129 @@
+{
+  "document": {
+    "block_prefix": "\n",
+    "block_suffix": "\n",
+    "color": "@fg@",
+    "margin": 2
+  },
+  "block_quote": {
+    "color": "@fgMuted@",
+    "indent": 1,
+    "indent_token": "│ "
+  },
+  "heading": {
+    "block_suffix": "\n",
+    "color": "@accent@",
+    "bold": true
+  },
+  "h1": {
+    "prefix": "# ",
+    "color": "@accent@",
+    "bold": true
+  },
+  "h2": {
+    "prefix": "## ",
+    "color": "@teal@",
+    "bold": true
+  },
+  "h3": {
+    "prefix": "### ",
+    "color": "@lavender@",
+    "bold": true
+  },
+  "h4": {
+    "prefix": "#### ",
+    "color": "@aqua@",
+    "bold": true
+  },
+  "h5": {
+    "prefix": "##### ",
+    "color": "@amber@",
+    "bold": true
+  },
+  "h6": {
+    "prefix": "###### ",
+    "color": "@slate@",
+    "bold": false
+  },
+  "strikethrough": {
+    "crossed_out": true,
+    "color": "@slate@"
+  },
+  "emph": {
+    "italic": true,
+    "color": "@fgMuted@"
+  },
+  "strong": {
+    "bold": true,
+    "color": "@amber@"
+  },
+  "horizontal_rule": {
+    "color": "@slate@",
+    "format": "\n────────\n"
+  },
+  "item": {
+    "block_prefix": "• "
+  },
+  "enumeration": {
+    "block_prefix": ". "
+  },
+  "task": {
+    "ticked": "[✓] ",
+    "unticked": "[ ] "
+  },
+  "link": {
+    "color": "@cyan@",
+    "underline": true
+  },
+  "link_text": {
+    "color": "@aqua@",
+    "bold": true
+  },
+  "image": {
+    "color": "@lavender@",
+    "underline": true
+  },
+  "image_text": {
+    "color": "@fgMuted@",
+    "format": "Image: {{.text}} →"
+  },
+  "code": {
+    "prefix": " ",
+    "suffix": " ",
+    "color": "@cyan@",
+    "background_color": "@surfaceHover@"
+  },
+  "code_block": {
+    "color": "@fg@",
+    "margin": 2,
+    "chroma": {
+      "text": { "color": "@fg@" },
+      "error": { "color": "@fg@", "background_color": "@urgent@" },
+      "comment": { "color": "@slate@" },
+      "comment_preproc": { "color": "@teal@" },
+      "keyword": { "color": "@lavender@" },
+      "keyword_reserved": { "color": "@purple@" },
+      "keyword_namespace": { "color": "@cyan@" },
+      "keyword_type": { "color": "@teal@" },
+      "operator": { "color": "@cyan@" },
+      "punctuation": { "color": "@fgMuted@" },
+      "name": { "color": "@fg@" },
+      "name_builtin": { "color": "@cyan@" },
+      "name_tag": { "color": "@accent@" },
+      "name_attribute": { "color": "@lavender@" },
+      "name_class": { "color": "@teal@", "bold": true },
+      "name_constant": { "color": "@orange@" },
+      "name_decorator": { "color": "@amber@" },
+      "name_function": { "color": "@accent@" },
+      "literal_number": { "color": "@orange@" },
+      "literal_string": { "color": "@green@" },
+      "literal_string_escape": { "color": "@lavender@" },
+      "generic_deleted": { "color": "@error@" },
+      "generic_emph": { "italic": true },
+      "generic_inserted": { "color": "@green@" },
+      "generic_strong": { "bold": true },
+      "generic_subheading": { "color": "@teal@" },
+      "background": { "background_color": "@surface@" }
+    }
+  }
+}

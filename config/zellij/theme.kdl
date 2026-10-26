@@ -1,0 +1,17 @@
+theme "dotfiles-theme"
+
+themes {
+    dotfiles-theme {
+        fg "@fg@"
+        bg "@surface@"
+        black "@bg@"
+        red "@urgent@"
+        green "@aqua@"
+        yellow "@amber@"
+        blue "@accent@"
+        magenta "@lavender@"
+        cyan "@teal@"
+        white "@fg@"
+        orange "@orange@"
+    }
+}

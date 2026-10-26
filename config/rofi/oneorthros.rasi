@@ -1,51 +1,30 @@
-/*
- * ROFI Some Dark
- *
- * Based on OneDark.vim (https://github.com/joshdick/onedark.vim)
- *
- * Author: Colin Nelson
- * User: orthros
- *
- */
-
+@import "theme.rasi"
 
 * {
-  black:      #000000;
-  red:        #eb6e67;
-  green:      #95ee8f;
-  yellow:     #f8c456;
-  blue:       #6eaafb;
-  mangenta:   #d886f3;
-  cyan:       #6cdcf7;
-  purple:     #a020f0;
-  emphasis:   #50536b;
-  text:       #dfdfdf;
-  text-alt:   #b2b2b2;
-  fg:         #abb2bf;
-  bg:         #282c34;
-
   spacing: 0;
   background-color: transparent;
-
-  font: "BlexMono Nerd Font Mono 14";
+  font: @font-name;
   text-color: @text;
 }
 
 window {
   transparency: "real";
   fullscreen: false;
-  background-color: #282c34dd;
+  background-color: @bg-window;
+  border: 2px;
+  border-color: @blue;
+  border-radius: 10px;
 }
 
 mainbox {
-  spacing: 30px;
+  spacing: 20px;
   margin: 0%;
-  padding: 30px 30px;
-  border: 1px;
+  padding: 24px 24px;
+  border: 0px;
 }
 
 inputbar {
-  margin: 0px 0px 20px 0px;
+  margin: 0px 0px 12px 0px;
   children: [prompt, textbox-prompt-colon, entry, case-indicator];
 }
 
@@ -64,16 +43,17 @@ entry {
 }
 
 listview {
-  spacing: 5px;
+  spacing: 6px;
   dynamic: true;
+  layout: vertical;
   scrollbar: false;
 }
 
 element {
-  padding: 5px;
+  padding: 8px 12px;
   text-color: @text-alt;
-  highlight: bold #95ee8f; /* green */
-  border-radius: 3px;
+  highlight: bold #9ece6a;
+  border-radius: 6px;
 }
 
 element selected {
@@ -90,15 +70,15 @@ element active, element selected active {
 }
 
 message {
-  padding: 5px;
-  border-radius: 3px;
+  padding: 10px;
+  border-radius: 6px;
   background-color: @emphasis;
   border: 1px;
   border-color: @cyan;
 }
 
 button selected {
-  padding: 5px;
-  border-radius: 3px;
+  padding: 6px;
+  border-radius: 6px;
   background-color: @emphasis;
 }

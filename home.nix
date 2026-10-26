@@ -4,7 +4,7 @@
   imports = [
     ./modules/dotfiles.nix
     ./modules/packages.nix
-    ./modules/theme.nix
+    ./modules/theme
   ];
 
   # Let Home Manager install and manage itself.

@@ -90,7 +90,7 @@ function cdt() {
 }
 
 # fzf configuration (backed by fd; colors provided by ~/.config/theme/colors.sh
-# when managed by modules/theme.nix, falling back to cherry-blossom defaults)
+# when managed by modules/theme, falling back to cherry-blossom defaults)
 export FZF_DEFAULT_COMMAND='fd --type f --hidden --follow --exclude .git --exclude .jj'
 export FZF_CTRL_T_COMMAND="$FZF_DEFAULT_COMMAND"
 export FZF_ALT_C_COMMAND='fd --type d --hidden --follow --exclude .git --exclude .jj'

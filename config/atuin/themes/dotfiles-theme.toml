@@ -1,0 +1,12 @@
+[theme]
+name = "dotfiles-theme"
+
+[colors]
+AlertInfo = "@aqua@"
+AlertWarn = "@amber@"
+AlertError = "@urgent@"
+Annotation = "@slate@"
+Base = "@fg@"
+Guidance = "@fgMuted@"
+Important = "@accent@"
+Title = "@teal@"
