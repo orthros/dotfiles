@@ -205,4 +205,6 @@ include ~/.config/sway/theme.conf
 set $opacity 0.9
 for_window [class=".*"] opacity $opacity
 for_window [app_id=".*"] opacity $opacity
+for_window [app_id="google-chrome"] opacity 1.0
+for_window [class="Google-chrome"] opacity 1.0
 
