@@ -1,22 +1,30 @@
 # sway config file (v4)
+
+# This setups the sway session properly
+include /etc/sway/config.d/*
+
 #
 # Please see http://i3wm.org/docs/userguide.html for a complete reference!
 
 set $mod Mod4
-# Use alacritty for terminal
 set $term alacritty
 set $menu rofi -show run -theme oneorthros.rasi
-set $lockcmd swaylock
+set $locker sh -c 'if command -v sway-lock-session >/dev/null 2>&1; then exec sway-lock-session; else exec swaylock; fi'
 
-# Font for window titles. Will also be used by the bar unless a different font
-# is used in the bar {} block below.
-# This font is widely installed, provides lots of unicode glyphs, right-to-left
-# text rendering and scalability on retina/hidpi displays (thanks to pango).
-# font pango:Monospace 12
+seat seat0 hide_cursor when-typing enable
+
 font pango:BlexMono Nerd Font Mono 12
 
 # HiDPI for sway
-output eDP-1 scale 1.75
+# output eDP-1 scale 1
+
+# Inputs for sway
+# Reverse scroll
+# input "2:7:SynPS/2_Synaptics_TouchPad" {
+#    natural_scroll enabled
+#    left_handed disabled
+#    pointer_accel 0.9
+# }
 
 # Use Mouse+$mod to drag floating windows to their wanted position
 floating_modifier $mod
@@ -30,6 +38,10 @@ bindsym $mod+d exec $menu
 # kill focused window
 bindsym $mod+Shift+q kill
 
+# Strip titlebars and apply 2px borders (including on existing windows during config reload)
+for_window [all] border pixel 2
+
+# spotify: no border
 for_window [class="^Spotify$"] border none
 for_window [class="^Spotify Premium$"] border none
 
@@ -38,12 +50,12 @@ for_window [class="Gimp"] floating enable
 for_window [app_id="(?i).*pavucontrol.*"] floating enable
 for_window [class="(?i).*pavucontrol.*"] floating enable
 
-# Strip titlebars and apply 2px borders (including on existing windows during config reload)
-for_window [all] border pixel 2
-
-
 # lock screen
-bindsym $mod+l exec $lockcmd -c 111111
+bindsym $mod+l exec $locker
+
+# Google Chrome
+bindsym $mod+i exec "google-chrome-stable --incognito"
+bindsym $mod+g exec "google-chrome-stable"
 
 # change focus
 bindsym $mod+j focus left
@@ -51,8 +63,8 @@ bindsym $mod+k focus down
 bindsym $mod+semicolon focus right
 
 # move to monitor
-# bindsym $mod+Shift+Left move workspace to output left
-# bindsym $mod+Shift+Right move workspace to output right
+bindsym $mod+Shift+Left move workspace to output left
+bindsym $mod+Shift+Right move workspace to output right
 
 # alternatively, you can use the cursor keys:
 bindsym $mod+Left focus left
@@ -67,13 +79,13 @@ bindsym $mod+Shift+l move up
 bindsym $mod+Shift+semicolon move right
 
 # alternatively, you can use the cursor keys:
-bindsym $mod+Shift+Left move left
+# bindsym $mod+Shift+Left move left
 bindsym $mod+Shift+Down move down
 bindsym $mod+Shift+Up move up
-bindsym $mod+Shift+Right move right
+# bindsym $mod+Shift+Right move right
 
 # split in horizontal orientation
-bindsym $mod+bar split h
+bindsym $mod+backslash split h
 
 # split in vertical orientation
 bindsym $mod+minus split v
@@ -139,11 +151,10 @@ bindsym Shift+Print exec "grimshot copy area"
 
 # reload the configuration file
 bindsym $mod+Shift+c reload
-# exit sway (logs you out of your wayland session)
+# restart sway inplace (preserves your layout/session)
+bindsym $mod+Shift+r restart
+# exit sway (logs you out of your Wayland session)
 bindsym $mod+Shift+e exit
-
-# Open up incognito mode
-bindsym $mod+I exec "google-chrome-stable --incognito"
 
 # resize window (you can also use the mouse for that)
 mode "resize" {
@@ -171,6 +182,7 @@ mode "resize" {
 
 bindsym $mod+r mode "resize"
 
+# Use waybar for bar
 bar swaybar_command waybar
 
 # Scratchpad
@@ -179,19 +191,27 @@ bindsym $mod+Shift+equal scratchpad show
 
 # auto run commands
 
-# Idle daemon (locks screen after 5m, turns off display after 10m, locks before sleep)
-exec swayidle -w \
-    timeout 300 'swaylock' \
-    timeout 600 'swaymsg "output * power off"' \
-    resume 'swaymsg "output * power on"' \
-    before-sleep 'swaylock' \
-    lock 'swaylock'
+# Notification dismissal bindings (mako, kanshi, cliphist, and swayidle are
+# supervised by systemd user units under sway-session.target when present).
+bindsym Ctrl+Space exec makoctl dismiss
+bindsym Ctrl+Shift+Space exec makoctl dismiss --all
 
 # Sway background
 output "*" background ${HOME}/.config/wallpapers/cherry_blossoms.jpg fill
 
-# Mako for notifications
-exec mako
+# Clipboard history selector
+bindsym $mod+p exec cliphist list | rofi -dmenu -theme oneorthros.rasi | cliphist decode | wl-copy
+
+# Synchronize Wayland session environment (systemd + D-Bus) and manage sway-session.target and desktop portals
+exec_always sh -c 'systemctl --user import-environment DISPLAY WAYLAND_DISPLAY SWAYSOCK XDG_CURRENT_DESKTOP; dbus-update-activation-environment --systemd DISPLAY WAYLAND_DISPLAY SWAYSOCK XDG_CURRENT_DESKTOP 2>/dev/null || true; busctl --user call org.freedesktop.DBus /org/freedesktop/DBus org.freedesktop.DBus ReloadConfig >/dev/null 2>&1 || true; systemctl --user start sway-session.target 2>/dev/null || true; systemctl --user restart xdg-desktop-portal.service xdg-desktop-portal-wlr.service 2>/dev/null || true'
+exec sh -c '(swaymsg -t subscribe "[\"shutdown\"]" || /usr/bin/swaymsg -t subscribe "[\"shutdown\"]") >/dev/null 2>&1; systemctl --user stop sway-session.target 2>/dev/null || true; systemctl --user unset-environment DISPLAY WAYLAND_DISPLAY SWAYSOCK'
+exec sh -c 'if ! systemctl --user cat sway-session.target >/dev/null 2>&1; then mako & swayidle -w timeout 300 "swaylock" timeout 600 "swaymsg \"output * power off\"" resume "swaymsg \"output * power on\"" before-sleep "swaylock" lock "swaylock" & fi'
+
+# Clamshell mode
+set $laptop eDP-1
+bindswitch --reload --locked lid:on output $laptop disable
+bindswitch --reload --locked lid:off output $laptop enable
+
 
 # Gaps & Borders
 gaps inner 10
@@ -199,12 +219,14 @@ default_border pixel 2
 default_floating_border pixel 2
 hide_edge_borders --i3 none
 
-# Window border & titlebar palette (generated by modules/theme)
-include ~/.config/sway/theme.conf
-
 set $opacity 0.9
 for_window [class=".*"] opacity $opacity
 for_window [app_id=".*"] opacity $opacity
 for_window [app_id="google-chrome"] opacity 1.0
 for_window [class="Google-chrome"] opacity 1.0
 
+# Window border & titlebar palette (generated by modules/theme)
+include ~/.config/sway/theme.conf
+
+# Optional machine-local drop-in overrides
+include ~/.config/sway/config.d/*.conf

@@ -1,4 +1,9 @@
-{ config, lib, pkgs, ... }:
+{
+  config,
+  lib,
+  pkgs,
+  ...
+}:
 
 let
   cfg = config.dotfiles.theme;
@@ -8,14 +13,33 @@ let
   stripHash = c: lib.removePrefix "#" c;
 
   hexCharToInt = {
-    "0" = 0; "1" = 1; "2" = 2; "3" = 3; "4" = 4; "5" = 5; "6" = 6; "7" = 7;
-    "8" = 8; "9" = 9; "a" = 10; "b" = 11; "c" = 12; "d" = 13; "e" = 14; "f" = 15;
-    "A" = 10; "B" = 11; "C" = 12; "D" = 13; "E" = 14; "F" = 15;
+    "0" = 0;
+    "1" = 1;
+    "2" = 2;
+    "3" = 3;
+    "4" = 4;
+    "5" = 5;
+    "6" = 6;
+    "7" = 7;
+    "8" = 8;
+    "9" = 9;
+    "a" = 10;
+    "b" = 11;
+    "c" = 12;
+    "d" = 13;
+    "e" = 14;
+    "f" = 15;
+    "A" = 10;
+    "B" = 11;
+    "C" = 12;
+    "D" = 13;
+    "E" = 14;
+    "F" = 15;
   };
-  hexByteToInt = s:
-    (hexCharToInt.${builtins.substring 0 1 s}) * 16
-    + (hexCharToInt.${builtins.substring 1 1 s});
-  hexToAnsiRgb = hex:
+  hexByteToInt =
+    s: hexCharToInt.${builtins.substring 0 1 s} * 16 + hexCharToInt.${builtins.substring 1 1 s};
+  hexToAnsiRgb =
+    hex:
     let
       h = stripHash hex;
       r = toString (hexByteToInt (builtins.substring 0 2 h));
@@ -82,19 +106,20 @@ let
   tokenNames = builtins.attrNames replacements;
   tokenValues = builtins.attrValues replacements;
 
-  renderTemplate = path:
-    builtins.replaceStrings tokenNames tokenValues (builtins.readFile path);
+  renderTemplate = path: builtins.replaceStrings tokenNames tokenValues (builtins.readFile path);
 
   gtkCss = renderTemplate ../../config/gtk/gtk.css;
   gtkSettingsIni = renderTemplate ../../config/gtk/settings.ini;
 
   themeScss = pkgs.writeTextDir "_theme.scss" (renderTemplate ../../config/waybar/_theme.scss);
 
-  mkColorOption = name: desc: lib.mkOption {
-    type = lib.types.str;
-    default = activePreset.${name};
-    description = desc;
-  };
+  mkColorOption =
+    name: desc:
+    lib.mkOption {
+      type = lib.types.str;
+      default = activePreset.${name};
+      description = desc;
+    };
 in
 {
   options.dotfiles.theme = {
@@ -149,9 +174,7 @@ in
 
       # Tmux base configuration (.tmux.conf) layered with config/tmux/theme.conf
       ".tmux.conf".text =
-        builtins.readFile ../../.tmux.conf
-        + "\n"
-        + renderTemplate ../../config/tmux/theme.conf;
+        builtins.readFile ../../.tmux.conf + "\n" + renderTemplate ../../config/tmux/theme.conf;
 
       # X11 / Xwayland Xresources 16-color palette + base .Xresources settings
       ".Xresources".text =
@@ -166,16 +189,14 @@ in
 
       # 2. Waybar stylesheet compiled with injected _theme.scss variables
       "waybar/style.css".source =
-        pkgs.runCommand "waybar-style.css" { nativeBuildInputs = [ pkgs.dart-sass ]; } ''
-          sass --no-source-map --load-path=${themeScss} ${../../config/waybar/style.scss} $out
-        '';
+        pkgs.runCommand "waybar-style.css" { nativeBuildInputs = [ pkgs.dart-sass ]; }
+          ''
+            sass --no-source-map --load-path=${themeScss} ${../../config/waybar/style.scss} $out
+          '';
 
       # 3. Mako notification daemon base config layered with theme rules
       "mako/config" = {
-        text =
-          builtins.readFile ../../config/mako/config
-          + "\n"
-          + renderTemplate ../../config/mako/theme;
+        text = builtins.readFile ../../config/mako/config + "\n" + renderTemplate ../../config/mako/theme;
         onChange = "/usr/bin/makoctl reload >/dev/null 2>&1 || true";
       };
 
@@ -200,8 +221,26 @@ in
 
       "theme/colors.json".text = builtins.toJSON {
         inherit (cfg)
-          preset bg surface surfaceAlt surfaceHover fg fgMuted slate
-          accent teal cyan lavender purple green aqua amber orange urgent error;
+          preset
+          bg
+          surface
+          surfaceAlt
+          surfaceHover
+          fg
+          fgMuted
+          slate
+          accent
+          teal
+          cyan
+          lavender
+          purple
+          green
+          aqua
+          amber
+          orange
+          urgent
+          error
+          ;
       };
 
       # 9. btop resource monitor custom theme (~/.config/btop/themes/dotfiles-theme.theme)
@@ -226,9 +265,7 @@ in
 
       # 15. Zathura PDF viewer base configuration layered with theme colors
       "zathura/zathurarc".text =
-        builtins.readFile ../../config/zathura/zathurarc
-        + "\n"
-        + renderTemplate ../../config/zathura/theme;
+        builtins.readFile ../../config/zathura/zathurarc + "\n" + renderTemplate ../../config/zathura/theme;
 
       # 16. Neovim tokyonight.nvim + lualine theme synchronization (~/.config/nvim/after/plugin/dotfiles_theme.lua)
       "nvim/after/plugin/dotfiles_theme.lua".text =
@@ -241,14 +278,14 @@ in
       "gtk-4.0/settings.ini".text = gtkSettingsIni;
 
       # Live-reload Herdr's running server whenever ~/.config/herdr/config.toml changes
-      "herdr/config.toml".onChange =
-        lib.mkIf (config.programs.herdr.enable && config.programs.herdr.package != null)
-          "${lib.getExe config.programs.herdr.package} server reload-config >/dev/null 2>&1 || true";
+      "herdr/config.toml".onChange = lib.mkIf (
+        config.programs.herdr.enable && config.programs.herdr.package != null
+      ) "${lib.getExe config.programs.herdr.package} server reload-config >/dev/null 2>&1 || true";
     };
 
     # 18. Herdr terminal multiplexer custom theme (~/.config/herdr/config.toml [theme.custom])
     programs.herdr.settings.theme.custom = {
-      accent = cfg.accent;
+      inherit (cfg) accent green teal;
       panel_bg = cfg.bg;
       sidebar_bg = cfg.surface;
       active_row_bg = cfg.surfaceHover;
@@ -261,11 +298,9 @@ in
       text = cfg.fg;
       subtext0 = cfg.fgMuted;
       mauve = cfg.lavender;
-      green = cfg.green;
       yellow = cfg.amber;
       red = cfg.urgent;
       blue = cfg.accent;
-      teal = cfg.teal;
       peach = cfg.orange;
     };
 

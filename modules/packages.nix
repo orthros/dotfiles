@@ -1,4 +1,9 @@
-{ config, lib, pkgs, ... }:
+{
+  config,
+  lib,
+  pkgs,
+  ...
+}:
 
 {
   options.dotfiles.jujutsu.enable = lib.mkOption {
@@ -10,39 +15,46 @@
   config = {
     # Packages to install in the user profile via Home Manager.
     # Add or uncomment CLI tools, development dependencies, and applications here.
-    home.packages = (with pkgs; [
-      # Basic CLI utilities & modern replacements
-      bandwhich # Per-process/connection network bandwidth monitor
-      btop # Resource monitor (replaces htop)
-      cyme # Modern USB bus & topology viewer (replaces lsusb)
-      difftastic # Structural AST diff tool
-      direnv # Per-directory environment loader
-      duf # Modern df replacement
-      dust # Modern du replacement
-      fastfetch # System information fetcher
-      fd # Modern find replacement
-      fzf # Command-line fuzzy finder (replaces peco)
-      glow # Terminal markdown renderer
-      jq # Command-line JSON processor
-      just # Command runner for project workflows
-      mergiraf # Structural AST merge tool
-      mise # Polyglot tool version & environment manager
-      nerd-fonts.blex-mono # IBM Plex Mono Nerd Font
-      nerd-fonts.fira-code # Fira Code Nerd Font
-      nh # Nix CLI helper
-      nix-melt # Ranger-like viewer for flake.lock
-      procs # Modern process viewer with tree & socket mapping (replaces ps)
-      ripgrep # Modern grep replacement
-      tio # Serial device I/O tool
-      tmux # Terminal multiplexer
-      viddy # Modern watch command
-      yazi # Terminal file explorer
-      zellij # Terminal workspace and multiplexer
-    ]) ++ lib.optionals pkgs.stdenv.hostPlatform.isLinux (with pkgs; [
-      brightnessctl # Backlight brightness control for Sway
-      pavucontrol # PulseAudio / PipeWire volume control GUI for Waybar
-    ]) ++ lib.optionals config.dotfiles.jujutsu.enable [
-      pkgs.jujutsu # Git-compatible VCS
-    ];
+    home.packages =
+      (with pkgs; [
+        # Basic CLI utilities & modern replacements
+        bandwhich # Per-process/connection network bandwidth monitor
+        btop # Resource monitor (replaces htop)
+        cyme # Modern USB bus & topology viewer (replaces lsusb)
+        difftastic # Structural AST diff tool
+        direnv # Per-directory environment loader
+        duf # Modern df replacement
+        dust # Modern du replacement
+        fastfetch # System information fetcher
+        fd # Modern find replacement
+        fzf # Command-line fuzzy finder (replaces peco)
+        glow # Terminal markdown renderer
+        jq # Command-line JSON processor
+        just # Command runner for project workflows
+        mergiraf # Structural AST merge tool
+        mise # Polyglot tool version & environment manager
+        nerd-fonts.blex-mono # IBM Plex Mono Nerd Font
+        nerd-fonts.fira-code # Fira Code Nerd Font
+        nh # Nix CLI helper
+        nix-melt # Ranger-like viewer for flake.lock
+        procs # Modern process viewer with tree & socket mapping (replaces ps)
+        ripgrep # Modern grep replacement
+        tio # Serial device I/O tool
+        tmux # Terminal multiplexer
+        viddy # Modern watch command
+        yazi # Terminal file explorer
+        zellij # Terminal workspace and multiplexer
+      ])
+      ++ lib.optionals pkgs.stdenv.hostPlatform.isLinux (
+        with pkgs;
+        [
+          brightnessctl # Backlight brightness control for Sway
+          pavucontrol # PulseAudio / PipeWire volume control GUI for Waybar
+          playerctl # MPRIS media player controller (used by Waybar custom/media)
+        ]
+      )
+      ++ lib.optionals config.dotfiles.jujutsu.enable [
+        pkgs.jujutsu # Git-compatible VCS
+      ];
   };
 }

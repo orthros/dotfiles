@@ -1,0 +1,30 @@
+#!/usr/bin/env bash
+
+# A nice little list of messages to show
+#
+messages=("Ghastly and obvious are my middle names" \
+  "I don’t know what’s got it’s teeth in me but I’m about to bite back in anger" \
+  "My, my those eyes like fire, I'm a winged insect you're a funeral pyre"\
+  "There's always another secret."\
+  "Great holes secretly are digged where earth's pores ought to suffice,\nand things have learnt to walk which ought to crawl."\
+  "Come now, bite through these wires\nI'm a waking hell and the gods grow tired."\
+  "What's he gonna do about that... he's just a little guy!"\
+  "Dude this is like asking an ant to turn off the sun!"\
+  "Drink deep, and descend."\
+  "Darkness implied a nothing, an invisible.\nTo not exist.\nEverything existed.\nWe changed to perceive it"\
+  "ACHTUNG\nACHTUNG\n39486 60170 24326 01064"\
+  "You keep this in, Shy!"\
+  "Soaping together is sacred to us.\nWashing each other's shoulders.\n\nYou can fuck anyone---\nbut with whom can you sit in water?"\
+  "Life before Death\nStrength before Weakness\nJourney before Destination"\
+  "THIS CANNOT CONTINUE\nTHIS CANNOT CONTINUE\nTHIS CANNOT CONTINUE\nTHIS CANNOT CONTINUE"\
+  "BECOME AS\n G O D S\nBECOME AS\n G O D S"\
+  "D̴̢̹̭̭͚̣̦̳͉̝̝̮̥̱̜͖̜͔̯͍̝̤̲̘̍̾̐̽̃͆̒̐̕͠ͅr̶̡̢͙̦͎͉̲͉̘̺̮̗̳͓͂̔͆͂̆̈́i̸̡̢̢̢̨̛͖͙͓̭̟͓̜̞̖̞͔͇͎̖̦̼̹̇̏̓͛̾̾̈̑͋͑͒̀̈́̒͒͐̏̂͛̚ņ̶̡̛̞̙̮̗̟̺͉̟̰̠̯̰̹̠̻̮̖̃̌̐͐̑͗͛̆͝͝ķ̸͕̜̜͕̹̔̓͋͗̉̅̄͑͌̏͌͋͊̀̕͠͠ ̵̨̛̗͍̥̳̣͛̆̌̏͒̔̽̅̏̓̒̿̈́͗͒̔̍͊̒́̀̀̿̀̒̚͜͝d̴̡͚͓̣͚͚̹̰̩̬̙͚̬̣̗̝͎͖̭̞̤̘̙͔̯̖͖̖͈̓͌̀̾́̉̒͒͑͊͊͐̍̒̚͘ȅ̵̢̖̃̅̉͂̽̐̉̿̆̽̓̅͆̿̕̕͝͝ę̸̡̢̧̩͔̭̰͓̺͚̮̫̳͈̰̭̫̌̿͗̾̈́̋̿͘͠͝p̷̢̭̘̳̼̠̘͕̮̯̥̜͇̘̥̭̦͈͐̆̂͗̾̈́͒̐͒́͛̌̈̃̐̐͝ͅ ̵̧̢̢̮̳̪̘̻̼͓̭̗̣̪͎͑̇͑̅̉̿a̸̛͙̱̬̔̊͒̽̐̽͗̿̽͐́̕͠͝n̸̹͓̲̪̘̈͂̄̈́̉̀̈́͐̐̀̇͘͝d̵͇͓̪͚͙̻̟̺̪͎̫̭͈̜͎̣̬͎̪̼̥̳͓̋͌̚͜͜͜ͅ ̴̢̨̛̺̞̯͓̳̲͈̳̟͕͈̦̞̣̺͈̫͕͍̥̭̜̬͇̝̲̇̍̈̎͌̊̿́̔̓̐̂̅̀͂̄̍̅͐̿̈͘͜͝͝ḑ̶̧͉͙̠͖̥̼̖̣̱͕͖͉̹͔̤̼͈͓̭͓̙͗́͛̅̀͋̿͒̋̕ȩ̴͔̠̜̜̬̬̪̻̜͜͝ş̶̧̛̫͔̥̟͚̹̝͉̰͚̼̙̘͔̤͍̗̜̭̆̋̀̄͛̈́̚̕̚͜͜ç̴̢̨͎͕̻͚̦̲̙̣̝̭̖̻̺̣̫̣͚͇̼̳̪͈̟͚̃̎̍͛̓̍͂͐̈́e̵̛̼̯̟̞̰̐͛̐̾͊̏̇̒̇̈́̑̄͐̃̎͘͝͝͝͝ͅņ̸̞̘̰̭̞̲̞͈̻̤̜̼̫̪̞̲̣̺̹͎̣̖̮̞̻̊̍͒̎́̂͋̓̍̓̿̆̎̿̾̓͊̀̒̕͝d̶̡̨̖̩̲͇̹̩̜̫̰̝̩̰̾͗̑͂͛̀̐̈́̿̀̇̈̋͒̃̿̒̈́͝͝ͅͅ"\
+  "Does the black moon howl?"\
+)
+
+# Pick a random message
+selectedmessage="${messages[RANDOM % ${#messages[@]}]}"
+
+
+# Print it out!
+printf '\n%b\n\n' "${selectedmessage}"

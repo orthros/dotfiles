@@ -1,6 +1,7 @@
 #!/usr/bin/env zsh
 
 # Get the git utilities
+# shellcheck disable=SC1091,SC2154
 source "$dotfile_config_path/zsh/git-utils.sh"
 
 # Gcloud Active Project Get

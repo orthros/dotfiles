@@ -9,11 +9,6 @@ export _GIT_UTILS_INCLUDE=true
 # Git Helper
 function in_git_dir() {
   git rev-parse --git-dir &>/dev/null
-  # If non zero we have an error code...
-  if (( $? )); then
-    return 1
-  fi
-  return 0
 }
 
 function get_origin_last_path() {
