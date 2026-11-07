@@ -20,6 +20,7 @@
         # Basic CLI utilities & modern replacements
         bandwhich # Per-process/connection network bandwidth monitor
         btop # Resource monitor (replaces htop)
+        cliphist # CLipboard history
         cyme # Modern USB bus & topology viewer (replaces lsusb)
         difftastic # Structural AST diff tool
         direnv # Per-directory environment loader
