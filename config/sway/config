@@ -199,6 +199,10 @@ bindsym Ctrl+Shift+Space exec makoctl dismiss --all
 # Sway background
 output "*" background ${HOME}/.config/wallpapers/cherry_blossoms.jpg fill
 
+# Launch the clipboard manager daemon at startup
+exec wl-paste --type text --watch cliphist store
+exec wl-paste --type image --watch cliphist store
+
 # Clipboard history selector
 bindsym $mod+p exec cliphist list | rofi -dmenu -theme oneorthros.rasi | cliphist decode | wl-copy
 
